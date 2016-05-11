@@ -15,28 +15,29 @@
     NSUInteger _currentIndex;
     NSUInteger _oldIndex;
 }
-
-@property (assign, nonatomic) CGFloat currentWidth;
-@property (strong, nonatomic) UIColor *coverBackgroundColor;
+// 滚动条
 @property (weak, nonatomic) UIView *scrollLine;
+// 遮盖
 @property (weak, nonatomic) UIView *coverLayer;
-@property (weak, nonatomic) UIView *extraButton;
+// 滚动scrollView
 @property (weak, nonatomic) UIScrollView *scrollView;
+// 背景ImageView
 @property (weak, nonatomic) UIImageView *backgroundImageView;
+// 附加的按钮
 @property (weak, nonatomic) UIButton *extraBtn;
-
+// 所有标题的设置
 @property (strong, nonatomic) ZJSegmentStyle *segmentStyle;
+// 所有的标题
 @property (strong, nonatomic) NSArray *titles;
-
+// 用于懒加载计算文字的rgb差值, 用于颜色渐变的时候设置
 @property (strong, nonatomic) NSArray *deltaRGB;
 @property (strong, nonatomic) NSArray *selectedColorRgb;
 @property (strong, nonatomic) NSArray *normalColorRgb;
-
-/** 所有标题数组 */
+/** 缓存所有标题label */
 @property (nonatomic, strong) NSMutableArray *titleLabels;
-
-/** 所有标题宽度数组 */
+// 缓存计算出来的每个标题的宽度
 @property (nonatomic, strong) NSMutableArray *titleWidths;
+// 响应标题点击
 @property (copy, nonatomic) TitleBtnOnClickBlock titleBtnOnClick;
 
 @end
@@ -370,8 +371,6 @@
             index++;
         }
     }
-    
-    
     
 }
 

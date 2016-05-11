@@ -8,31 +8,44 @@
 
 #import "ZJContentView.h"
 #import "ZJScrollSegmentView.h"
-@interface ZJContentView ()<UICollectionViewDelegate, UICollectionViewDataSource, UIScrollViewDelegate> {
+@interface ZJContentView ()<UICollectionViewDelegate, UICollectionViewDataSource, UIScrollViewDelegate, UIGestureRecognizerDelegate> {
     NSInteger _oldIndex;
     NSInteger _currentIndex;
     CGFloat   _oldOffSetX;
 }
-
+// 用于处理重用和内容的显示
 @property (weak, nonatomic) UICollectionView *collectionView;
+// collectionView的布局
 @property (strong, nonatomic) UICollectionViewFlowLayout *collectionViewLayout;
 /** 避免循环引用*/
 @property (weak, nonatomic) ZJScrollSegmentView *segmentView;
 
 @property (weak, nonatomic) UIButton *extraBtn;
-
+// 父类 用于处理添加子控制器  使用weak避免循环引用
 @property (weak, nonatomic) UIViewController *parentViewController;
-//@property (weak, nonatomic) UIButton *delegate;
-
+// 当这个属性设置为YES的时候 就不用处理 scrollView滚动的计算
 @property (assign, nonatomic) BOOL forbidTouchToAdjustPosition;
+// 所有的子控制器
 @property (strong, nonatomic) NSArray *childVcs;
 @end
 
 @implementation ZJContentView
 #define cellID @"cellID"
 
+#pragma mark - UIGestureRecognizerDelegate
 
-#pragma mark - life cycle 
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
+    if (self.parentViewController.parentViewController && [self.parentViewController.parentViewController isKindOfClass:[UINavigationController class]]) {         UINavigationController *navi = (UINavigationController *)self.parentViewController.parentViewController;
+
+        if (navi.visibleViewController == self.parentViewController) {// 当显示的是ScrollPageView的时候 只在第一个tag处执行pop手势
+
+            return self.collectionView.contentOffset.x == 0;
+        }
+    }
+    return YES;
+}
+
+#pragma mark - life cycle
 
 - (instancetype)initWithFrame:(CGRect)frame childVcs:(NSArray *)childVcs segmentView:(ZJScrollSegmentView *)segmentView parentViewController:(UIViewController *)parentViewController {
     
@@ -62,6 +75,15 @@
             [self.parentViewController addChildViewController:childVc];
         }
     }
+    
+    if (self.parentViewController.parentViewController && [self.parentViewController.parentViewController isKindOfClass:[UINavigationController class]]) {
+        UINavigationController *navi = (UINavigationController *)self.parentViewController.parentViewController;
+        
+        if (navi.interactivePopGestureRecognizer) {
+            navi.interactivePopGestureRecognizer.delegate = self;
+            [self.collectionView.panGestureRecognizer requireGestureRecognizerToFail:navi.interactivePopGestureRecognizer];
+        }
+    }
 }
 
 
@@ -80,6 +102,7 @@
 
 /** 给外界刷新视图的方法 */
 - (void)reloadAllViewsWithNewChildVcs:(NSArray *)newChileVcs {
+    // 这种处理是结束子控制器和父控制器的关系
     for (UIViewController *childVc in self.childVcs) {
         [childVc willMoveToParentViewController:nil];
         [childVc.view removeFromSuperview];
@@ -104,8 +127,9 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellID forIndexPath:indexPath];
+    // 移除subviews 避免重用内容显示错误
     [cell.contentView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    
+    // 这里建立子控制器和父控制器的关系  -> 当然在这之前已经将对应的子控制器添加到了父控制器了, 只不过还没有建立完成
     UIViewController *vc = (UIViewController *)self.childVcs[indexPath.row];
     vc.view.frame = self.bounds;
     [cell.contentView addSubview:vc.view];
