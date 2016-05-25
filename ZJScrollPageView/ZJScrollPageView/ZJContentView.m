@@ -33,9 +33,9 @@
 #define cellID @"cellID"
 
 #pragma mark - UIGestureRecognizerDelegate
-
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
-    if (self.parentViewController.parentViewController && [self.parentViewController.parentViewController isKindOfClass:[UINavigationController class]]) {         UINavigationController *navi = (UINavigationController *)self.parentViewController.parentViewController;
+    if (self.parentViewController.parentViewController && [self.parentViewController.parentViewController isKindOfClass:[UINavigationController class]]) {
+        UINavigationController *navi = (UINavigationController *)self.parentViewController.parentViewController;
 
         if (navi.visibleViewController == self.parentViewController) {// 当显示的是ScrollPageView的时候 只在第一个tag处执行pop手势
 
