@@ -25,6 +25,7 @@
     ZJSegmentStyle *style = [[ZJSegmentStyle alloc] init];
     //显示遮盖
     style.showCover = YES;
+    style.segmentViewBounces = NO;
     // 颜色渐变
     style.gradualChangeTitleColor = YES;
     // 显示附加的按钮

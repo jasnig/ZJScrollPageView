@@ -25,8 +25,7 @@
 @property (weak, nonatomic) UIImageView *backgroundImageView;
 // 附加的按钮
 @property (weak, nonatomic) UIButton *extraBtn;
-// 所有标题的设置
-@property (strong, nonatomic) ZJSegmentStyle *segmentStyle;
+
 // 所有的标题
 @property (strong, nonatomic) NSArray *titles;
 // 用于懒加载计算文字的rgb差值, 用于颜色渐变的时候设置
@@ -146,8 +145,8 @@
 }
 
 - (void)setupUI {
-    [self setupScrollViewAndExtraBtn];
     [self setUpLabelsPosition];
+    [self setupScrollViewAndExtraBtn];
     [self setupScrollLineAndCover];
     
     if (self.segmentStyle.isScrollTitle) { // 设置滚动区域
@@ -158,16 +157,6 @@
         }
     }
     
-}
-
-- (void)setupScrollViewAndExtraBtn {
-    CGFloat extraBtnW = 44.0;
-    CGFloat extraBtnY = 5.0;
-    CGFloat scrollW = self.extraBtn ? _currentWidth - extraBtnW : _currentWidth;
-    self.scrollView.frame = CGRectMake(0.0, 0.0, scrollW, self.zj_height);
-    if (self.extraBtn) {
-        self.extraBtn.frame = CGRectMake(scrollW, extraBtnY, extraBtnW, self.zj_height - 2*extraBtnY);
-    }
 }
 
 
@@ -220,6 +209,21 @@
         firstLabel.textColor = self.segmentStyle.selectedTitleColor;
     }
     
+}
+
+- (void)setupScrollViewAndExtraBtn {
+    CGFloat extraBtnW = 44.0;
+    CGFloat extraBtnY = 5.0;
+    UILabel *lastLabel = _titleLabels.lastObject;
+    CGFloat maxX = CGRectGetMaxX(lastLabel.frame) + 8;
+    CGFloat scrollW = self.extraBtn ? _currentWidth - extraBtnW : _currentWidth;
+    if (maxX < _currentWidth) {
+        scrollW = maxX;
+    }
+    self.scrollView.frame = CGRectMake(0.0, 0.0, scrollW, self.zj_height);
+    if (self.extraBtn) {
+        self.extraBtn.frame = CGRectMake(scrollW , extraBtnY, extraBtnW, self.zj_height - 2*extraBtnY);
+    }
 }
 
 - (void)setupScrollLineAndCover {
@@ -476,7 +480,7 @@
     if (!_scrollView) {
         UIScrollView *scrollView = [[UIScrollView alloc] init];
         scrollView.showsHorizontalScrollIndicator = NO;
-        scrollView.bounces = YES;
+        scrollView.bounces = self.segmentStyle.isSegmentViewBounces;
         scrollView.pagingEnabled = NO;
         // weak 需要强引用
         [self addSubview:scrollView];

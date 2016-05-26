@@ -16,8 +16,10 @@
         self.showLine = NO;
         self.scaleTitle = NO;
         self.scrollTitle = YES;
+        self.segmentViewBounces = YES;
         self.gradualChangeTitleColor = NO;
         self.showExtraButton = NO;
+        self.scrollContentView = YES;
         self.extraBtnBackgroundImageName = nil;
         self.scrollLineHeight = 2.0;
         self.scrollLineColor = [UIColor brownColor];

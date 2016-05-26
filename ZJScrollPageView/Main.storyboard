@@ -50,7 +50,7 @@
                                 <rect key="frame" x="0.0" y="97" width="600" height="34"/>
                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <inset key="titleEdgeInsets" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                <state key="normal" title="遮盖+颜色渐变 效果">
+                                <state key="normal" title="遮盖+颜色渐变+segmentView没有弹性 效果">
                                     <color key="titleColor" red="0.66681522651006708" green="0.61430279567011725" blue="0.38850389390094997" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>

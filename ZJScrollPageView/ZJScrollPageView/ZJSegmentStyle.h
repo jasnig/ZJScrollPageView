@@ -33,12 +33,16 @@
 @property (assign, nonatomic, getter=isShowLine) BOOL showLine;
 /** 是否缩放标题 默认为NO*/
 @property (assign, nonatomic, getter=isScaleTitle) BOOL scaleTitle;
-/** 是否滚动标题 默认为YES 设置为NO的时候所有的标题将不会滚动, 和系统的segment效果相似 */
+/** 是否滚动标题 默认为YES 设置为NO的时候所有的标题将不会滚动, 并且宽度会平分 和系统的segment效果相似 */
 @property (assign, nonatomic, getter=isScrollTitle) BOOL scrollTitle;
+/** segmentView是否有弹性 默认为NO*/
+@property (assign, nonatomic, getter=isSegmentViewBounces) BOOL segmentViewBounces;
 /** 是否颜色渐变 默认为NO*/
 @property (assign, nonatomic, getter=isGradualChangeTitleColor) BOOL gradualChangeTitleColor;
 /** 是否显示附加的按钮 默认为NO*/
 @property (assign, nonatomic, getter=isShowExtraButton) BOOL showExtraButton;
+/** 内容view是否能滑动 默认为YES*/
+@property (assign, nonatomic, getter=isScrollContentView) BOOL scrollContentView;
 /** 设置附加按钮的背景图片 默认为nil*/
 @property (strong, nonatomic) NSString *extraBtnBackgroundImageName;
 /** 滚动条的高度 默认为2 */

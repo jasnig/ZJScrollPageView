@@ -219,7 +219,7 @@
         collectionView.dataSource = self;
         [collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:cellID];
         collectionView.bounces = NO;
-        
+        collectionView.scrollEnabled = self.segmentView.segmentStyle.isScrollContentView;
         [self addSubview:collectionView];
         _collectionView = collectionView;
     }

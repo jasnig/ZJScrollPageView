@@ -192,7 +192,7 @@
 		4B7429C61CDD9C0D009CC9B2 /* 使用示例 */ = {
 			isa = PBXGroup;
 			children = (
-				4B7429CD1CDD9C0D009CC9B2 /* 遮盖+颜色渐变 效果 */,
+				4B7429CD1CDD9C0D009CC9B2 /* 遮盖+颜色渐变+segmentView没有弹性 效果 */,
 				4B7429CA1CDD9C0D009CC9B2 /* 缩放+颜色渐变 效果 */,
 				4B7429C91CDD9C0D009CC9B2 /* 滚动条+颜色渐变 效果 */,
 				4B7429CC1CDD9C0D009CC9B2 /* 遮盖+缩放+没有颜色渐变 效果 */,
@@ -259,12 +259,13 @@
 			path = "遮盖+缩放+没有颜色渐变 效果";
 			sourceTree = "<group>";
 		};
-		4B7429CD1CDD9C0D009CC9B2 /* 遮盖+颜色渐变 效果 */ = {
+		4B7429CD1CDD9C0D009CC9B2 /* 遮盖+颜色渐变+segmentView没有弹性 效果 */ = {
 			isa = PBXGroup;
 			children = (
 				4B7429E41CDDB3E4009CC9B2 /* ZJVc1Controller.h */,
 				4B7429E51CDDB3E4009CC9B2 /* ZJVc1Controller.m */,
 			);
+			name = "遮盖+颜色渐变+segmentView没有弹性 效果";
 			path = "遮盖+颜色渐变 效果";
 			sourceTree = "<group>";
 		};
