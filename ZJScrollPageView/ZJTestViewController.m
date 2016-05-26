@@ -6,20 +6,25 @@
 //  Copyright © 2016年 ZeroJ. All rights reserved.
 //
 
-#import "ZJTextViewController.h"
-
-@interface ZJTextViewController ()
+#import "ZJTestViewController.h"
+#import "ZJSegmentStyle.h"
+@interface ZJTestViewController ()
 
 @end
 
-@implementation ZJTextViewController
+@implementation ZJTestViewController
 - (IBAction)testBtnOnClick:(UIButton *)sender {
     
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSelectedIndex:) name:ScrollPageViewDidShowThePageNotification object:nil];
+}
+
+- (void)didSelectedIndex: (NSNotification *)noti {
+    NSDictionary *userInfo = noti.userInfo;
+    NSLog(@"显示了%@页", userInfo[@"currentIndex"]);
 }
 
 - (void)didReceiveMemoryWarning {

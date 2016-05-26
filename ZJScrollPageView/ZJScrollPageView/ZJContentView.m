@@ -177,13 +177,15 @@
 }
 
 /**为了解决在滚动或接着点击title更换的时候因为index不同步而增加了下边的两个代理方法的判断
-
 */
 
 /** 滚动减速完成时再更新title的位置 */
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     NSInteger currentIndex = (scrollView.contentOffset.x / self.bounds.size.width);
     [self contentViewEndMoveToIndex:currentIndex];
+    // 发布通知
+    [[NSNotificationCenter defaultCenter] postNotificationName: ScrollPageViewDidShowThePageNotification object:nil userInfo:@{@"currentIndex": @(currentIndex)}];
+
 }
 
 

@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ZJTextViewController : UIViewController
+@interface ZJTestViewController : UIViewController
 
 @end

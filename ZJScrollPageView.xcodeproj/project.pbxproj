@@ -28,7 +28,7 @@
 		4B7429EF1CDDCECD009CC9B2 /* ZJVc6Controller.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7429EE1CDDCECD009CC9B2 /* ZJVc6Controller.m */; };
 		4B7429F21CDDD409009CC9B2 /* ZJVc5Controller.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7429F11CDDD409009CC9B2 /* ZJVc5Controller.m */; };
 		4B7429F51CDDD4DA009CC9B2 /* ZJVc7Controller.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7429F41CDDD4DA009CC9B2 /* ZJVc7Controller.m */; };
-		4B7429F81CDDDC35009CC9B2 /* ZJTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7429F71CDDDC35009CC9B2 /* ZJTextViewController.m */; };
+		4B7429F81CDDDC35009CC9B2 /* ZJTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7429F71CDDDC35009CC9B2 /* ZJTestViewController.m */; };
 		4B7429FC1CDDE1E5009CC9B2 /* ZJVc8Controller.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7429FB1CDDE1E5009CC9B2 /* ZJVc8Controller.m */; };
 /* End PBXBuildFile section */
 
@@ -92,8 +92,8 @@
 		4B7429F11CDDD409009CC9B2 /* ZJVc5Controller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZJVc5Controller.m; sourceTree = "<group>"; };
 		4B7429F31CDDD4DA009CC9B2 /* ZJVc7Controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJVc7Controller.h; sourceTree = "<group>"; };
 		4B7429F41CDDD4DA009CC9B2 /* ZJVc7Controller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZJVc7Controller.m; sourceTree = "<group>"; };
-		4B7429F61CDDDC35009CC9B2 /* ZJTextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJTextViewController.h; sourceTree = "<group>"; };
-		4B7429F71CDDDC35009CC9B2 /* ZJTextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZJTextViewController.m; sourceTree = "<group>"; };
+		4B7429F61CDDDC35009CC9B2 /* ZJTestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJTestViewController.h; sourceTree = "<group>"; };
+		4B7429F71CDDDC35009CC9B2 /* ZJTestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZJTestViewController.m; sourceTree = "<group>"; };
 		4B7429FA1CDDE1E5009CC9B2 /* ZJVc8Controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJVc8Controller.h; sourceTree = "<group>"; };
 		4B7429FB1CDDE1E5009CC9B2 /* ZJVc8Controller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZJVc8Controller.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -152,8 +152,8 @@
 				4B0C06331CDC55080079E8F3 /* AppDelegate.m */,
 				4B0C06351CDC55080079E8F3 /* ViewController.h */,
 				4B0C06361CDC55080079E8F3 /* ViewController.m */,
-				4B7429F61CDDDC35009CC9B2 /* ZJTextViewController.h */,
-				4B7429F71CDDDC35009CC9B2 /* ZJTextViewController.m */,
+				4B7429F61CDDDC35009CC9B2 /* ZJTestViewController.h */,
+				4B7429F71CDDDC35009CC9B2 /* ZJTestViewController.m */,
 				4B7429C41CDD9ACB009CC9B2 /* Main.storyboard */,
 				4B0C063B1CDC55080079E8F3 /* Assets.xcassets */,
 				4B0C063D1CDC55080079E8F3 /* LaunchScreen.storyboard */,
@@ -434,7 +434,7 @@
 				4B7429FC1CDDE1E5009CC9B2 /* ZJVc8Controller.m in Sources */,
 				4B7429EC1CDDCE29009CC9B2 /* ZJVc3Controller.m in Sources */,
 				4B7429DF1CDD9C16009CC9B2 /* ZJScrollSegmentView.m in Sources */,
-				4B7429F81CDDDC35009CC9B2 /* ZJTextViewController.m in Sources */,
+				4B7429F81CDDDC35009CC9B2 /* ZJTestViewController.m in Sources */,
 				4B7429E01CDD9C16009CC9B2 /* ZJSegmentStyle.m in Sources */,
 				4B7429DB1CDD9C16009CC9B2 /* UIView+ZJFrame.m in Sources */,
 				4B0C06371CDC55080079E8F3 /* ViewController.m in Sources */,

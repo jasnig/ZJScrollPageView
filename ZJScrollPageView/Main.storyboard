@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="jUn-H6-hBc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="jUn-H6-hBc">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -306,10 +306,10 @@
             </objects>
             <point key="canvasLocation" x="-459" y="3648"/>
         </scene>
-        <!--Text View Controller-->
+        <!--Test View Controller-->
         <scene sceneID="Lvp-h7-ftW">
             <objects>
-                <viewController storyboardIdentifier="test" id="dCG-Ca-jcw" customClass="ZJTextViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="test" id="dCG-Ca-jcw" customClass="ZJTestViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="arn-hg-Zci"/>
                         <viewControllerLayoutGuide type="bottom" id="bmA-AP-ypd"/>

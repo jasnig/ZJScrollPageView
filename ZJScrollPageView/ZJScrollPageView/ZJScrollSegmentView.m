@@ -64,7 +64,8 @@
         // 设置了frame之后可以直接设置其他的控件的frame了, 不需要在layoutsubView()里面设置
         [self setupTitles];
         [self setupUI];
-
+        //发布通知 默认显示第一页
+        [self addCurrentShowIndexNotification];
     }
     
     return self;
@@ -249,6 +250,11 @@
         
 }
 
+- (void)addCurrentShowIndexNotification {
+    [[NSNotificationCenter defaultCenter] postNotificationName: ScrollPageViewDidShowThePageNotification object:nil userInfo:@{@"currentIndex": @(_currentIndex)}];
+
+}
+
 #pragma mark - public helper
 
 - (void)adjustUIWhenBtnOnClickWithAnimate:(BOOL)animated {
@@ -294,8 +300,8 @@
     if (self.titleBtnOnClick) {
         self.titleBtnOnClick(currentLabel, _currentIndex);
     }
-    
-    
+    //发布通知
+    [self addCurrentShowIndexNotification];
 }
 
 - (void)adjustUIWithProgress:(CGFloat)progress oldIndex:(NSInteger)oldIndex currentIndex:(NSInteger)currentIndex {
