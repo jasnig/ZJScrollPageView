@@ -24,6 +24,8 @@
     ZJSegmentStyle *style = [[ZJSegmentStyle alloc] init];
     //显示遮盖
     style.showCover = YES;
+    // 同步调整遮盖或者滚动条的宽度
+    style.adjustCoverOrLineWidth = YES;
     // 不滚动标题
     style.scrollTitle = NO;
     // 颜色渐变

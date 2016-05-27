@@ -26,6 +26,10 @@
     NSDictionary *userInfo = noti.userInfo;
     NSLog(@"显示了%@页", userInfo[@"currentIndex"]);
 }
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -84,6 +84,9 @@
             [self.collectionView.panGestureRecognizer requireGestureRecognizerToFail:navi.interactivePopGestureRecognizer];
         }
     }
+    // 发布通知 默认为0
+    [self addCurrentShowIndexNotificationWithIndex:0];
+    
 }
 
 
@@ -134,7 +137,6 @@
     vc.view.frame = self.bounds;
     [cell.contentView addSubview:vc.view];
     [vc didMoveToParentViewController:self.parentViewController];
-    
     return cell;
 }
 
@@ -184,8 +186,7 @@
     NSInteger currentIndex = (scrollView.contentOffset.x / self.bounds.size.width);
     [self contentViewEndMoveToIndex:currentIndex];
     // 发布通知
-    [[NSNotificationCenter defaultCenter] postNotificationName: ScrollPageViewDidShowThePageNotification object:nil userInfo:@{@"currentIndex": @(currentIndex)}];
-
+    [self addCurrentShowIndexNotificationWithIndex:currentIndex];
 }
 
 
@@ -207,6 +208,11 @@
         [self.segmentView adjustTitleOffSetToCurrentIndex:currentIndex];
         [self.segmentView adjustUIWithProgress:1.0 oldIndex:currentIndex currentIndex:currentIndex];
     }
+}
+//发布通知
+- (void)addCurrentShowIndexNotificationWithIndex:(NSInteger)index {
+    [[NSNotificationCenter defaultCenter] postNotificationName: ScrollPageViewDidShowThePageNotification object:nil userInfo:@{@"currentIndex": @(index)}];
+    
 }
 
 #pragma mark - getter --- setter

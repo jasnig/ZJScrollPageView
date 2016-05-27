@@ -43,6 +43,8 @@
 @property (assign, nonatomic, getter=isShowExtraButton) BOOL showExtraButton;
 /** 内容view是否能滑动 默认为YES*/
 @property (assign, nonatomic, getter=isScrollContentView) BOOL scrollContentView;
+/** 当设置scrollTitle=NO的时候标题会平分宽度, 如果你希望在滚动的过程中cover或者scrollLine的宽度随着变化设置这个属性为YES 默认为NO*/
+@property (assign, nonatomic, getter=isAdjustCoverOrLineWidth) BOOL adjustCoverOrLineWidth;
 /** 设置附加按钮的背景图片 默认为nil*/
 @property (strong, nonatomic) NSString *extraBtnBackgroundImageName;
 /** 滚动条的高度 默认为2 */

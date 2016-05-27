@@ -63,8 +63,6 @@
         // 设置了frame之后可以直接设置其他的控件的frame了, 不需要在layoutsubView()里面设置
         [self setupTitles];
         [self setupUI];
-        //发布通知 默认显示第一页
-        [self addCurrentShowIndexNotification];
     }
     
     return self;
@@ -235,7 +233,20 @@
     CGFloat coverY = (self.bounds.size.height - coverH) * 0.5;
     
     if (self.scrollLine) {
-        self.scrollLine.frame = CGRectMake(coverX , self.zj_height - self.segmentStyle.scrollLineHeight, coverW , self.segmentStyle.scrollLineHeight);
+        
+        if (self.segmentStyle.isScrollTitle) {
+            self.scrollLine.frame = CGRectMake(coverX , self.zj_height - self.segmentStyle.scrollLineHeight, coverW , self.segmentStyle.scrollLineHeight);
+
+        } else {
+            if (self.segmentStyle.isAdjustCoverOrLineWidth) {
+                coverW = [self.titleWidths[_currentIndex] floatValue] + wGap;
+                coverX = (firstLabel.zj_width - coverW) * 0.5;
+            }
+
+            self.scrollLine.frame = CGRectMake(coverX , self.zj_height - self.segmentStyle.scrollLineHeight, coverW , self.segmentStyle.scrollLineHeight);
+
+        }
+        
         
     }
     
@@ -245,6 +256,11 @@
             self.coverLayer.frame = CGRectMake(coverX - xGap, coverY, coverW + wGap, coverH);
             
         } else {
+            if (self.segmentStyle.isAdjustCoverOrLineWidth) {
+                coverW = [self.titleWidths[_currentIndex] floatValue] + wGap;
+                coverX = (firstLabel.zj_width - coverW) * 0.5;
+            }
+
             self.coverLayer.frame = CGRectMake(coverX, coverY, coverW, coverH);
             
         }
@@ -282,8 +298,22 @@
         }
         
         if (weakSelf.scrollLine) {
-            weakSelf.scrollLine.zj_x = currentLabel.zj_x;
-            weakSelf.scrollLine.zj_width = currentLabel.zj_width;
+            if (weakSelf.segmentStyle.isScrollTitle) {
+                weakSelf.scrollLine.zj_x = currentLabel.zj_x;
+                weakSelf.scrollLine.zj_width = currentLabel.zj_width;
+            } else {
+                if (self.segmentStyle.isAdjustCoverOrLineWidth) {
+                    CGFloat scrollLineW = [self.titleWidths[_currentIndex] floatValue] + wGap;
+                    CGFloat scrollLineX = currentLabel.zj_x + (currentLabel.zj_width - scrollLineW) * 0.5;
+                    weakSelf.scrollLine.zj_x = scrollLineX;
+                    weakSelf.scrollLine.zj_width = scrollLineW;
+                } else {
+                    weakSelf.scrollLine.zj_x = currentLabel.zj_x;
+                    weakSelf.scrollLine.zj_width = currentLabel.zj_width;
+                }
+
+            }
+
         }
         
         if (weakSelf.coverLayer) {
@@ -292,8 +322,15 @@
                 weakSelf.coverLayer.zj_x = currentLabel.zj_x - xGap;
                 weakSelf.coverLayer.zj_width = currentLabel.zj_width + wGap;
             } else {
-                weakSelf.coverLayer.zj_x = currentLabel.zj_x;
-                weakSelf.coverLayer.zj_width = currentLabel.zj_width;
+                if (self.segmentStyle.isAdjustCoverOrLineWidth) {
+                    CGFloat coverW = [self.titleWidths[_currentIndex] floatValue] + wGap;
+                    CGFloat coverX = currentLabel.zj_x + (currentLabel.zj_width - coverW) * 0.5;
+                    weakSelf.coverLayer.zj_x = coverX;
+                    weakSelf.coverLayer.zj_width = coverW;
+                } else {
+                    weakSelf.coverLayer.zj_x = currentLabel.zj_x;
+                    weakSelf.coverLayer.zj_width = currentLabel.zj_width;
+                }
             }
             
         }
@@ -317,8 +354,27 @@
     CGFloat wDistance = currentLabel.zj_width - oldLabel.zj_width;
     
     if (self.scrollLine) {
-        self.scrollLine.zj_x = oldLabel.zj_x + xDistance * progress;
-        self.scrollLine.zj_width = oldLabel.zj_width + wDistance * progress;
+        
+        if (self.segmentStyle.isScrollTitle) {
+            self.scrollLine.zj_x = oldLabel.zj_x + xDistance * progress;
+            self.scrollLine.zj_width = oldLabel.zj_width + wDistance * progress;
+        } else {
+            if (self.segmentStyle.isAdjustCoverOrLineWidth) {
+                CGFloat oldScrollLineW = [self.titleWidths[oldIndex] floatValue] + wGap;
+                CGFloat currentScrollLineW = [self.titleWidths[currentIndex] floatValue] + wGap;
+                wDistance = currentScrollLineW - oldScrollLineW;
+                
+                CGFloat oldScrollLineX = oldLabel.zj_x + (oldLabel.zj_width - oldScrollLineW) * 0.5;
+                CGFloat currentScrollLineX = currentLabel.zj_x + (currentLabel.zj_width - currentScrollLineW) * 0.5;
+                xDistance = currentScrollLineX - oldScrollLineX;
+                self.scrollLine.zj_x = oldScrollLineX + xDistance * progress;
+                self.scrollLine.zj_width = oldScrollLineW + wDistance * progress;
+            } else {
+                self.scrollLine.zj_x = oldLabel.zj_x + xDistance * progress;
+                self.scrollLine.zj_width = oldLabel.zj_width + wDistance * progress;
+            }
+        }
+
     }
     
     if (self.coverLayer) {
@@ -326,8 +382,19 @@
             self.coverLayer.zj_x = oldLabel.zj_x + xDistance * progress - xGap;
             self.coverLayer.zj_width = oldLabel.zj_width + wDistance * progress + wGap;
         } else {
-            self.coverLayer.zj_x = oldLabel.zj_x + xDistance * progress;
-            self.coverLayer.zj_width = oldLabel.zj_width + wDistance * progress;
+            if (self.segmentStyle.isAdjustCoverOrLineWidth) {
+                CGFloat oldCoverW = [self.titleWidths[oldIndex] floatValue] + wGap;
+                CGFloat currentCoverW = [self.titleWidths[currentIndex] floatValue] + wGap;
+                wDistance = currentCoverW - oldCoverW;
+                CGFloat oldCoverX = oldLabel.zj_x + (oldLabel.zj_width - oldCoverW) * 0.5;
+                CGFloat currentCoverX = currentLabel.zj_x + (currentLabel.zj_width - currentCoverW) * 0.5;
+                xDistance = currentCoverX - oldCoverX;
+                self.coverLayer.zj_x = oldCoverX + xDistance * progress;
+                self.coverLayer.zj_width = oldCoverW + wDistance * progress;
+            } else {
+                self.coverLayer.zj_x = oldLabel.zj_x + xDistance * progress;
+                self.coverLayer.zj_width = oldLabel.zj_width + wDistance * progress;
+            }
         }
     }
     

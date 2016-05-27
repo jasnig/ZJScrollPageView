@@ -8,6 +8,7 @@
 
 #import "ZJVc6Controller.h"
 #import "ZJScrollPageView.h"
+#import "ZJTestViewController.h"
 @interface ZJVc6Controller ()
 @property (weak, nonatomic) ZJScrollSegmentView *segmentView;
 @property (weak, nonatomic) ZJContentView *contentView;
@@ -77,7 +78,7 @@
     UIViewController *vc2 = [UIViewController new];
     vc2.view.backgroundColor = [UIColor greenColor];
     
-    NSArray *childVcs = [NSArray arrayWithObjects:vc1, vc2, nil];
+    NSArray *childVcs = [NSArray arrayWithObjects:vc2, vc1, nil];
     return childVcs;
 }
 
