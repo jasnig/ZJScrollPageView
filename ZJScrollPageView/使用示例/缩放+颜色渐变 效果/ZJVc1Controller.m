@@ -52,7 +52,8 @@
     vc1.view.backgroundColor = [UIColor redColor];
     vc1.title = @"新闻头条";
     
-    UIViewController *vc2 = [UIViewController new];
+    
+    UIViewController *vc2 = [[UIViewController alloc] init];
     vc2.view.backgroundColor = [UIColor greenColor];
     vc2.title = @"国际要闻";
     

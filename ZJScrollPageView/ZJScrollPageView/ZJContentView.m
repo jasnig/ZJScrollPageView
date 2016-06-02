@@ -220,6 +220,7 @@
     if (_collectionView == nil) {
         UICollectionView *collectionView = [[UICollectionView alloc] initWithFrame:self.bounds collectionViewLayout:self.collectionViewLayout];
         collectionView.pagingEnabled = YES;
+        collectionView.scrollsToTop = NO;
         collectionView.showsHorizontalScrollIndicator = NO;
         collectionView.delegate = self;
         collectionView.dataSource = self;

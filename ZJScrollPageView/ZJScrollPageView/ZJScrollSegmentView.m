@@ -547,6 +547,7 @@
     if (!_scrollView) {
         UIScrollView *scrollView = [[UIScrollView alloc] init];
         scrollView.showsHorizontalScrollIndicator = NO;
+        scrollView.scrollsToTop = NO;
         scrollView.bounces = self.segmentStyle.isSegmentViewBounces;
         scrollView.pagingEnabled = NO;
         // weak 需要强引用
