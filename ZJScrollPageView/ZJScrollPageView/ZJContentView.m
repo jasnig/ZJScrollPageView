@@ -184,14 +184,13 @@
 /** 滚动减速完成时再更新title的位置 */
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     NSInteger currentIndex = (scrollView.contentOffset.x / self.bounds.size.width);
-    NSLog(@"减速完成");
     [self contentViewDidEndMoveFromIndex:_currentIndex toIndex:currentIndex];
     // 发布通知
     [self addCurrentShowIndexNotificationWithIndex:currentIndex];
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-    NSLog(@"%f", scrollView.contentOffset.x);
+
     if (scrollView.contentOffset.x == 0 || scrollView.contentOffset.x == scrollView.contentSize.width - scrollView.bounds.size.width) {
         NSInteger currentIndex = (scrollView.contentOffset.x / self.bounds.size.width);
         [self contentViewDidEndMoveFromIndex:_currentIndex toIndex:currentIndex];
