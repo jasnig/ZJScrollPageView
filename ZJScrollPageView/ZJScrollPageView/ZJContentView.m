@@ -184,9 +184,20 @@
 /** 滚动减速完成时再更新title的位置 */
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     NSInteger currentIndex = (scrollView.contentOffset.x / self.bounds.size.width);
-    [self contentViewEndMoveToIndex:currentIndex];
+    NSLog(@"减速完成");
+    [self contentViewDidEndMoveFromIndex:_currentIndex toIndex:currentIndex];
     // 发布通知
     [self addCurrentShowIndexNotificationWithIndex:currentIndex];
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    NSLog(@"%f", scrollView.contentOffset.x);
+    if (scrollView.contentOffset.x == 0 || scrollView.contentOffset.x == scrollView.contentSize.width - scrollView.bounds.size.width) {
+        NSInteger currentIndex = (scrollView.contentOffset.x / self.bounds.size.width);
+        [self contentViewDidEndMoveFromIndex:_currentIndex toIndex:currentIndex];
+        // 发布通知
+        [self addCurrentShowIndexNotificationWithIndex:currentIndex];
+    }
 }
 
 
@@ -203,10 +214,10 @@
     }
 }
 
-- (void)contentViewEndMoveToIndex:(NSInteger)currentIndex {
+- (void)contentViewDidEndMoveFromIndex:(NSInteger)formIndex toIndex:(NSInteger)toIndex {
     if(self.segmentView) {
-        [self.segmentView adjustTitleOffSetToCurrentIndex:currentIndex];
-        [self.segmentView adjustUIWithProgress:1.0 oldIndex:currentIndex currentIndex:currentIndex];
+        [self.segmentView adjustTitleOffSetToCurrentIndex:toIndex];
+        [self.segmentView adjustUIWithProgress:1.0 oldIndex:formIndex currentIndex:toIndex];
     }
 }
 //发布通知

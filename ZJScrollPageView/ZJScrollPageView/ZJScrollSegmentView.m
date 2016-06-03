@@ -420,6 +420,8 @@
 - (void)adjustTitleOffSetToCurrentIndex:(NSInteger)currentIndex {
     ZJCustomLabel *currentLabel = (ZJCustomLabel *)self.titleLabels[currentIndex];
     
+
+    
     CGFloat offSetx = currentLabel.center.x - _currentWidth * 0.5;
     if (offSetx < 0) {
         offSetx = 0;
@@ -436,18 +438,21 @@
     }
     
     [self.scrollView setContentOffset:CGPointMake(offSetx, 0.0) animated:YES];
-    
-    if (!self.segmentStyle.isGradualChangeTitleColor) {
-        NSInteger index = 0;
-        for (ZJCustomLabel *label in self.titleLabels) {
-            if (index == currentIndex) {
+    // 重置其他item的缩放和颜色
+    NSInteger index = 0;
+    for (ZJCustomLabel *label in self.titleLabels) {
+        if (index != currentIndex) {
+            label.textColor = self.segmentStyle.normalTitleColor;
+            label.currentTransformSx = 1.0;
+        } else {
+            if (!self.segmentStyle.isGradualChangeTitleColor) {
                 label.textColor = self.segmentStyle.selectedTitleColor;
-            } else {
-                label.textColor = self.segmentStyle.normalTitleColor;
             }
-            index++;
+
         }
+        index++;
     }
+ 
     
 }
 
