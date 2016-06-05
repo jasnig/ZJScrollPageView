@@ -420,8 +420,6 @@
 - (void)adjustTitleOffSetToCurrentIndex:(NSInteger)currentIndex {
     ZJCustomLabel *currentLabel = (ZJCustomLabel *)self.titleLabels[currentIndex];
     
-
-    
     CGFloat offSetx = currentLabel.center.x - _currentWidth * 0.5;
     if (offSetx < 0) {
         offSetx = 0;
@@ -448,12 +446,10 @@
             if (!self.segmentStyle.isGradualChangeTitleColor) {
                 label.textColor = self.segmentStyle.selectedTitleColor;
             }
-
         }
         index++;
     }
  
-    
 }
 
 - (void)setSelectedIndex:(NSInteger)index animated:(BOOL)animated {

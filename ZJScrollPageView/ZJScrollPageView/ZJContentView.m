@@ -25,6 +25,7 @@
 @property (weak, nonatomic) UIViewController *parentViewController;
 // 当这个属性设置为YES的时候 就不用处理 scrollView滚动的计算
 @property (assign, nonatomic) BOOL forbidTouchToAdjustPosition;
+
 // 所有的子控制器
 @property (strong, nonatomic) NSArray *childVcs;
 @end
@@ -149,53 +150,61 @@
         return;
     }
     CGFloat offSetX = scrollView.contentOffset.x;
-    CGFloat temp = offSetX / self.bounds.size.width;
-    CGFloat progress = temp - floor(temp);
-    if (offSetX - _oldOffSetX >= 0) {
-        if (progress == 0.0) {
-            return;
-        }
-        _oldIndex = (offSetX/self.bounds.size.width);
+    CGFloat tempProgress = offSetX / self.bounds.size.width;
+    CGFloat progress = tempProgress - floor(tempProgress);
+
+    if (offSetX - _oldOffSetX >= 0) {// 向右
+        _oldIndex =  offSetX / self.bounds.size.width;
         _currentIndex = _oldIndex + 1;
-        if (_currentIndex >= self.childVcs.count) {
-            _currentIndex = self.childVcs.count -1;
-            return;
+        if (_currentIndex >= _childVcs.count) {
+            _currentIndex = _oldIndex - 1;
         }
+        
+        if (offSetX - _oldOffSetX == scrollView.bounds.size.width) {// 滚动完成
+            progress = 1.0;
+            _currentIndex = _oldIndex;
+        }
+
     } else {
-        _currentIndex = (offSetX / self.bounds.size.width);
+        
+        _currentIndex = offSetX / self.bounds.size.width;
         _oldIndex = _currentIndex + 1;
-        if (_oldIndex >= self.childVcs.count) {
-            _oldIndex = self.childVcs.count - 1;
-            return;
-        }
+
         progress = 1.0 - progress;
-
+        
     }
-    
 
+
+//    NSLog(@"%f------%d----%d------", progress, _oldIndex, _currentIndex);
     
     [self contentViewDidMoveFromIndex:_oldIndex toIndex:_currentIndex progress:progress];
-    
+
 }
 
-/**为了解决在滚动或接着点击title更换的时候因为index不同步而增加了下边的两个代理方法的判断
-*/
 
 /** 滚动减速完成时再更新title的位置 */
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     NSInteger currentIndex = (scrollView.contentOffset.x / self.bounds.size.width);
-    [self contentViewDidEndMoveFromIndex:_currentIndex toIndex:currentIndex];
-    // 发布通知
-    [self addCurrentShowIndexNotificationWithIndex:currentIndex];
+
+    if (_currentIndex == currentIndex) {// 滚动完成
+        // 调整title
+        [self adjustSegmentTitleOffsetToCurrentIndex:currentIndex];
+        // 发布通知
+        [self addCurrentShowIndexNotificationWithIndex:currentIndex];
+    } else {// 滚动没有完成就返回了当前页 重置index
+
+        [self contentViewDidMoveFromIndex:_oldIndex toIndex:currentIndex progress:1.0];
+    }
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
 
+
     if (scrollView.contentOffset.x == 0 || scrollView.contentOffset.x == scrollView.contentSize.width - scrollView.bounds.size.width) {
         NSInteger currentIndex = (scrollView.contentOffset.x / self.bounds.size.width);
-        [self contentViewDidEndMoveFromIndex:_currentIndex toIndex:currentIndex];
-        // 发布通知
-        [self addCurrentShowIndexNotificationWithIndex:currentIndex];
+        if (_currentIndex != currentIndex) {
+            [self contentViewDidMoveFromIndex:_oldIndex toIndex:currentIndex progress:1.0];
+        }
     }
 }
 
@@ -203,7 +212,6 @@
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
     _oldOffSetX = scrollView.contentOffset.x;
     self.forbidTouchToAdjustPosition = NO;
-    
 }
 
 #pragma mark - private helper
@@ -213,12 +221,13 @@
     }
 }
 
-- (void)contentViewDidEndMoveFromIndex:(NSInteger)formIndex toIndex:(NSInteger)toIndex {
+- (void)adjustSegmentTitleOffsetToCurrentIndex:(NSInteger)index {
     if(self.segmentView) {
-        [self.segmentView adjustTitleOffSetToCurrentIndex:toIndex];
-        [self.segmentView adjustUIWithProgress:1.0 oldIndex:formIndex currentIndex:toIndex];
+        [self.segmentView adjustTitleOffSetToCurrentIndex:index];
     }
+    
 }
+
 //发布通知
 - (void)addCurrentShowIndexNotificationWithIndex:(NSInteger)index {
     [[NSNotificationCenter defaultCenter] postNotificationName: ScrollPageViewDidShowThePageNotification object:nil userInfo:@{@"currentIndex": @(index)}];
@@ -234,6 +243,7 @@
         collectionView.showsHorizontalScrollIndicator = NO;
         collectionView.delegate = self;
         collectionView.dataSource = self;
+//        collectionView.bounces = YES;
         [collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:cellID];
         collectionView.bounces = NO;
         collectionView.scrollEnabled = self.segmentView.segmentStyle.isScrollContentView;
@@ -255,6 +265,7 @@
     
     return _collectionViewLayout;
 }
+
 
 
 @end
