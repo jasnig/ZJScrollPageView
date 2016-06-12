@@ -14,6 +14,7 @@
 		4B0C063F1CDC55080079E8F3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4B0C063D1CDC55080079E8F3 /* LaunchScreen.storyboard */; };
 		4B0C064A1CDC55080079E8F3 /* ZJScrollPageViewTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B0C06491CDC55080079E8F3 /* ZJScrollPageViewTests.m */; };
 		4B0C06551CDC55080079E8F3 /* ZJScrollPageViewUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B0C06541CDC55080079E8F3 /* ZJScrollPageViewUITests.m */; };
+		4B56CB9F1D06E1E900D58BFA /* UIViewController+ZJScrollPageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B56CB9E1D06E1E900D58BFA /* UIViewController+ZJScrollPageController.m */; };
 		4B7429C51CDD9ACB009CC9B2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4B7429C41CDD9ACB009CC9B2 /* Main.storyboard */; };
 		4B7429DB1CDD9C16009CC9B2 /* UIView+ZJFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7429D01CDD9C16009CC9B2 /* UIView+ZJFrame.m */; };
 		4B7429DC1CDD9C16009CC9B2 /* ZJContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7429D21CDD9C16009CC9B2 /* ZJContentView.m */; };
@@ -65,6 +66,8 @@
 		4B0C06501CDC55080079E8F3 /* ZJScrollPageViewUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZJScrollPageViewUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B0C06541CDC55080079E8F3 /* ZJScrollPageViewUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZJScrollPageViewUITests.m; sourceTree = "<group>"; };
 		4B0C06561CDC55080079E8F3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4B56CB9D1D06E1E900D58BFA /* UIViewController+ZJScrollPageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+ZJScrollPageController.h"; sourceTree = "<group>"; };
+		4B56CB9E1D06E1E900D58BFA /* UIViewController+ZJScrollPageController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+ZJScrollPageController.m"; sourceTree = "<group>"; };
 		4B7429C41CDD9ACB009CC9B2 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		4B7429CF1CDD9C16009CC9B2 /* UIView+ZJFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+ZJFrame.h"; sourceTree = "<group>"; };
 		4B7429D01CDD9C16009CC9B2 /* UIView+ZJFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+ZJFrame.m"; sourceTree = "<group>"; };
@@ -274,6 +277,8 @@
 			children = (
 				4B7429CF1CDD9C16009CC9B2 /* UIView+ZJFrame.h */,
 				4B7429D01CDD9C16009CC9B2 /* UIView+ZJFrame.m */,
+				4B56CB9D1D06E1E900D58BFA /* UIViewController+ZJScrollPageController.h */,
+				4B56CB9E1D06E1E900D58BFA /* UIViewController+ZJScrollPageController.m */,
 				4B7429D11CDD9C16009CC9B2 /* ZJContentView.h */,
 				4B7429D21CDD9C16009CC9B2 /* ZJContentView.m */,
 				4B7429D31CDD9C16009CC9B2 /* ZJCustomLabel.h */,
@@ -428,6 +433,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4B7429E31CDD9F1B009CC9B2 /* ZJVc2Controller.m in Sources */,
+				4B56CB9F1D06E1E900D58BFA /* UIViewController+ZJScrollPageController.m in Sources */,
 				4B7429EF1CDDCECD009CC9B2 /* ZJVc6Controller.m in Sources */,
 				4B7429E91CDDCE18009CC9B2 /* ZJVc4Controller.m in Sources */,
 				4B7429DE1CDD9C16009CC9B2 /* ZJScrollPageView.m in Sources */,

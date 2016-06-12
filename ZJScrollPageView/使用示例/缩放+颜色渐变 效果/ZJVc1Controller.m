@@ -105,6 +105,12 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)dealloc
+{
+//        NSLog(@"%@-----test", self.description);
+
+}
+
 /*
 #pragma mark - Navigation
 

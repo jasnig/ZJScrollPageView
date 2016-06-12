@@ -8,6 +8,7 @@
 
 #import "ZJTestViewController.h"
 #import "ZJSegmentStyle.h"
+
 @interface ZJTestViewController ()
 
 @end
@@ -25,10 +26,12 @@
 - (void)didSelectedIndex: (NSNotification *)noti {
     NSDictionary *userInfo = noti.userInfo;
     NSLog(@"显示了%@页", userInfo[@"currentIndex"]);
+    NSLog(@"%@",self.scrollPageParentViewController);
 }
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+//    NSLog(@"%@-----test", self.description);
 }
 
 - (void)didReceiveMemoryWarning {

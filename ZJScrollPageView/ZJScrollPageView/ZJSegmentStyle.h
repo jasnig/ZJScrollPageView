@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "UIViewController+ZJScrollPageController.h"
+
 @interface ZJSegmentStyle : NSObject
 
 // 这个是发布当前显示的index的下标, 从 0 开始  注意, 通知的字典中的键名是 currentIndex

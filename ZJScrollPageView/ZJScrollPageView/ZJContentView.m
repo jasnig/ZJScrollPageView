@@ -8,6 +8,7 @@
 
 #import "ZJContentView.h"
 #import "ZJScrollSegmentView.h"
+#import "UIViewController+ZJScrollPageController.h"
 @interface ZJContentView ()<UICollectionViewDelegate, UICollectionViewDataSource, UIScrollViewDelegate, UIGestureRecognizerDelegate> {
     NSInteger _oldIndex;
     NSInteger _currentIndex;
@@ -74,6 +75,7 @@
         
         if (self.parentViewController) {
             [self.parentViewController addChildViewController:childVc];
+            childVc.scrollPageParentViewController = self.parentViewController;
         }
     }
     
@@ -186,14 +188,15 @@
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     NSInteger currentIndex = (scrollView.contentOffset.x / self.bounds.size.width);
 
-    if (_currentIndex == currentIndex) {// 滚动完成
+    if (scrollView.contentOffset.x == _oldOffSetX) {// 没有滚动到下一页, 恢复状态
+        [self contentViewDidMoveFromIndex:_oldIndex toIndex:currentIndex progress:1.0];
+    } else {// 滚动完成
+        
         // 调整title
         [self adjustSegmentTitleOffsetToCurrentIndex:currentIndex];
         // 发布通知
         [self addCurrentShowIndexNotificationWithIndex:currentIndex];
-    } else {// 滚动没有完成就返回了当前页 重置index
 
-        [self contentViewDidMoveFromIndex:_oldIndex toIndex:currentIndex progress:1.0];
     }
 }
 
