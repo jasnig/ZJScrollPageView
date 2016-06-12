@@ -45,6 +45,7 @@
 * 2016/05/26 新增了一个通知ScrollPageViewDidShowThePageNotification, 你可以监听这个通知来获取到正在显示的页数, 使用的示例可以参照 ZJSegmentStyle.h里面的说明
 * 2016/05/27 增加了一个style属性 segmentViewBounces, 来设置segmentView是否有弹性
 * 2016/05/27 增加了一个style属性 scrollContentView, 来设置contentView是否能滑动
+* 2016/06/12 增加了一个分类, 提供了 scrollPageParentViewController属性, 方便在每个界面获取到父控制器
 
 ----
 
