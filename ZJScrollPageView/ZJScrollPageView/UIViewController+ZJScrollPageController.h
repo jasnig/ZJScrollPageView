@@ -8,7 +8,7 @@
 #import <UIKit/UIKit.h>
 
 
-@interface UIViewController (UIViewController_ZJScrollPageController)
+@interface UIViewController (ZJScrollPageController)
 /**
  *  所有子控制的父控制器, 方便在每个子控制页面直接获取到父控制器进行其他操作
  */

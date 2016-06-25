@@ -443,9 +443,7 @@
             label.textColor = self.segmentStyle.normalTitleColor;
             label.currentTransformSx = 1.0;
         } else {
-            if (!self.segmentStyle.isGradualChangeTitleColor) {
-                label.textColor = self.segmentStyle.selectedTitleColor;
-            }
+            label.textColor = self.segmentStyle.selectedTitleColor;
         }
         index++;
     }

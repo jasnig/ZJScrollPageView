@@ -42,9 +42,11 @@
         if (navi.visibleViewController == self.parentViewController) {// 当显示的是ScrollPageView的时候 只在第一个tag处执行pop手势
 
             return self.collectionView.contentOffset.x == 0;
+        } else {
+            return [super gestureRecognizerShouldBegin:gestureRecognizer];
         }
     }
-    return YES;
+    return [super gestureRecognizerShouldBegin:gestureRecognizer];
 }
 
 #pragma mark - life cycle
@@ -188,9 +190,8 @@
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     NSInteger currentIndex = (scrollView.contentOffset.x / self.bounds.size.width);
 
-    if (scrollView.contentOffset.x == _oldOffSetX) {// 没有滚动到下一页, 恢复状态
-        [self contentViewDidMoveFromIndex:_oldIndex toIndex:currentIndex progress:1.0];
-    } else {// 滚动完成
+    [self contentViewDidMoveFromIndex:currentIndex toIndex:currentIndex progress:1.0];
+    if (scrollView.contentOffset.x != _oldOffSetX) {// 滚动完成
         
         // 调整title
         [self adjustSegmentTitleOffsetToCurrentIndex:currentIndex];
@@ -205,8 +206,8 @@
 
     if (scrollView.contentOffset.x == 0 || scrollView.contentOffset.x == scrollView.contentSize.width - scrollView.bounds.size.width) {
         NSInteger currentIndex = (scrollView.contentOffset.x / self.bounds.size.width);
-        if (_currentIndex != currentIndex) {
-            [self contentViewDidMoveFromIndex:_oldIndex toIndex:currentIndex progress:1.0];
+        if (scrollView.contentOffset.x == _oldOffSetX) {
+            [self contentViewDidMoveFromIndex:currentIndex toIndex:currentIndex progress:1.0];
         }
     }
 }
