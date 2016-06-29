@@ -8,7 +8,9 @@
 
 #import "ZJVc8Controller.h"
 #import "ZJScrollPageView.h"
-@interface ZJVc8Controller ()
+@interface ZJVc8Controller ()<ZJScrollPageViewDelegate>
+@property(strong, nonatomic)NSArray<NSString *> *titles;
+@property(strong, nonatomic)NSArray<UIViewController *> *childVcs;
 @property (weak, nonatomic) ZJScrollPageView *scrollPageView;
 
 @end
@@ -32,10 +34,22 @@
     // 颜色渐变
     style.gradualChangeTitleColor = YES;
     
-    // 设置子控制器 --- 注意子控制器需要设置title, 将用于对应的tag显示title
-    NSArray *childVcs = [NSArray arrayWithArray:[self setupChildVcAndTitle]];
+    self.titles = @[@"新闻头条",
+                    @"国际要闻",
+                    @"体育",
+                    @"中国足球",
+                    @"汽车",
+                    @"囧途旅游",
+                    @"幽默搞笑",
+                    @"视频",
+                    @"无厘头",
+                    @"美女图片",
+                    @"今日房价",
+                    @"头像",
+                    ];
     // 初始化
-    ZJScrollPageView *scrollPageView = [[ZJScrollPageView alloc] initWithFrame:CGRectMake(0, 64.0, self.view.bounds.size.width, self.view.bounds.size.height - 64.0) segmentStyle:style childVcs:childVcs parentViewController:self];
+    ZJScrollPageView *scrollPageView = [[ZJScrollPageView alloc] initWithFrame:CGRectMake(0, 64.0, self.view.bounds.size.width, self.view.bounds.size.height - 64.0) segmentStyle:style titles:self.titles parentViewController:self delegate:self];
+    
     self.scrollPageView = scrollPageView;
     
     // 设置默认下标
@@ -97,14 +111,25 @@
     return childVcs;
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (NSInteger)numberOfChildViewControllers {
+    return self.titles.count;
 }
-*/
+
+
+- (UIViewController *)childViewController:(UIViewController *)reuseViewController forIndex:(NSInteger)index {
+    UIViewController *childVc = reuseViewController;
+    if (childVc == nil) {
+        childVc = [UIViewController new];
+        
+        if (index%2 == 0) {
+            childVc.view.backgroundColor = [UIColor redColor];
+        } else {
+            childVc.view.backgroundColor = [UIColor cyanColor];
+            
+        }
+        
+    }
+    return childVc;
+}
 
 @end

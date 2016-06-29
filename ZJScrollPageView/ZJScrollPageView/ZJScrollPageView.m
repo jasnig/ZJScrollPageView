@@ -33,17 +33,19 @@
     return self;
 }
 
-- (void)commonInit {
- 
-    NSMutableArray *tempTitles = [NSMutableArray array];
-    for (UIViewController *childVc in self.childVcs) {
-        NSAssert(childVc.title, @"子控制器的title没有正确设置!!");
-        if (childVc.title) {
-            [tempTitles addObject:childVc.title];
-        }
+- (instancetype)initWithFrame:(CGRect)frame segmentStyle:(ZJSegmentStyle *)segmentStyle titles:(NSArray<NSString *> *)titles parentViewController:(UIViewController *)parentViewController delegate:(id<ZJScrollPageViewDelegate>) delegate {
+    if (self = [super initWithFrame:frame]) {
+        self.segmentStyle = segmentStyle;
+        self.delegate = delegate;
+        self.parentViewController = parentViewController;
+        self.titlesArray = titles.copy;
+        [self commonInit];
     }
-    
-    self.titlesArray = [NSArray arrayWithArray:tempTitles];
+    return self;
+}
+
+
+- (void)commonInit {
     
     // 触发懒加载
     self.segmentView.backgroundColor = [UIColor whiteColor];
@@ -62,23 +64,13 @@
 }
 
 /**  给外界重新设置视图内容的标题的方法 */
-- (void)reloadChildVcsWithNewChildVcs:(NSArray *)newChildVcs {
+- (void)reloadWithNewTitles:(NSArray<NSString *> *)newTitles {
     
-    self.childVcs = nil;
     self.titlesArray = nil;
-    self.childVcs = newChildVcs;
-    
-    NSMutableArray *tempTitles = [NSMutableArray array];
-    for (UIViewController *childVc in self.childVcs) {
-        NSAssert(childVc.title, @"子控制器的title没有正确设置!!");
-        if (childVc.title) {
-            [tempTitles addObject:childVc.title];
-        }
-    }
-    self.titlesArray = [NSArray arrayWithArray:tempTitles];
+    self.titlesArray = newTitles.copy;
     
     [self.segmentView reloadTitlesWithNewTitles:self.titlesArray];
-    [self.contentView reloadAllViewsWithNewChildVcs:self.childVcs];
+    [self.contentView reload];
 }
 
 
@@ -86,7 +78,7 @@
 
 - (ZJContentView *)contentView {
     if (!_contentView) {
-        ZJContentView *content = [[ZJContentView alloc] initWithFrame:CGRectMake(0.0, CGRectGetMaxY(self.segmentView.frame), self.bounds.size.width, self.bounds.size.height - CGRectGetMaxY(self.segmentView.frame)) childVcs:self.childVcs segmentView:self.segmentView parentViewController:self.parentViewController];
+        ZJContentView *content = [[ZJContentView alloc] initWithFrame:CGRectMake(0.0, CGRectGetMaxY(self.segmentView.frame), self.bounds.size.width, self.bounds.size.height - CGRectGetMaxY(self.segmentView.frame)) segmentView:self.segmentView parentViewController:self.parentViewController delegate:self.delegate];
         [self addSubview:content];
         _contentView = content;
     }

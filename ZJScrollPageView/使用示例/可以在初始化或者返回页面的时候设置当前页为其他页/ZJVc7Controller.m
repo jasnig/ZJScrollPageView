@@ -8,7 +8,9 @@
 
 #import "ZJVc7Controller.h"
 #import "ZJScrollPageView.h"
-@interface ZJVc7Controller ()
+@interface ZJVc7Controller ()<ZJScrollPageViewDelegate>
+@property(strong, nonatomic)NSArray<NSString *> *titles;
+@property(strong, nonatomic)NSArray<UIViewController *> *childVcs;
 @property (weak, nonatomic) ZJScrollPageView *scrollPageView;
 
 @end
@@ -28,112 +30,68 @@
     // 颜色渐变
     style.gradualChangeTitleColor = YES;
     
-    // 设置子控制器 --- 注意子控制器需要设置title, 将用于对应的tag显示title
-    NSArray *childVcs = [NSArray arrayWithArray:[self setupChildVcAndTitle]];
+    self.titles = @[@"新闻头条",
+                    @"国际要闻",
+                    @"体育",
+                    @"中国足球",
+                    @"汽车",
+                    @"囧途旅游",
+                    @"幽默搞笑",
+                    @"视频",
+                    @"无厘头",
+                    @"美女图片",
+                    @"今日房价",
+                    @"头像",
+                    ];
     // 初始化
-    ZJScrollPageView *scrollPageView = [[ZJScrollPageView alloc] initWithFrame:CGRectMake(0, 64.0, self.view.bounds.size.width, self.view.bounds.size.height - 64.0) segmentStyle:style childVcs:childVcs parentViewController:self];
+    ZJScrollPageView *scrollPageView = [[ZJScrollPageView alloc] initWithFrame:CGRectMake(0, 64.0, self.view.bounds.size.width, self.view.bounds.size.height - 64.0) segmentStyle:style titles:self.titles parentViewController:self delegate:self];
+    
     self.scrollPageView = scrollPageView;
     
     [self.view addSubview:self.scrollPageView];
 }
 
-- (NSArray *)setupChildVcAndTitle {
-    
-    UIViewController *vc1 = [UIViewController new];
-    vc1.view.backgroundColor = [UIColor redColor];
-    vc1.title = @"新闻头条";
-    
-    UIViewController *vc2 = [UIViewController new];
-    vc2.view.backgroundColor = [UIColor greenColor];
-    vc2.title = @"国际要闻";
-    
-    UIViewController *vc3 = [UIViewController new];
-    vc3.view.backgroundColor = [UIColor yellowColor];
-    vc3.title = @"体育";
-    
-    UIViewController *vc4 = [UIViewController new];
-    vc4.view.backgroundColor = [UIColor brownColor];
-    vc4.title = @"中国足球";
-    
-    UIViewController *vc5 = [UIViewController new];
-    vc5.view.backgroundColor = [UIColor lightGrayColor];
-    vc5.title = @"汽车";
-    
-    UIViewController *vc6 = [UIViewController new];
-    vc6.view.backgroundColor = [UIColor orangeColor];
-    vc6.title = @"囧途旅游";
-    
-    UIViewController *vc7 = [UIViewController new];
-    vc7.view.backgroundColor = [UIColor cyanColor];
-    vc7.title = @"幽默搞笑";
-    
-    UIViewController *vc8 = [UIViewController new];
-    vc8.view.backgroundColor = [UIColor blueColor];
-    vc8.title = @"视频";
-    
-    UIViewController *vc9 = [UIViewController new];
-    vc9.view.backgroundColor = [UIColor purpleColor];
-    vc9.title = @"无厘头";
-    
-    UIViewController *vc10 = [UIViewController new];
-    vc10.view.backgroundColor = [UIColor magentaColor];
-    vc10.title = @"美女图片";
-    
-    UIViewController *vc11 = [UIViewController new];
-    vc11.view.backgroundColor = [UIColor whiteColor];
-    vc11.title = @"今日房价";
-    
-    UIViewController *vc12 = [UIViewController new];
-    vc12.view.backgroundColor = [UIColor redColor];
-    vc12.title = @"头像";
-    
-    NSArray *childVcs = [NSArray arrayWithObjects:vc1, vc2, vc3, vc4, vc5, vc6, vc7, vc8, vc9 , vc10, vc11, vc12, nil];
-    return childVcs;
-}
+
 
 
 - (IBAction)changeBtnOnClick:(UIBarButtonItem *)sender {
-    NSArray *newChildVcs = [self setupNewChildVcAndTitle];
     // 只需要传入新的子控制器即可, 移除原来的等其他的内部已经处理好
-    [self.scrollPageView reloadChildVcsWithNewChildVcs:newChildVcs];
+    self.titles = [self setupNewTitles];
+    
+    [self.scrollPageView reloadWithNewTitles:self.titles];
     
 }
 
-- (NSArray *)setupNewChildVcAndTitle {
+- (NSArray *)setupNewTitles {
     
-    UIViewController *vc1 = [self.storyboard instantiateViewControllerWithIdentifier:@"test"];
-    vc1.view.backgroundColor = [UIColor greenColor];
-    vc1.title = @"新标题1";
+    NSMutableArray *tempt = [NSMutableArray array];
+    for (int  i =0; i < 20; i++) {
+        [tempt addObject:[NSString stringWithFormat:@"新标题%d",i]];
+    }
     
-    UIViewController *vc2 = [UIViewController new];
-    vc2.view.backgroundColor = [UIColor yellowColor];
-    vc2.title = @"新标题2";
-    
-    UIViewController *vc3 = [UIViewController new];
-    vc3.view.backgroundColor = [UIColor brownColor];
-    vc3.title = @"新标题3";
-    
-    UIViewController *vc4 = [UIViewController new];
-    vc4.view.backgroundColor = [UIColor lightGrayColor];
-    vc4.title = @"新标题4";
-    
-    UIViewController *vc5 = [UIViewController new];
-    vc5.view.backgroundColor = [UIColor orangeColor];
-    vc5.title = @"新标题5";
-    
-    UIViewController *vc6 = [UIViewController new];
-    vc6.view.backgroundColor = [UIColor cyanColor];
-    vc6.title = @"新标题6";
-    
-    UIViewController *vc7 = [UIViewController new];
-    vc7.view.backgroundColor = [UIColor cyanColor];
-    vc7.title = @"新标题7";
-    
-    UIViewController *vc8 = [UIViewController new];
-    vc8.view.backgroundColor = [UIColor blueColor];
-    vc8.title = @"新标题8";
-    
-    NSArray *newChildVcs = [NSArray arrayWithObjects:vc1, vc2, vc3, vc4, vc5, vc6,vc7, vc8, nil];
-    return newChildVcs;
+    return tempt;
+}
+
+- (NSInteger)numberOfChildViewControllers {
+    return self.titles.count;
+}
+
+
+- (UIViewController *)childViewController:(UIViewController *)reuseViewController forIndex:(NSInteger)index {
+    UIViewController *childVc = reuseViewController;
+    if (childVc == nil) {
+        childVc = [UIViewController new];
+        
+        if (index%2 == 0) {
+            childVc.view.backgroundColor = [UIColor redColor];
+        } else {
+            childVc.view.backgroundColor = [UIColor cyanColor];
+            
+        }
+        
+    }
+    // 设置自控制器的title属性, 以便于在自控制器中通过title来判断应该加载什么数据
+    childVc.title = self.titles[index];
+    return childVc;
 }
 @end

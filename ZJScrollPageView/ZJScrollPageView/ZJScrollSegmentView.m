@@ -282,12 +282,11 @@
     
     ZJCustomLabel *oldLabel = (ZJCustomLabel *)self.titleLabels[_oldIndex];
     ZJCustomLabel *currentLabel = (ZJCustomLabel *)self.titleLabels[_currentIndex];
-
-    [self adjustTitleOffSetToCurrentIndex:_currentIndex];
     
     CGFloat animatedTime = animated ? 0.3 : 0.0;
     
     __weak typeof(self) weakSelf = self;
+    
     [UIView animateWithDuration:animatedTime animations:^{
         oldLabel.textColor = weakSelf.segmentStyle.normalTitleColor;
         currentLabel.textColor = weakSelf.segmentStyle.selectedTitleColor;
@@ -311,9 +310,9 @@
                     weakSelf.scrollLine.zj_x = currentLabel.zj_x;
                     weakSelf.scrollLine.zj_width = currentLabel.zj_width;
                 }
-
+                
             }
-
+            
         }
         
         if (weakSelf.coverLayer) {
@@ -334,7 +333,10 @@
             }
             
         }
-        
+
+    } completion:^(BOOL finished) {
+        [weakSelf adjustTitleOffSetToCurrentIndex:_currentIndex];
+
     }];
     
     _oldIndex = _currentIndex;

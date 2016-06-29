@@ -26,37 +26,23 @@
 @property (weak, nonatomic) UIViewController *parentViewController;
 // 当这个属性设置为YES的时候 就不用处理 scrollView滚动的计算
 @property (assign, nonatomic) BOOL forbidTouchToAdjustPosition;
-
+@property (assign, nonatomic) NSInteger itemsCount;
 // 所有的子控制器
-@property (strong, nonatomic) NSArray *childVcs;
+@property (strong, nonatomic) NSMutableArray *childVcs;
 @end
 
 @implementation ZJContentView
 #define cellID @"cellID"
 
-#pragma mark - UIGestureRecognizerDelegate
-- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
-    if (self.parentViewController.parentViewController && [self.parentViewController.parentViewController isKindOfClass:[UINavigationController class]]) {
-        UINavigationController *navi = (UINavigationController *)self.parentViewController.parentViewController;
-
-        if (navi.visibleViewController == self.parentViewController) {// 当显示的是ScrollPageView的时候 只在第一个tag处执行pop手势
-
-            return self.collectionView.contentOffset.x == 0;
-        } else {
-            return [super gestureRecognizerShouldBegin:gestureRecognizer];
-        }
-    }
-    return [super gestureRecognizerShouldBegin:gestureRecognizer];
-}
 
 #pragma mark - life cycle
 
-- (instancetype)initWithFrame:(CGRect)frame childVcs:(NSArray *)childVcs segmentView:(ZJScrollSegmentView *)segmentView parentViewController:(UIViewController *)parentViewController {
+- (instancetype)initWithFrame:(CGRect)frame segmentView:(ZJScrollSegmentView *)segmentView parentViewController:(UIViewController *)parentViewController delegate:(id<ZJScrollPageViewDelegate>) delegate {
     
     if (self = [super initWithFrame:frame]) {
-        self.childVcs = childVcs;
-        self.parentViewController = parentViewController;
         self.segmentView = segmentView;
+        self.delegate = delegate;
+        self.parentViewController = parentViewController;
         _oldIndex = 0;
         _currentIndex = 1;
         _oldOffSetX = 0.0;
@@ -64,23 +50,13 @@
         // 触发懒加载
         self.collectionView.backgroundColor = [UIColor whiteColor];
         [self commonInit];
+        
     }
     return self;
 }
 
 - (void)commonInit {
-    for (UIViewController *childVc in self.childVcs) {
-        if ([childVc isKindOfClass:[UINavigationController class]]) {
-            NSAssert(NO, @"不要添加UINavigationController包装后的子控制器");
-            
-        }
-        
-        if (self.parentViewController) {
-            [self.parentViewController addChildViewController:childVc];
-            childVc.scrollPageParentViewController = self.parentViewController;
-        }
-    }
-    
+
     if (self.parentViewController.parentViewController && [self.parentViewController.parentViewController isKindOfClass:[UINavigationController class]]) {
         UINavigationController *navi = (UINavigationController *)self.parentViewController.parentViewController;
         
@@ -109,18 +85,10 @@
 }
 
 /** 给外界刷新视图的方法 */
-- (void)reloadAllViewsWithNewChildVcs:(NSArray *)newChileVcs {
-    // 这种处理是结束子控制器和父控制器的关系
-    for (UIViewController *childVc in self.childVcs) {
-        [childVc willMoveToParentViewController:nil];
-        [childVc.view removeFromSuperview];
-        [childVc removeFromParentViewController];
-    }
-    
+- (void)reload {
     self.childVcs = nil;
-    self.childVcs = newChileVcs;
-    [self commonInit];
     [self.collectionView reloadData];
+
 }
 
 #pragma mark - UICollectionViewDelegate --- UICollectionViewDataSource
@@ -130,19 +98,54 @@
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return self.childVcs.count;
+    if (_delegate && [_delegate respondsToSelector:@selector(numberOfChildViewControllers)]) {
+        _itemsCount = [_delegate numberOfChildViewControllers];
+    }
+    return _itemsCount;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellID forIndexPath:indexPath];
     // 移除subviews 避免重用内容显示错误
     [cell.contentView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    // 这里建立子控制器和父控制器的关系  -> 当然在这之前已经将对应的子控制器添加到了父控制器了, 只不过还没有建立完成
-    UIViewController *vc = (UIViewController *)self.childVcs[indexPath.row];
-    vc.view.frame = self.bounds;
-    [cell.contentView addSubview:vc.view];
-    [vc didMoveToParentViewController:self.parentViewController];
+
     return cell;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
+    
+    UIViewController *childVc;
+    if (_delegate && [_delegate respondsToSelector:@selector(childViewController:forIndex:)]) {
+        if (self.childVcs.count == 0 || self.childVcs.count <= indexPath.row) {
+            childVc = [_delegate childViewController:nil forIndex:indexPath.row];
+            [self.childVcs addObject:childVc];
+        } else {
+            childVc = (UIViewController *)self.childVcs[indexPath.row];
+            [_delegate childViewController:childVc forIndex:indexPath.row];
+        }
+    } else {
+        NSAssert(NO, @"必须设置代理和实现代理方法");
+    }
+    // 这里建立子控制器和父控制器的关系
+    [self addChildVc:childVc ToParentVcCell:cell];
+}
+
+- (void)addChildVc:(UIViewController *)childVc ToParentVcCell:(UICollectionViewCell *) cell {
+    [childVc willMoveToParentViewController:nil];
+    [childVc removeFromParentViewController];
+    [childVc.view removeFromSuperview];
+    if ([childVc isKindOfClass:[UINavigationController class]]) {
+        NSAssert(NO, @"不要添加UINavigationController包装后的子控制器");
+        
+    }
+    
+    childVc.scrollPageParentViewController = self.parentViewController;
+    
+    [self.parentViewController addChildViewController:childVc];
+    childVc.view.frame = self.bounds;
+    [cell.contentView addSubview:childVc.view];
+    [childVc didMoveToParentViewController:self.parentViewController];
+    
 }
 
 
@@ -160,7 +163,7 @@
     if (offSetX - _oldOffSetX >= 0) {// 向右
         _oldIndex =  offSetX / self.bounds.size.width;
         _currentIndex = _oldIndex + 1;
-        if (_currentIndex >= _childVcs.count) {
+        if (_currentIndex >= self.itemsCount) {
             _currentIndex = _oldIndex - 1;
         }
         
@@ -238,6 +241,22 @@
     
 }
 
+#pragma mark - UIGestureRecognizerDelegate
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
+    if (self.parentViewController.parentViewController && [self.parentViewController.parentViewController isKindOfClass:[UINavigationController class]]) {
+        UINavigationController *navi = (UINavigationController *)self.parentViewController.parentViewController;
+        
+        if (navi.visibleViewController == self.parentViewController) {// 当显示的是ScrollPageView的时候 只在第一个tag处执行pop手势
+            
+            return self.collectionView.contentOffset.x == 0;
+        } else {
+            return [super gestureRecognizerShouldBegin:gestureRecognizer];
+        }
+    }
+    return [super gestureRecognizerShouldBegin:gestureRecognizer];
+}
+
+
 #pragma mark - getter --- setter
 - (UICollectionView *)collectionView {
     if (_collectionView == nil) {
@@ -270,6 +289,12 @@
     return _collectionViewLayout;
 }
 
-
+- (NSMutableArray *)childVcs {
+    if (!_childVcs) {
+        NSMutableArray *arr = [NSMutableArray array];
+        _childVcs = arr;
+    }
+    return _childVcs;
+}
 
 @end

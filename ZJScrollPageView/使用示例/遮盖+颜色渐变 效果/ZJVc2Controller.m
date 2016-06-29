@@ -9,9 +9,10 @@
 #import "ZJVc2Controller.h"
 #import "ZJScrollPageView.h"
 
-@interface ZJVc2Controller ()
+@interface ZJVc2Controller ()<ZJScrollPageViewDelegate>
 
-
+@property(strong, nonatomic)NSArray<NSString *> *titles;
+@property(strong, nonatomic)NSArray<UIViewController *> *childVcs;
 @end
 
 @implementation ZJVc2Controller
@@ -29,67 +30,84 @@
     // 颜色渐变
     style.gradualChangeTitleColor = YES;
     // 设置附加按钮的背景图片
-    // 设置子控制器 --- 注意子控制器需要设置title, 将用于对应的tag显示title
-    NSArray *childVcs = [NSArray arrayWithArray:[self setupChildVcAndTitle]];
+    self.childVcs = [NSArray arrayWithArray:[self setupChildVcAndTitle]];
+    
+    self.titles = @[@"新闻头条",
+                    @"国际要闻",
+                    @"体育",
+                    @"中国足球",
+                    @"汽车",
+                    @"囧途旅游",
+                    @"幽默搞笑",
+                    @"视频",
+                    @"无厘头",
+                    @"美女图片",
+                    @"今日房价",
+                    @"头像",
+                    ];
     // 初始化
-    ZJScrollPageView *scrollPageView = [[ZJScrollPageView alloc] initWithFrame:CGRectMake(0, 64.0, self.view.bounds.size.width, self.view.bounds.size.height - 64.0) segmentStyle:style childVcs:childVcs parentViewController:self];
+    ZJScrollPageView *scrollPageView = [[ZJScrollPageView alloc] initWithFrame:CGRectMake(0, 64.0, self.view.bounds.size.width, self.view.bounds.size.height - 64.0) segmentStyle:style titles:self.titles parentViewController:self delegate:self];
     [self.view addSubview:scrollPageView];
 }
 
+
+#pragma ZJScrollPageViewDelegate 代理方法
+- (NSInteger)numberOfChildViewControllers {
+    return self.titles.count;
+}
+
+- (UIViewController *)childViewController:(UIViewController *)reuseViewController forIndex:(NSInteger)index {
+    UIViewController *childVc = reuseViewController;
+    // 首先要判断是否返回的为nil, 如果为nil才重新创建
+    if (childVc == nil) {
+        childVc = self.childVcs[index];
+    }
+    
+    return childVc;
+}
+
+
 - (NSArray *)setupChildVcAndTitle {
     
-    UIViewController *vc1 = [self.storyboard instantiateViewControllerWithIdentifier:@"test"];
+    UIViewController *vc1 = [UIViewController new];
     vc1.view.backgroundColor = [UIColor redColor];
-    vc1.title = @"新闻头条";
     
     UIViewController *vc2 = [UIViewController new];
     vc2.view.backgroundColor = [UIColor greenColor];
-    vc2.title = @"国际要闻";
     
     UIViewController *vc3 = [UIViewController new];
     vc3.view.backgroundColor = [UIColor yellowColor];
-    vc3.title = @"体育";
     
     UIViewController *vc4 = [UIViewController new];
     vc4.view.backgroundColor = [UIColor brownColor];
-    vc4.title = @"中国足球";
     
     UIViewController *vc5 = [UIViewController new];
     vc5.view.backgroundColor = [UIColor lightGrayColor];
-    vc5.title = @"汽车";
     
     UIViewController *vc6 = [UIViewController new];
     vc6.view.backgroundColor = [UIColor orangeColor];
-    vc6.title = @"囧途旅游";
     
     UIViewController *vc7 = [UIViewController new];
     vc7.view.backgroundColor = [UIColor cyanColor];
-    vc7.title = @"幽默搞笑";
     
     UIViewController *vc8 = [UIViewController new];
     vc8.view.backgroundColor = [UIColor blueColor];
-    vc8.title = @"视频";
     
     UIViewController *vc9 = [UIViewController new];
     vc9.view.backgroundColor = [UIColor purpleColor];
-    vc9.title = @"无厘头";
     
     UIViewController *vc10 = [UIViewController new];
     vc10.view.backgroundColor = [UIColor magentaColor];
-    vc10.title = @"美女图片";
     
     UIViewController *vc11 = [UIViewController new];
     vc11.view.backgroundColor = [UIColor whiteColor];
-    vc11.title = @"今日房价";
     
     UIViewController *vc12 = [UIViewController new];
     vc12.view.backgroundColor = [UIColor redColor];
-    vc12.title = @"头像";
     
     NSArray *childVcs = [NSArray arrayWithObjects:vc1, vc2, vc3, vc4, vc5, vc6, vc7, vc8, vc9 , vc10, vc11, vc12, nil];
     return childVcs;
 }
-
 
 
 - (void)didReceiveMemoryWarning {
