@@ -46,6 +46,7 @@
 * 2016/05/27 增加了一个style属性 segmentViewBounces, 来设置segmentView是否有弹性
 * 2016/05/27 增加了一个style属性 scrollContentView, 来设置contentView是否能滑动
 * 2016/06/12 增加了一个分类, 提供了 scrollPageParentViewController属性, 方便在每个界面获取到父控制器
+* 2016/06/29 更改了初始化方法, 改为了使用代理来传递相关的自控制器 方便动态更新
 
 ----
 
@@ -101,22 +102,75 @@
 	- (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"效果示例";
-    //1.必要的设置, 如果没有设置可能导致内容显示不正常
+
+    //必要的设置, 如果没有设置可能导致内容显示不正常
     self.automaticallyAdjustsScrollViewInsets = NO;
-    // 2.设置需要的效果分类
+    
     ZJSegmentStyle *style = [[ZJSegmentStyle alloc] init];
-    // 缩放标题
-    style.scaleTitle = YES;
+    //显示遮盖
+    style.showCover = YES;
+    style.segmentViewBounces = NO;
     // 颜色渐变
     style.gradualChangeTitleColor = YES;
-    // 3.设置子控制器 --- 注意子控制器需要设置title, 将用于对应的tag显示title
-    NSArray *childVcs = [NSArray arrayWithArray:[self setupChildVcAndTitle]];
-    // 4.初始化
-    ZJScrollPageView *scrollPageView = [[ZJScrollPageView alloc] initWithFrame:CGRectMake(0, 64.0, self.view.bounds.size.width, self.view.bounds.size.height - 64.0) segmentStyle:style childVcs:childVcs parentViewController:self];
-    // 5. 添加scrollPageView
-    [self.view addSubview:scrollPageView];
+    // 显示附加的按钮
+    style.showExtraButton = YES;
+    // 设置附加按钮的背景图片
+    style.extraBtnBackgroundImageName = @"extraBtnBackgroundImage";
+    
+    self.titles = @[@"新闻头条",
+                    @"国际要闻",
+                    @"体育",
+                    @"中国足球",
+                    @"汽车",
+                    @"囧途旅游",
+                    @"幽默搞笑",
+                    @"视频",
+                    @"无厘头",
+                    @"美女图片",
+                    @"今日房价",
+                    @"头像",
+                    ];
+    // 初始化
+    CGRect scrollPageViewFrame = CGRectMake(0, 64.0, self.view.bounds.size.width, self.view.bounds.size.height - 64.0);
+    ZJScrollPageView *scrollPageView = [[ZJScrollPageView alloc] initWithFrame:scrollPageViewFrame segmentStyle:style titles:_titles parentViewController:self delegate:self];
+    self.scrollPageView = scrollPageView;
+    // 额外的按钮响应的block
+    __weak typeof(self) weakSelf = self;
+    
+    
+    self.scrollPageView.extraBtnOnClick = ^(UIButton *extraBtn){
+        weakSelf.title = @"点击了extraBtn";
+        NSLog(@"点击了extraBtn");
+        
+    };
+    [self.view addSubview:self.scrollPageView];
 }
 
+
+代理方法
+
+	- (NSInteger)numberOfChildViewControllers {
+    return self.titles.count;// 传入页面的总数, 推荐使用titles.count
+    }
+    
+	- (UIViewController *)childViewController:(UIViewController *)reuseViewController forIndex:(NSInteger)index {
+
+    UIViewController *childVc = reuseViewController;
+    // 这里一定要判断传过来的是否是nil, 如果为nil直接使用并返回
+    // 如果不为nil 就创建
+    if (childVc == nil) {
+        childVc = [UIViewController new];
+        
+        if (index%2 == 0) {
+            childVc.view.backgroundColor = [UIColor redColor];
+        } else {
+            childVc.view.backgroundColor = [UIColor cyanColor];
+
+        }
+        
+    }
+    return childVc;
+	}
 ####二 使用 ZJScrollSegmentView 和 ZJContentView, 提供相同的效果组合, 但是同时可以分离开segmentView和contentView,可以单独设置他们的frame, 使用更灵活
 
 
@@ -126,6 +180,8 @@
 
     //必要的设置, 如果没有设置可能导致内容显示不正常
     self.automaticallyAdjustsScrollViewInsets = NO;
+    self.childVcs = [self setupChildVc];
+    // 初始化
     [self setupSegmentView];
     [self setupContentView];
     
@@ -152,10 +208,30 @@
     
 ###setupContentView
 
-	    NSArray *childVcs = [self setupChildVcAndTitle];
-    ZJContentView *content = [[ZJContentView alloc] initWithFrame:CGRectMake(0.0, 64.0, self.view.bounds.size.width, self.view.bounds.size.height - 64.0) childVcs:childVcs segmentView:self.segmentView parentViewController:self];
+	    ZJContentView *content = [[ZJContentView alloc] initWithFrame:CGRectMake(0.0, 64.0, self.view.bounds.size.width, self.view.bounds.size.height - 64.0) segmentView:self.segmentView parentViewController:self delegate:self];
     self.contentView = content;
     [self.view addSubview:self.contentView];
+ 代理方法
+ 
+	- (NSInteger)numberOfChildViewControllers {
+    return self.titles.count;
+	}
+
+	- (UIViewController *)childViewController:(UIViewController *)reuseViewController forIndex:(NSInteger)index {
+    UIViewController *childVc = reuseViewController;
+    if (childVc == nil) {
+        childVc = self.childVcs[index];
+        
+        if (index%2 == 0) {
+            childVc.view.backgroundColor = [UIColor redColor];
+        } else {
+            childVc.view.backgroundColor = [UIColor cyanColor];
+            
+        }
+        
+    }
+    return childVc;
+	}
     
     
     
