@@ -130,8 +130,9 @@
     // 移除subviews 避免重用内容显示错误
     [cell.contentView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     
-    
     _currentChildVc = [self.childVcsDic valueForKey:[NSString stringWithFormat:@"%ld", (long)indexPath.row]];
+    BOOL isFirstTime = _currentChildVc == nil;
+
     if (_delegate && [_delegate respondsToSelector:@selector(childViewController:forIndex:)]) {
         if (_currentChildVc == nil) {
             _currentChildVc = [_delegate childViewController:nil forIndex:indexPath.row];
@@ -149,11 +150,15 @@
     // 这里建立子控制器和父控制器的关系
     [self addChildVc:_currentChildVc ToParentVcCell:cell];
     
-    if ([_currentChildVc respondsToSelector:@selector(setUpWhenViewWillAppearForTitle:forIndex:)]) {
-        
-        [_currentChildVc setUpWhenViewWillAppearForTitle:self.segmentView.titles[indexPath.row] forIndex:indexPath.row];
-    }
+    [self viewWillAppearIsFirstTime:isFirstTime forIndex:indexPath.row];
 
+}
+
+- (void)viewWillAppearIsFirstTime:(BOOL)isFirstTime forIndex:(NSInteger)index {
+    
+    if ([_currentChildVc respondsToSelector:@selector(setUpWhenViewWillAppearForTitle:forIndex:firstTimeAppear:)]) {
+        [_currentChildVc setUpWhenViewWillAppearForTitle:self.segmentView.titles[index] forIndex:index firstTimeAppear:isFirstTime];
+    }
 }
 
 - (void)addChildVc:(UIViewController *)childVc ToParentVcCell:(UICollectionViewCell *) cell {

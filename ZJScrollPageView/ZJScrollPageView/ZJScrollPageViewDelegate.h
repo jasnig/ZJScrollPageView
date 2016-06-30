@@ -21,9 +21,10 @@
  * 并且可以通过实现协议中的方法来加载不同的数据
  * 注意ZJScrollPageView不会保证viewWillAppear等生命周期方法一定会调用
  * 所以建议使用ZJScrollPageViewChildVcDelegate中的方法来加载不同的数据
- *
+ * firstTimeAppear - 会告诉你是否页面是第一次出现
  */
-- (void)setUpWhenViewWillAppearForTitle:(NSString *)title forIndex:(NSInteger)index;
+
+- (void)setUpWhenViewWillAppearForTitle:(NSString *)title forIndex:(NSInteger)index firstTimeAppear: (BOOL)isFirstTime;
 
 // 还未实现相关功能
 //- (void)setUpWhenViewDidAppearForTitle:(NSString *)title forIndex:(NSInteger)index;

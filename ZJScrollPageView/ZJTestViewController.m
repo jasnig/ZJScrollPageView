@@ -19,9 +19,12 @@
 
 
 
-- (void)setUpWhenViewWillAppearForTitle:(NSString *)title forIndex:(NSInteger)index {
-    if ([title isEqualToString:@"国际要闻"]) {
-        NSLog(@"加载'国际要闻'相关的内容");
+
+- (void)setUpWhenViewWillAppearForTitle:(NSString *)title forIndex:(NSInteger)index firstTimeAppear:(BOOL)isFirstTime {
+    if (isFirstTime) {
+        if ([title isEqualToString:@"国际要闻"]) {
+            NSLog(@"加载'国际要闻'相关的内容");
+        }
     }
 }
 
