@@ -8,7 +8,8 @@
 
 #import "ZJVc1Controller.h"
 #import "ZJScrollPageView.h"
-
+#import "ZJTestViewController.h"
+#import "ZJTest1Controller.h"
 @interface ZJVc1Controller ()<ZJScrollPageViewDelegate>
 @property(weak, nonatomic)ZJScrollPageView *scrollPageView;
 @property(strong, nonatomic)NSArray<NSString *> *titles;
@@ -56,6 +57,7 @@
     // 额外的按钮响应的block
     __weak typeof(self) weakSelf = self;
     
+    [self.scrollPageView setSelectedIndex:1 animated:true];
     
     self.scrollPageView.extraBtnOnClick = ^(UIButton *extraBtn){
         weakSelf.title = @"点击了extraBtn";
@@ -75,21 +77,44 @@
 }
 
 
-- (UIViewController *)childViewController:(UIViewController *)reuseViewController forIndex:(NSInteger)index {
-    UIViewController *childVc = reuseViewController;
-    if (childVc == nil) {
-        childVc = [UIViewController new];
+- (UIViewController<ZJScrollPageViewChildVcDelegate> *)childViewController:(UIViewController<ZJScrollPageViewChildVcDelegate> *)reuseViewController forIndex:(NSInteger)index {
+    
+    // 根据不同的下标或者title返回相应的控制器, 但是控制器必须要遵守ZJScrollPageViewChildVcDelegate
+    // 并且可以通过实现协议中的方法来加载不同的数据
+    // 注意ZJScrollPageView不会保证viewWillAppear等生命周期方法一定会调用
+    // 所以建议使用ZJScrollPageViewChildVcDelegate中的方法来加载不同的数据
+    
+    if (index == 0) {
+        ZJTestViewController *childVc = (ZJTestViewController *)reuseViewController;
+        if (childVc == nil) {
+            childVc = [[ZJTestViewController alloc] init];
+            childVc.view.backgroundColor = [UIColor yellowColor];
+        }
+        return childVc;
         
-        if (index%2 == 0) {
+    } else if (index == 1) {
+        ZJTestViewController *childVc = (ZJTestViewController *)reuseViewController;
+        if (childVc == nil) {
+            childVc = [[ZJTestViewController alloc] init];
             childVc.view.backgroundColor = [UIColor redColor];
-        } else {
-            childVc.view.backgroundColor = [UIColor cyanColor];
-
+        }
+        return childVc;
+    } else {
+        ZJTest1Controller *childVc = (ZJTest1Controller *)reuseViewController;
+        if (childVc == nil) {
+            childVc = [[ZJTest1Controller alloc] init];
+            childVc.view.backgroundColor = [UIColor greenColor];
         }
         
+        if (index%2==0) {
+            childVc.view.backgroundColor = [UIColor orangeColor];
+        }
+        
+        return childVc;
     }
-    return childVc;
 }
+
+
 
 
 - (void)dealloc

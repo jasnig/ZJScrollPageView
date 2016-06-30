@@ -36,9 +36,11 @@
 ##usage
 
 ####特别说明
-因为大家可能会复用同一个controller来显示内容, 这里提供两种方法
+因为大家可能会复用同一个controller来显示内容
 * 在对应的controller的viewWillAppear()等生命周期里面可以根据不同的title来显示不同的内容或者刷新视图
-* 新增了一个通知ScrollPageViewDidShowThePageNotification, 你可以监听这个通知来获取到正在显示的页数, 使用的示例可以参照 ZJSegmentStyle.h里面的说明
+* 但是注意ZJScrollPageView不会保证viewWillAppear等生命周期方法一定会调用
+* 所以建议在子控制器中使用ZJScrollPageViewChildVcDelegate中的方法来加载不同的数据
+
 
 ----
 ###更新说明
@@ -47,6 +49,7 @@
 * 2016/05/27 增加了一个style属性 scrollContentView, 来设置contentView是否能滑动
 * 2016/06/12 增加了一个分类, 提供了 scrollPageParentViewController属性, 方便在每个界面获取到父控制器
 * 2016/06/29 更改了初始化方法, 改为了使用代理来传递相关的自控制器 方便动态更新
+* 2016/06/30 新增加了子控制器遵守的协议ZJScrollPageViewChildVcDelegate, 用于页面出现的时候加载数据
 
 ----
 

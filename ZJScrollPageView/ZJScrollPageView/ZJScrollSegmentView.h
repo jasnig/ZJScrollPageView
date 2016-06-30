@@ -15,6 +15,9 @@ typedef void(^TitleBtnOnClickBlock)(UILabel *label, NSInteger index);
 typedef void(^ExtraBtnOnClick)(UIButton *extraBtn);
 
 @interface ZJScrollSegmentView : UIView
+
+// 所有的标题
+@property (strong, nonatomic) NSArray *titles;
 // 所有标题的设置
 @property (strong, nonatomic) ZJSegmentStyle *segmentStyle;
 @property (copy, nonatomic) ExtraBtnOnClick extraBtnOnClick;

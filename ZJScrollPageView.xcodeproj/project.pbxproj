@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4AAF4F0F1D24D88D009F6D3F /* ZJTest1Controller.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AAF4F0E1D24D88D009F6D3F /* ZJTest1Controller.m */; };
 		4B0C06311CDC55080079E8F3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B0C06301CDC55080079E8F3 /* main.m */; };
 		4B0C06341CDC55080079E8F3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B0C06331CDC55080079E8F3 /* AppDelegate.m */; };
 		4B0C06371CDC55080079E8F3 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B0C06361CDC55080079E8F3 /* ViewController.m */; };
@@ -51,6 +52,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4AAF4F0A1D24C172009F6D3F /* ZJScrollPageViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJScrollPageViewDelegate.h; sourceTree = "<group>"; };
+		4AAF4F0D1D24D88D009F6D3F /* ZJTest1Controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJTest1Controller.h; sourceTree = "<group>"; };
+		4AAF4F0E1D24D88D009F6D3F /* ZJTest1Controller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZJTest1Controller.m; sourceTree = "<group>"; };
 		4B0C062C1CDC55080079E8F3 /* ZJScrollPageView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZJScrollPageView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B0C06301CDC55080079E8F3 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		4B0C06321CDC55080079E8F3 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -157,6 +161,8 @@
 				4B0C06361CDC55080079E8F3 /* ViewController.m */,
 				4B7429F61CDDDC35009CC9B2 /* ZJTestViewController.h */,
 				4B7429F71CDDDC35009CC9B2 /* ZJTestViewController.m */,
+				4AAF4F0D1D24D88D009F6D3F /* ZJTest1Controller.h */,
+				4AAF4F0E1D24D88D009F6D3F /* ZJTest1Controller.m */,
 				4B7429C41CDD9ACB009CC9B2 /* Main.storyboard */,
 				4B0C063B1CDC55080079E8F3 /* Assets.xcassets */,
 				4B0C063D1CDC55080079E8F3 /* LaunchScreen.storyboard */,
@@ -289,6 +295,7 @@
 				4B7429D81CDD9C16009CC9B2 /* ZJScrollSegmentView.m */,
 				4B7429D91CDD9C16009CC9B2 /* ZJSegmentStyle.h */,
 				4B7429DA1CDD9C16009CC9B2 /* ZJSegmentStyle.m */,
+				4AAF4F0A1D24C172009F6D3F /* ZJScrollPageViewDelegate.h */,
 			);
 			path = ZJScrollPageView;
 			sourceTree = "<group>";
@@ -453,6 +460,7 @@
 				4B0C06311CDC55080079E8F3 /* main.m in Sources */,
 				4B7429F21CDDD409009CC9B2 /* ZJVc5Controller.m in Sources */,
 				4B7429DD1CDD9C16009CC9B2 /* ZJCustomLabel.m in Sources */,
+				4AAF4F0F1D24D88D009F6D3F /* ZJTest1Controller.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,11 +8,11 @@
 
 #import "ZJVc2Controller.h"
 #import "ZJScrollPageView.h"
+#import "ZJTestViewController.h"
 
 @interface ZJVc2Controller ()<ZJScrollPageViewDelegate>
 
 @property(strong, nonatomic)NSArray<NSString *> *titles;
-@property(strong, nonatomic)NSArray<UIViewController *> *childVcs;
 @end
 
 @implementation ZJVc2Controller
@@ -30,7 +30,6 @@
     // 颜色渐变
     style.gradualChangeTitleColor = YES;
     // 设置附加按钮的背景图片
-    self.childVcs = [NSArray arrayWithArray:[self setupChildVcAndTitle]];
     
     self.titles = @[@"新闻头条",
                     @"国际要闻",
@@ -56,59 +55,23 @@
     return self.titles.count;
 }
 
-- (UIViewController *)childViewController:(UIViewController *)reuseViewController forIndex:(NSInteger)index {
-    UIViewController *childVc = reuseViewController;
-    // 首先要判断是否返回的为nil, 如果为nil才重新创建
-    if (childVc == nil) {
-        childVc = self.childVcs[index];
+- (UIViewController<ZJScrollPageViewChildVcDelegate> *)childViewController:(UIViewController<ZJScrollPageViewChildVcDelegate> *)reuseViewController forIndex:(NSInteger)index {
+    UIViewController<ZJScrollPageViewChildVcDelegate> *childVc = reuseViewController;
+    
+    if (!childVc) {
+        childVc = [[ZJTestViewController alloc] init];
+    }
+    
+    
+    if (index%2==0) {
+        childVc.view.backgroundColor = [UIColor blueColor];
+    } else {
+        childVc.view.backgroundColor = [UIColor greenColor];
+
     }
     
     return childVc;
 }
-
-
-- (NSArray *)setupChildVcAndTitle {
-    
-    UIViewController *vc1 = [UIViewController new];
-    vc1.view.backgroundColor = [UIColor redColor];
-    
-    UIViewController *vc2 = [UIViewController new];
-    vc2.view.backgroundColor = [UIColor greenColor];
-    
-    UIViewController *vc3 = [UIViewController new];
-    vc3.view.backgroundColor = [UIColor yellowColor];
-    
-    UIViewController *vc4 = [UIViewController new];
-    vc4.view.backgroundColor = [UIColor brownColor];
-    
-    UIViewController *vc5 = [UIViewController new];
-    vc5.view.backgroundColor = [UIColor lightGrayColor];
-    
-    UIViewController *vc6 = [UIViewController new];
-    vc6.view.backgroundColor = [UIColor orangeColor];
-    
-    UIViewController *vc7 = [UIViewController new];
-    vc7.view.backgroundColor = [UIColor cyanColor];
-    
-    UIViewController *vc8 = [UIViewController new];
-    vc8.view.backgroundColor = [UIColor blueColor];
-    
-    UIViewController *vc9 = [UIViewController new];
-    vc9.view.backgroundColor = [UIColor purpleColor];
-    
-    UIViewController *vc10 = [UIViewController new];
-    vc10.view.backgroundColor = [UIColor magentaColor];
-    
-    UIViewController *vc11 = [UIViewController new];
-    vc11.view.backgroundColor = [UIColor whiteColor];
-    
-    UIViewController *vc12 = [UIViewController new];
-    vc12.view.backgroundColor = [UIColor redColor];
-    
-    NSArray *childVcs = [NSArray arrayWithObjects:vc1, vc2, vc3, vc4, vc5, vc6, vc7, vc8, vc9 , vc10, vc11, vc12, nil];
-    return childVcs;
-}
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

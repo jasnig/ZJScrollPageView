@@ -11,24 +11,6 @@
 
 @interface ZJSegmentStyle : NSObject
 
-// 这个是发布当前显示的index的下标, 从 0 开始  注意, 通知的字典中的键名是 currentIndex
-#define ScrollPageViewDidShowThePageNotification @"ScrollPageViewDidShowThePageNotification"
-
-/** 通知使用示例 
- 
- 首先需要在当前文件 #import "ZJSegmentStyle.h" 或者 "ZJScrollPageView.h" 通知名才会有只能提示
- 
- - (void)viewDidLoad {
- [super viewDidLoad];
- [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSelectedItem:) name:ScrollPageViewDidShowThePageNotification object:nil];
- }
- - (void)didSelectedItem: (NSNotification *)noti {
- NSDictionary *userInfo = noti.userInfo;
- 注意, 字典中的键名是 currentIndex
- NSLog(@"显示了%@页", userInfo[@"currentIndex"]);
- }
- */
-
 /** 是否显示遮盖 默认为NO */
 @property (assign, nonatomic, getter=isShowCover) BOOL showCover;
 /** 是否显示滚动条 默认为NO*/

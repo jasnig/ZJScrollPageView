@@ -18,19 +18,20 @@
     
 }
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSelectedIndex:) name:ScrollPageViewDidShowThePageNotification object:nil];
+
+
+- (void)setUpWhenViewWillAppearForTitle:(NSString *)title forIndex:(NSInteger)index {
+    if ([title isEqualToString:@"国际要闻"]) {
+        NSLog(@"加载'国际要闻'相关的内容");
+    }
 }
 
-- (void)didSelectedIndex: (NSNotification *)noti {
-    NSDictionary *userInfo = noti.userInfo;
-    NSLog(@"显示了%@页", userInfo[@"currentIndex"]);
-    NSLog(@"%@",self.scrollPageParentViewController);
+- (void)viewDidLoad {
+    [super viewDidLoad];
 }
+
 - (void)dealloc
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
 //    NSLog(@"%@-----test", self.description);
 }
 
@@ -39,14 +40,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

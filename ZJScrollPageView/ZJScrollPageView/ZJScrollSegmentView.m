@@ -26,8 +26,7 @@
 // 附加的按钮
 @property (weak, nonatomic) UIButton *extraBtn;
 
-// 所有的标题
-@property (strong, nonatomic) NSArray *titles;
+
 // 用于懒加载计算文字的rgb差值, 用于颜色渐变的时候设置
 @property (strong, nonatomic) NSArray *deltaRGB;
 @property (strong, nonatomic) NSArray *selectedColorRgb;
@@ -270,10 +269,10 @@
         
 }
 
-- (void)addCurrentShowIndexNotification {
-    [[NSNotificationCenter defaultCenter] postNotificationName: ScrollPageViewDidShowThePageNotification object:nil userInfo:@{@"currentIndex": @(_currentIndex)}];
-
-}
+//- (void)addCurrentShowIndexNotification {
+//    [[NSNotificationCenter defaultCenter] postNotificationName: ScrollPageViewDidShowThePageNotification object:nil userInfo:@{@"currentIndex": @(_currentIndex)}];
+//
+//}
 
 #pragma mark - public helper
 
@@ -344,7 +343,7 @@
         self.titleBtnOnClick(currentLabel, _currentIndex);
     }
     //发布通知
-    [self addCurrentShowIndexNotification];
+//    [self addCurrentShowIndexNotification];
 }
 
 - (void)adjustUIWithProgress:(CGFloat)progress oldIndex:(NSInteger)oldIndex currentIndex:(NSInteger)currentIndex {

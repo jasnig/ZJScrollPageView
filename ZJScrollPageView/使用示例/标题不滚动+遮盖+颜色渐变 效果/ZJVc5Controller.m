@@ -8,6 +8,8 @@
 
 #import "ZJVc5Controller.h"
 #import "ZJScrollPageView.h"
+#import "ZJTestViewController.h"
+
 @interface ZJVc5Controller ()<ZJScrollPageViewDelegate>
 @property(strong, nonatomic)NSArray<NSString *> *titles;
 @property(strong, nonatomic)NSArray<UIViewController *> *childVcs;
@@ -44,51 +46,26 @@
     [self.view addSubview:scrollPageView];
 }
 
-- (NSArray *)setupChildVcAndTitle {
-    
-    UIViewController *vc1 = [self.storyboard instantiateViewControllerWithIdentifier:@"test"];
-    vc1.view.backgroundColor = [UIColor redColor];
-    vc1.title = @"新闻头条";
-    
-    UIViewController *vc2 = [UIViewController new];
-    vc2.view.backgroundColor = [UIColor greenColor];
-    vc2.title = @"国际要闻";
-    
-    UIViewController *vc3 = [UIViewController new];
-    vc3.view.backgroundColor = [UIColor yellowColor];
-    vc3.title = @"体育";
-    
-    UIViewController *vc4 = [UIViewController new];
-    vc4.view.backgroundColor = [UIColor brownColor];
-    vc4.title = @"中国足球";
-    
-    UIViewController *vc5 = [UIViewController new];
-    vc5.view.backgroundColor = [UIColor lightGrayColor];
-    vc5.title = @"汽车";
-
-    
-    NSArray *childVcs = [NSArray arrayWithObjects:vc1, vc2, vc3, vc4, vc5, nil];
-    return childVcs;
-}
-
 - (NSInteger)numberOfChildViewControllers {
     return self.titles.count;
 }
 
 
-- (UIViewController *)childViewController:(UIViewController *)reuseViewController forIndex:(NSInteger)index {
-    UIViewController *childVc = reuseViewController;
-    if (childVc == nil) {
-        childVc = [UIViewController new];
-        
-        if (index%2 == 0) {
-            childVc.view.backgroundColor = [UIColor redColor];
-        } else {
-            childVc.view.backgroundColor = [UIColor cyanColor];
-            
-        }
+- (UIViewController<ZJScrollPageViewChildVcDelegate> *)childViewController:(UIViewController<ZJScrollPageViewChildVcDelegate> *)reuseViewController forIndex:(NSInteger)index {
+    UIViewController<ZJScrollPageViewChildVcDelegate> *childVc = reuseViewController;
+    
+    if (!childVc) {
+        childVc = [[ZJTestViewController alloc] init];
+    }
+    
+    
+    if (index%2==0) {
+        childVc.view.backgroundColor = [UIColor blueColor];
+    } else {
+        childVc.view.backgroundColor = [UIColor greenColor];
         
     }
+    
     return childVc;
 }
 

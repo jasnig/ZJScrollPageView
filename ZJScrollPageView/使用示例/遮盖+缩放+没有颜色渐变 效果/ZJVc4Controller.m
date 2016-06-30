@@ -8,6 +8,8 @@
 
 #import "ZJVc4Controller.h"
 #import "ZJScrollPageView.h"
+#import "ZJTestViewController.h"
+
 @interface ZJVc4Controller ()<ZJScrollPageViewDelegate>
 @property(strong, nonatomic)NSArray<NSString *> *titles;
 @property(strong, nonatomic)NSArray<UIViewController *> *childVcs;
@@ -54,20 +56,21 @@
 }
 
 
-- (UIViewController *)childViewController:(UIViewController *)reuseViewController forIndex:(NSInteger)index {
-    UIViewController *childVc = reuseViewController;
-    if (childVc == nil) {
-        childVc = [UIViewController new];
-        
-        if (index%2 == 0) {
-            childVc.view.backgroundColor = [UIColor redColor];
-        } else {
-            childVc.view.backgroundColor = [UIColor cyanColor];
-            
-        }
+- (UIViewController<ZJScrollPageViewChildVcDelegate> *)childViewController:(UIViewController<ZJScrollPageViewChildVcDelegate> *)reuseViewController forIndex:(NSInteger)index {
+    UIViewController<ZJScrollPageViewChildVcDelegate> *childVc = reuseViewController;
+    
+    if (!childVc) {
+        childVc = [[ZJTestViewController alloc] init];
+    }
+    
+    
+    if (index%2==0) {
+        childVc.view.backgroundColor = [UIColor blueColor];
+    } else {
+        childVc.view.backgroundColor = [UIColor greenColor];
         
     }
+    
     return childVc;
 }
-
 @end
