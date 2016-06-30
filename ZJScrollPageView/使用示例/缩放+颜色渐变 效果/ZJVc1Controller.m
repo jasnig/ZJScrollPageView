@@ -85,6 +85,10 @@
     // 所以建议使用ZJScrollPageViewChildVcDelegate中的方法来加载不同的数据
     
     if (index == 0) {
+        // 注意这个效果和tableView的deque...方法一样, 会返回一个可重用的childVc
+        // 请首先判断返回给你的是否是可重用的
+        // 如果为nil就重新创建并返回
+        // 如果不为nil 直接使用返回给你的reuseViewController并进行需要的设置 然后返回即可
         ZJTestViewController *childVc = (ZJTestViewController *)reuseViewController;
         if (childVc == nil) {
             childVc = [[ZJTestViewController alloc] init];
