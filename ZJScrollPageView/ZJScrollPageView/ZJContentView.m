@@ -29,6 +29,8 @@
 @property (assign, nonatomic) NSInteger itemsCount;
 // 所有的子控制器(需要遵守ZJScrollPageViewChildVcDelegate协议)
 @property (strong, nonatomic) NSMutableDictionary<NSString *, UIViewController<ZJScrollPageViewChildVcDelegate> *> *childVcsDic;
+// 当前控制器
+@property (strong, nonatomic) UIViewController<ZJScrollPageViewChildVcDelegate> *currentChildVc;
 
 
 @end
@@ -69,12 +71,23 @@
     }
 //    // 发布通知 默认为0
 //    [self addCurrentShowIndexNotificationWithIndex:0];
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveMemoryWarningHander:) name:UIApplicationDidReceiveMemoryWarningNotification object:nil];
 }
+
+- (void)receiveMemoryWarningHander:(NSNotificationCenter *)noti {
+    for (UIViewController *childVc in _childVcsDic.allKeys) {
+        if (childVc != self.currentChildVc) {
+            [_childVcsDic delete:childVc];
+        }
+    }
+}
+
+
 
 
 - (void)dealloc {
     self.parentViewController = nil;
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     NSLog(@"ZJContentView---销毁");
 }
 
@@ -117,29 +130,28 @@
     // 移除subviews 避免重用内容显示错误
     [cell.contentView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     
-    UIViewController<ZJScrollPageViewChildVcDelegate> *childVc;
     
-    childVc = [self.childVcsDic valueForKey:[NSString stringWithFormat:@"%ld", (long)indexPath.row]];
+    _currentChildVc = [self.childVcsDic valueForKey:[NSString stringWithFormat:@"%ld", (long)indexPath.row]];
     if (_delegate && [_delegate respondsToSelector:@selector(childViewController:forIndex:)]) {
-        if (childVc == nil) {
-            childVc = [_delegate childViewController:nil forIndex:indexPath.row];
+        if (_currentChildVc == nil) {
+            _currentChildVc = [_delegate childViewController:nil forIndex:indexPath.row];
             
-            if (!childVc || ![childVc conformsToProtocol:@protocol(ZJScrollPageViewChildVcDelegate)]) {
+            if (!_currentChildVc || ![_currentChildVc conformsToProtocol:@protocol(ZJScrollPageViewChildVcDelegate)]) {
                 NSAssert(NO, @"子控制器必须遵守ZJScrollPageViewChildVcDelegate协议");
             }
-            [self.childVcsDic setValue:childVc forKey:[NSString stringWithFormat:@"%ld", (long)indexPath.row]];
+            [self.childVcsDic setValue:_currentChildVc forKey:[NSString stringWithFormat:@"%ld", (long)indexPath.row]];
         } else {
-            [_delegate childViewController:childVc forIndex:indexPath.row];
+            [_delegate childViewController:_currentChildVc forIndex:indexPath.row];
         }
     } else {
         NSAssert(NO, @"必须设置代理和实现代理方法");
     }
     // 这里建立子控制器和父控制器的关系
-    [self addChildVc:childVc ToParentVcCell:cell];
+    [self addChildVc:_currentChildVc ToParentVcCell:cell];
     
-    if ([childVc respondsToSelector:@selector(setUpWhenViewWillAppearForTitle:forIndex:)]) {
+    if ([_currentChildVc respondsToSelector:@selector(setUpWhenViewWillAppearForTitle:forIndex:)]) {
         
-        [childVc setUpWhenViewWillAppearForTitle:self.segmentView.titles[indexPath.row] forIndex:indexPath.row];
+        [_currentChildVc setUpWhenViewWillAppearForTitle:self.segmentView.titles[indexPath.row] forIndex:indexPath.row];
     }
 
 }
@@ -208,10 +220,13 @@
     NSInteger currentIndex = (scrollView.contentOffset.x / self.bounds.size.width);
 
     [self contentViewDidMoveFromIndex:currentIndex toIndex:currentIndex progress:1.0];
-    if (scrollView.contentOffset.x != _oldOffSetX) {// 滚动完成
-        
-        // 调整title
-        [self adjustSegmentTitleOffsetToCurrentIndex:currentIndex];
+    // 调整title
+    [self adjustSegmentTitleOffsetToCurrentIndex:currentIndex];
+
+    if (scrollView.contentOffset.x == _oldOffSetX) {// 滚动未完成
+        _currentChildVc = [self.childVcsDic valueForKey:[NSString stringWithFormat:@"%ld", (long)currentIndex]];
+
+        _currentChildVc = [_delegate childViewController:_currentChildVc forIndex:currentIndex];
 
     }
 }
@@ -223,6 +238,13 @@
         NSInteger currentIndex = (scrollView.contentOffset.x / self.bounds.size.width);
         if (scrollView.contentOffset.x == _oldOffSetX) {
             [self contentViewDidMoveFromIndex:currentIndex toIndex:currentIndex progress:1.0];
+            
+            if (scrollView.contentOffset.x == _oldOffSetX) {// 滚动未完成
+                _currentChildVc = [self.childVcsDic valueForKey:[NSString stringWithFormat:@"%ld", (long)currentIndex]];
+                
+                _currentChildVc = [_delegate childViewController:_currentChildVc forIndex:currentIndex];
+                
+            }
         }
     }
 }

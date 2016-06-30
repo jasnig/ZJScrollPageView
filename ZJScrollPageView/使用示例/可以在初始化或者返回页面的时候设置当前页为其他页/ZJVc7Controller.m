@@ -57,9 +57,8 @@
 
 
 - (IBAction)changeBtnOnClick:(UIBarButtonItem *)sender {
-    // 只需要传入新的子控制器即可, 移除原来的等其他的内部已经处理好
     self.titles = [self setupNewTitles];
-    
+    // 传入新的titles同时reload
     [self.scrollPageView reloadWithNewTitles:self.titles];
     
 }

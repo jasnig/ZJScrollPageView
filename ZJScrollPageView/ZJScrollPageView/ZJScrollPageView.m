@@ -22,17 +22,6 @@
 
 #pragma mark - life cycle
 
-- (instancetype)initWithFrame:(CGRect)frame segmentStyle:(ZJSegmentStyle *)segmentStyle childVcs:(NSArray *)childVcs parentViewController:(UIViewController *)parentViewController {
-    
-    if (self = [super initWithFrame:frame]) {
-        self.childVcs = childVcs;
-        self.segmentStyle = segmentStyle;
-        self.parentViewController = parentViewController;
-        [self commonInit];
-    }
-    return self;
-}
-
 - (instancetype)initWithFrame:(CGRect)frame segmentStyle:(ZJSegmentStyle *)segmentStyle titles:(NSArray<NSString *> *)titles parentViewController:(UIViewController *)parentViewController delegate:(id<ZJScrollPageViewDelegate>) delegate {
     if (self = [super initWithFrame:frame]) {
         self.segmentStyle = segmentStyle;
