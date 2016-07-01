@@ -283,7 +283,7 @@
     ZJCustomLabel *oldLabel = (ZJCustomLabel *)self.titleLabels[_oldIndex];
     ZJCustomLabel *currentLabel = (ZJCustomLabel *)self.titleLabels[_currentIndex];
     
-    CGFloat animatedTime = animated ? 0.3 : 0.0;
+    CGFloat animatedTime = animated ? 0.30 : 0.0;
     
     __weak typeof(self) weakSelf = self;
     
