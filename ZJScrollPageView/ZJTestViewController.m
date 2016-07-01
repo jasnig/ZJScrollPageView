@@ -18,8 +18,6 @@
 }
 
 
-
-
 - (void)setUpWhenViewWillAppearForTitle:(NSString *)title forIndex:(NSInteger)index firstTimeAppear:(BOOL)isFirstTime {
     if (isFirstTime) {
         if ([title isEqualToString:@"国际要闻"]) {

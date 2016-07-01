@@ -14,6 +14,7 @@
     CGFloat _currentWidth;
     NSUInteger _currentIndex;
     NSUInteger _oldIndex;
+//    BOOL _isScroll;
 }
 // 滚动条
 @property (weak, nonatomic) UIView *scrollLine;
@@ -43,6 +44,8 @@
 @implementation ZJScrollSegmentView
 #define xGap 5.0
 #define wGap 2*xGap
+#define contentSizeXOff 20.0
+
 
 #pragma mark - life cycle
 - (instancetype)initWithFrame:(CGRect )frame segmentStyle:(ZJSegmentStyle *)segmentStyle titles:(NSArray *)titles titleDidClick:(TitleBtnOnClickBlock)titleDidClick {
@@ -142,20 +145,35 @@
 }
 
 - (void)setupUI {
-    [self setUpLabelsPosition];
     [self setupScrollViewAndExtraBtn];
+    [self setUpLabelsPosition];
     [self setupScrollLineAndCover];
     
     if (self.segmentStyle.isScrollTitle) { // 设置滚动区域
         ZJCustomLabel *lastLabel = (ZJCustomLabel *)self.titleLabels.lastObject;
         
         if (lastLabel) {
-            self.scrollView.contentSize = CGSizeMake(CGRectGetMaxX(lastLabel.frame)+self.segmentStyle.titleMargin, 0.0);
+            self.scrollView.contentSize = CGSizeMake(CGRectGetMaxX(lastLabel.frame) + contentSizeXOff, 0.0);
         }
     }
     
 }
 
+- (void)setupScrollViewAndExtraBtn {
+    CGFloat extraBtnW = 44.0;
+    CGFloat extraBtnY = 5.0;
+    
+    //    UILabel *lastLabel = _titleLabels.lastObject;
+    //    CGFloat maxX = CGRectGetMaxX(lastLabel.frame) + 8;
+    CGFloat scrollW = self.extraBtn ? _currentWidth - extraBtnW : _currentWidth;
+    //    if (maxX < _currentWidth) {
+    //        scrollW = maxX;
+    //    }
+    self.scrollView.frame = CGRectMake(0.0, 0.0, scrollW, self.zj_height);
+    if (self.extraBtn) {
+        self.extraBtn.frame = CGRectMake(scrollW , extraBtnY, extraBtnW, self.zj_height - 2*extraBtnY);
+    }
+}
 
 - (void)setUpLabelsPosition {
     CGFloat titleX = 0.0;
@@ -177,16 +195,23 @@
         }
         
     } else {
+        float allTitlesWidth = 0.0;
+        for (int i = 0; i<self.titleWidths.count; i++) {
+            allTitlesWidth = allTitlesWidth + [self.titleWidths[i] floatValue] + self.segmentStyle.titleMargin;
+        }
+        
+
+        float addedMargin = allTitlesWidth < self.scrollView.bounds.size.width ? (self.scrollView.bounds.size.width - allTitlesWidth)/self.titleWidths.count : 0 ;
+        
         NSInteger index = 0;
+        float lastLableMaxX = self.segmentStyle.titleMargin;
+
         for (ZJCustomLabel *label in self.titleLabels) {
-            
             titleW = [self.titleWidths[index] floatValue];
-            titleX = self.segmentStyle.titleMargin;
-            
-            if (index != 0) {
-                ZJCustomLabel *lastLabel = (ZJCustomLabel *)self.titleLabels[index - 1];
-                titleX = CGRectGetMaxX(lastLabel.frame) + self.segmentStyle.titleMargin;
-            }
+            titleX = lastLableMaxX + addedMargin/2;
+
+            lastLableMaxX += (titleW + addedMargin + self.segmentStyle.titleMargin);
+
             label.frame = CGRectMake(titleX, titleY, titleW, titleH);
             index++;
             
@@ -208,21 +233,7 @@
     
 }
 
-- (void)setupScrollViewAndExtraBtn {
-    CGFloat extraBtnW = 44.0;
-    CGFloat extraBtnY = 5.0;
-    UILabel *lastLabel = _titleLabels.lastObject;
-    CGFloat maxX = CGRectGetMaxX(lastLabel.frame) + 8;
-    CGFloat scrollW = self.extraBtn ? _currentWidth - extraBtnW : _currentWidth;
-    if (maxX < _currentWidth) {
-        scrollW = maxX;
-    }
-    
-    self.scrollView.frame = CGRectMake(0.0, 0.0, scrollW, self.zj_height);
-    if (self.extraBtn) {
-        self.extraBtn.frame = CGRectMake(scrollW , extraBtnY, extraBtnW, self.zj_height - 2*extraBtnY);
-    }
-}
+
 
 - (void)setupScrollLineAndCover {
     
@@ -420,24 +431,28 @@
 }
 
 - (void)adjustTitleOffSetToCurrentIndex:(NSInteger)currentIndex {
-    ZJCustomLabel *currentLabel = (ZJCustomLabel *)self.titleLabels[currentIndex];
     
-    CGFloat offSetx = currentLabel.center.x - _currentWidth * 0.5;
-    if (offSetx < 0) {
-        offSetx = 0;
+    if (self.scrollView.contentSize.width != self.scrollView.bounds.size.width + contentSizeXOff) {// 需要滚动
+        
+        ZJCustomLabel *currentLabel = (ZJCustomLabel *)self.titleLabels[currentIndex];
+        
+        CGFloat offSetx = currentLabel.center.x - _currentWidth * 0.5;
+        if (offSetx < 0) {
+            offSetx = 0;
+        }
+        CGFloat extraBtnW = self.extraBtn ? self.extraBtn.zj_width : 0.0;
+        CGFloat maxOffSetX = self.scrollView.contentSize.width - (_currentWidth - extraBtnW);
+        
+        if (maxOffSetX < 0) {
+            maxOffSetX = 0;
+        }
+        
+        if (offSetx > maxOffSetX) {
+            offSetx = maxOffSetX;
+        }
+        
+        [self.scrollView setContentOffset:CGPointMake(offSetx, 0.0) animated:YES];
     }
-    CGFloat extraBtnW = self.extraBtn ? self.extraBtn.zj_width : 0.0;
-    CGFloat maxOffSetX = self.scrollView.contentSize.width - (_currentWidth - extraBtnW);
-    
-    if (maxOffSetX < 0) {
-        maxOffSetX = 0;
-    }
-    
-    if (offSetx > maxOffSetX) {
-        offSetx = maxOffSetX;
-    }
-    
-    [self.scrollView setContentOffset:CGPointMake(offSetx, 0.0) animated:YES];
     // 重置其他item的缩放和颜色
     NSInteger index = 0;
     for (ZJCustomLabel *label in self.titleLabels) {
