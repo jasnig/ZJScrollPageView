@@ -70,6 +70,8 @@
         
     }
     
+    NSLog(@"%ld-----%@",(long)index, childVc);
+    
     return childVc;
 }
 

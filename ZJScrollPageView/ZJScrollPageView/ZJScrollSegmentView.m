@@ -170,6 +170,7 @@
     //        scrollW = maxX;
     //    }
     self.scrollView.frame = CGRectMake(0.0, 0.0, scrollW, self.zj_height);
+    
     if (self.extraBtn) {
         self.extraBtn.frame = CGRectMake(scrollW , extraBtnY, extraBtnW, self.zj_height - 2*extraBtnY);
     }

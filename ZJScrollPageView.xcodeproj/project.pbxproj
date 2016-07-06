@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		4AAF4F0F1D24D88D009F6D3F /* ZJTest1Controller.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AAF4F0E1D24D88D009F6D3F /* ZJTest1Controller.m */; };
+		4AD142241D2CE6AD001113FC /* ZJVc9Controller.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD142231D2CE6AD001113FC /* ZJVc9Controller.m */; };
+		4AD142281D2CE807001113FC /* ZJPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD142271D2CE807001113FC /* ZJPageViewController.m */; };
 		4B0C06311CDC55080079E8F3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B0C06301CDC55080079E8F3 /* main.m */; };
 		4B0C06341CDC55080079E8F3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B0C06331CDC55080079E8F3 /* AppDelegate.m */; };
 		4B0C06371CDC55080079E8F3 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B0C06361CDC55080079E8F3 /* ViewController.m */; };
@@ -55,6 +57,10 @@
 		4AAF4F0A1D24C172009F6D3F /* ZJScrollPageViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJScrollPageViewDelegate.h; sourceTree = "<group>"; };
 		4AAF4F0D1D24D88D009F6D3F /* ZJTest1Controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJTest1Controller.h; sourceTree = "<group>"; };
 		4AAF4F0E1D24D88D009F6D3F /* ZJTest1Controller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZJTest1Controller.m; sourceTree = "<group>"; };
+		4AD142221D2CE6AD001113FC /* ZJVc9Controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJVc9Controller.h; sourceTree = "<group>"; };
+		4AD142231D2CE6AD001113FC /* ZJVc9Controller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZJVc9Controller.m; sourceTree = "<group>"; };
+		4AD142261D2CE807001113FC /* ZJPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJPageViewController.h; sourceTree = "<group>"; };
+		4AD142271D2CE807001113FC /* ZJPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZJPageViewController.m; sourceTree = "<group>"; };
 		4B0C062C1CDC55080079E8F3 /* ZJScrollPageView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZJScrollPageView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B0C06301CDC55080079E8F3 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		4B0C06321CDC55080079E8F3 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -130,6 +136,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4AD142251D2CE6BC001113FC /* 微博&简书个人主页效果 */ = {
+			isa = PBXGroup;
+			children = (
+				4AD142221D2CE6AD001113FC /* ZJVc9Controller.h */,
+				4AD142231D2CE6AD001113FC /* ZJVc9Controller.m */,
+				4AD142261D2CE807001113FC /* ZJPageViewController.h */,
+				4AD142271D2CE807001113FC /* ZJPageViewController.m */,
+			);
+			name = "微博&简书个人主页效果";
+			path = ..;
+			sourceTree = "<group>";
+		};
 		4B0C06231CDC55080079E8F3 = {
 			isa = PBXGroup;
 			children = (
@@ -209,6 +227,7 @@
 				4B7429CB1CDD9C0D009CC9B2 /* 自定义segmentView和contentView位置的效果) */,
 				4B7429C71CDD9C0D009CC9B2 /* 动态更改显示内容和标题 效果 */,
 				4B7429F91CDDE1B9009CC9B2 /* 更改选中的下标的效果 */,
+				4AD142251D2CE6BC001113FC /* 微博&简书个人主页效果 */,
 			);
 			path = "使用示例";
 			sourceTree = "<group>";
@@ -450,8 +469,10 @@
 				4B7429FC1CDDE1E5009CC9B2 /* ZJVc8Controller.m in Sources */,
 				4B7429EC1CDDCE29009CC9B2 /* ZJVc3Controller.m in Sources */,
 				4B7429DF1CDD9C16009CC9B2 /* ZJScrollSegmentView.m in Sources */,
+				4AD142281D2CE807001113FC /* ZJPageViewController.m in Sources */,
 				4B7429F81CDDDC35009CC9B2 /* ZJTestViewController.m in Sources */,
 				4B7429E01CDD9C16009CC9B2 /* ZJSegmentStyle.m in Sources */,
+				4AD142241D2CE6AD001113FC /* ZJVc9Controller.m in Sources */,
 				4B7429DB1CDD9C16009CC9B2 /* UIView+ZJFrame.m in Sources */,
 				4B0C06371CDC55080079E8F3 /* ViewController.m in Sources */,
 				4B0C06341CDC55080079E8F3 /* AppDelegate.m in Sources */,
@@ -598,7 +619,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = ZJScrollPageView/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ZeroJ.ZJScrollPageViewDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -613,7 +634,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = ZJScrollPageView/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ZeroJ.ZJScrollPageViewDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";

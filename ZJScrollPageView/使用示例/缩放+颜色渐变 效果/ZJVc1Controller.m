@@ -38,25 +38,36 @@
     style.extraBtnBackgroundImageName = @"extraBtnBackgroundImage";
     
     // 当标题宽度总和小于ZJScrollPageView的宽度的时候, 标题会自适应宽度
-    self.titles = @[@"新闻头条",
-                    @"国际要闻",
-                    @"中国足球"
-                    ];
+    
+    __weak typeof(self) weakSelf = self;
+
     // 初始化
     CGRect scrollPageViewFrame = CGRectMake(0, 64.0, self.view.bounds.size.width, self.view.bounds.size.height - 64.0);
-    ZJScrollPageView *scrollPageView = [[ZJScrollPageView alloc] initWithFrame:scrollPageViewFrame segmentStyle:style titles:_titles parentViewController:self delegate:self];
-    self.scrollPageView = scrollPageView;
-    // 额外的按钮响应的block
-    __weak typeof(self) weakSelf = self;
-    
-    [self.scrollPageView setSelectedIndex:1 animated:true];
-    
-    self.scrollPageView.extraBtnOnClick = ^(UIButton *extraBtn){
-        weakSelf.title = @"点击了extraBtn";
-        NSLog(@"点击了extraBtn");
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        __strong typeof(self) strongSelf = self;
         
-    };
-    [self.view addSubview:self.scrollPageView];
+        strongSelf.titles = @[@"新闻头条",
+                              @"国际要闻",
+                              @"中国足球"
+                              ];
+        
+        ZJScrollPageView *scrollPageView = [[ZJScrollPageView alloc] initWithFrame:scrollPageViewFrame segmentStyle:style titles:_titles parentViewController:strongSelf delegate:strongSelf];
+        strongSelf.scrollPageView = scrollPageView;
+        // 额外的按钮响应的block
+        
+//        [strongSelf.scrollPageView setSelectedIndex:1 animated:true];
+        
+        strongSelf.scrollPageView.extraBtnOnClick = ^(UIButton *extraBtn){
+            weakSelf.title = @"点击了extraBtn";
+            NSLog(@"点击了extraBtn");
+            
+        };
+        [strongSelf.view addSubview:strongSelf.scrollPageView];
+        
+    });
+
+    
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -86,6 +97,7 @@
             childVc = [[ZJTestViewController alloc] init];
             childVc.view.backgroundColor = [UIColor yellowColor];
         }
+        NSLog(@"%@", childVc);
         return childVc;
         
     } else if (index == 1) {
@@ -94,6 +106,8 @@
             childVc = [[ZJTestViewController alloc] init];
             childVc.view.backgroundColor = [UIColor redColor];
         }
+        NSLog(@"%@", childVc);
+
         return childVc;
     } else {
         ZJTest1Controller *childVc = (ZJTest1Controller *)reuseViewController;
@@ -105,7 +119,8 @@
         if (index%2==0) {
             childVc.view.backgroundColor = [UIColor orangeColor];
         }
-        
+        NSLog(@"%@", childVc);
+
         return childVc;
     }
 }

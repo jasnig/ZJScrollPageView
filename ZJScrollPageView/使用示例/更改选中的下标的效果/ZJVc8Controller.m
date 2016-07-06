@@ -11,12 +11,15 @@
 #import "ZJTestViewController.h"
 
 @interface ZJVc8Controller ()<ZJScrollPageViewDelegate>
+
 @property(strong, nonatomic)NSArray<NSString *> *titles;
 @property (weak, nonatomic) ZJScrollPageView *scrollPageView;
 
 @end
 
 @implementation ZJVc8Controller
+
+
 - (IBAction)changeBtnOnClick:(UIBarButtonItem *)sender {
     // 切换选中的下标
     [self.scrollPageView setSelectedIndex:5 animated:YES];

@@ -75,14 +75,17 @@
 }
 
 - (void)receiveMemoryWarningHander:(NSNotificationCenter *)noti {
-    for (UIViewController *childVc in _childVcsDic.allKeys) {
-        if (childVc != self.currentChildVc) {
-            [_childVcsDic delete:childVc];
+    
+    __weak typeof(self) weakSelf = self;
+    [_childVcsDic enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, UIViewController<ZJScrollPageViewChildVcDelegate> * _Nonnull childVc, BOOL * _Nonnull stop) {
+        __strong typeof(self) strongSelf = weakSelf;
+
+        if (childVc != strongSelf.currentChildVc) {
+            [_childVcsDic removeObjectForKey:key];
         }
-    }
+
+    }];
 }
-
-
 
 
 - (void)dealloc {
@@ -121,18 +124,12 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellID forIndexPath:indexPath];
-
-    return cell;
-}
-
-- (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
-    
     // 移除subviews 避免重用内容显示错误
     [cell.contentView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     
     _currentChildVc = [self.childVcsDic valueForKey:[NSString stringWithFormat:@"%ld", (long)indexPath.row]];
     BOOL isFirstTime = _currentChildVc == nil;
-
+    
     if (_delegate && [_delegate respondsToSelector:@selector(childViewController:forIndex:)]) {
         if (_currentChildVc == nil) {
             _currentChildVc = [_delegate childViewController:nil forIndex:indexPath.row];
@@ -151,7 +148,7 @@
     [self addChildVc:_currentChildVc ToParentVcCell:cell];
     
     [self viewWillAppearIsFirstTime:isFirstTime forIndex:indexPath.row];
-
+    return cell;
 }
 
 - (void)viewWillAppearIsFirstTime:(BOOL)isFirstTime forIndex:(NSInteger)index {
@@ -174,7 +171,6 @@
     childVc.view.frame = self.bounds;
     [cell.contentView addSubview:childVc.view];
     [childVc didMoveToParentViewController:self.parentViewController];
-    
     
 
 }
