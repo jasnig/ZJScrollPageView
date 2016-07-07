@@ -53,9 +53,13 @@ static CGFloat const defaultOffSetY = segmentViewHeight + naviBarHeight + headVi
 }
 - (void)addSubviews {
     [self.view addSubview:self.containerView];
+    // 先添加contentView
     [self.containerView addSubview:self.contentView];
+    // 这个scrollView是为了headView能够滑动
     [self.scrollView addSubview:self.headView];
+    // 在添加headView
     [self.containerView addSubview:self.scrollView];
+    // 在添加segmentView
     [self.containerView addSubview:self.segmentView];
 }
 
@@ -88,7 +92,7 @@ static CGFloat const defaultOffSetY = segmentViewHeight + naviBarHeight + headVi
     
 //    NSLog(@"%f", _currentOffsetY);
 
-    if (self.currentOffsetY <= 0 ) {
+    if (self.currentOffsetY <= 0 ) {// 让headView停在navigationBar下面
         self.segmentView.zj_y = -_childOffsetY - segmentViewHeight;
         self.scrollView.zj_y = self.segmentView.zj_y - headViewHeight;
         
@@ -165,7 +169,7 @@ static CGFloat const defaultOffSetY = segmentViewHeight + naviBarHeight + headVi
         childVc.view.backgroundColor = [UIColor redColor];
         
     }
-    
+    // 设置代理, 用于处理子控制器的滚动
     _currentChildVc = (ZJPageViewController *)childVc;
     _currentChildVc.delegate = self;
     return childVc;

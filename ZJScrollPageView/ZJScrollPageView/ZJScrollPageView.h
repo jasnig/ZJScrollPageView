@@ -15,6 +15,8 @@
 typedef void(^ExtraBtnOnClick)(UIButton *extraBtn);
 
 @property (copy, nonatomic) ExtraBtnOnClick extraBtnOnClick;
+@property (weak, nonatomic, readonly) ZJContentView *contentView;
+@property (weak, nonatomic, readonly) ZJScrollSegmentView *segmentView;
 
 /** 必须设置代理并且实现相应的方法*/
 @property(weak, nonatomic)id<ZJScrollPageViewDelegate> delegate;

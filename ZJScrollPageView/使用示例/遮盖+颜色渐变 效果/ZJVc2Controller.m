@@ -46,6 +46,8 @@
                     ];
     // 初始化
     ZJScrollPageView *scrollPageView = [[ZJScrollPageView alloc] initWithFrame:CGRectMake(0, 64.0, self.view.bounds.size.width, self.view.bounds.size.height - 64.0) segmentStyle:style titles:self.titles parentViewController:self delegate:self];
+    // 这里可以设置头部视图的属性(背景色, 圆角, 背景图片...)
+    scrollPageView.segmentView.backgroundColor = [UIColor blackColor];
     [self.view addSubview:scrollPageView];
 }
 
