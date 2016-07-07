@@ -15,8 +15,9 @@
 - (void)setupScrollViewOffSetYWhenViewWillAppear:(UIScrollView *)scrollView;
 @end
 
-@interface ZJPageViewController : UIViewController<ZJScrollPageViewChildVcDelegate, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource>
-@property(strong, nonatomic)UITableView *tableView;
+@interface ZJPageViewController : UIViewController<ZJScrollPageViewChildVcDelegate>
+@property(strong, nonatomic)UIScrollView *scrollView;
+
 @property(weak, nonatomic)id<PageTableViewDelegate> delegate;
 
 

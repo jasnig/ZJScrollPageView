@@ -10,7 +10,8 @@
 #import "ZJScrollPageView.h"
 #import "ZJPageViewController.h"
 #import "UIView+ZJFrame.h"
-
+#import "ZJCollectionController.h"
+#import "ZJTableViewController.h"
 static CGFloat const segmentViewHeight = 44.0;
 static CGFloat const naviBarHeight = 64.0;
 static CGFloat const headViewHeight = 200.0;
@@ -79,11 +80,11 @@ static CGFloat const defaultOffSetY = segmentViewHeight + naviBarHeight + headVi
 
     }
 
-    if (_currentChildVc.tableView.contentOffset.y == self.currentOffsetY - defaultOffSetY) {
+    if (_currentChildVc.scrollView.contentOffset.y == self.currentOffsetY - defaultOffSetY) {
         return;
     }
 
-    [_currentChildVc.tableView setContentOffset:CGPointMake(0, self.currentOffsetY - defaultOffSetY)];
+    [_currentChildVc.scrollView setContentOffset:CGPointMake(0, self.currentOffsetY - defaultOffSetY)];
 }
 
 - (void)scrollViewIsScrolling:(UIScrollView *)scrollView {
@@ -158,17 +159,20 @@ static CGFloat const defaultOffSetY = segmentViewHeight + naviBarHeight + headVi
     UIViewController<ZJScrollPageViewChildVcDelegate> *childVc = reuseViewController;
     
     if (!childVc) {
-        childVc = [[ZJPageViewController alloc] init];
-        
+        if (index%2==0) {
+            childVc = [[ZJTableViewController alloc] init];
+
+            childVc.view.backgroundColor = [UIColor blueColor];
+        } else {
+            childVc = [[ZJCollectionController alloc] init];
+
+            childVc.view.backgroundColor = [UIColor redColor];
+            
+        }
+
     }
     
     
-    if (index%2==0) {
-        childVc.view.backgroundColor = [UIColor blueColor];
-    } else {
-        childVc.view.backgroundColor = [UIColor redColor];
-        
-    }
     // 设置代理, 用于处理子控制器的滚动
     _currentChildVc = (ZJPageViewController *)childVc;
     _currentChildVc.delegate = self;

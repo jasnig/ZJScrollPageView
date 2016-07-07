@@ -44,7 +44,7 @@
     // 初始化
     CGRect scrollPageViewFrame = CGRectMake(0, 64.0, self.view.bounds.size.width, self.view.bounds.size.height - 64.0);
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        __strong typeof(self) strongSelf = self;
+        __strong typeof(self) strongSelf = weakSelf;
         
         strongSelf.titles = @[@"新闻头条",
                               @"国际要闻",
@@ -97,7 +97,6 @@
             childVc = [[ZJTestViewController alloc] init];
             childVc.view.backgroundColor = [UIColor yellowColor];
         }
-        NSLog(@"%@", childVc);
         return childVc;
         
     } else if (index == 1) {
@@ -106,7 +105,6 @@
             childVc = [[ZJTestViewController alloc] init];
             childVc.view.backgroundColor = [UIColor redColor];
         }
-        NSLog(@"%@", childVc);
 
         return childVc;
     } else {
@@ -119,13 +117,10 @@
         if (index%2==0) {
             childVc.view.backgroundColor = [UIColor orangeColor];
         }
-        NSLog(@"%@", childVc);
 
         return childVc;
     }
 }
-
-
 
 
 - (void)dealloc
