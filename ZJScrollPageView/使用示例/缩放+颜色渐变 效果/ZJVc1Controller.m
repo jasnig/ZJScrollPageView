@@ -81,7 +81,7 @@
 
 
 - (UIViewController<ZJScrollPageViewChildVcDelegate> *)childViewController:(UIViewController<ZJScrollPageViewChildVcDelegate> *)reuseViewController forIndex:(NSInteger)index {
-    
+
     // 根据不同的下标或者title返回相应的控制器, 但是控制器必须要遵守ZJScrollPageViewChildVcDelegate
     // 并且可以通过实现协议中的方法来加载不同的数据
     // 注意ZJScrollPageView不会保证viewWillAppear等生命周期方法一定会调用

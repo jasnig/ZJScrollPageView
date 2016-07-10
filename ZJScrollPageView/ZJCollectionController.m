@@ -21,17 +21,23 @@ static NSString *cellId = @"cellId";
 // ZJScrollPageViewChildVcDelegate 这个代理方法用于页面出现的时候处理
 - (void)setUpWhenViewWillAppearForTitle:(NSString *)title forIndex:(NSInteger)index firstTimeAppear: (BOOL)isFirstTime {
     [self.delegate setupScrollViewOffSetYWhenViewWillAppear:self.collectionView];
-    if(isFirstTime) {
-        // 加载数据
-    } else {
-        //刷新...
-    }
+
+        if(isFirstTime) {
+            // 加载数据
+
+
+        } else {
+            //刷新...
+
+        }
+
     
 }
 
 #pragma UIScrollViewDelegate 
 // 这个scrollView的代理方法中调用代理的方法
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+
     [self.delegate scrollViewIsScrolling:scrollView];
 }
 
@@ -70,12 +76,13 @@ static NSString *cellId = @"cellId";
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return 50;
+    return 10;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellId forIndexPath:indexPath];
     cell.backgroundColor = [UIColor redColor];
+
     return cell;
 }
 

@@ -19,7 +19,7 @@ static CGFloat const defaultOffSetY = segmentViewHeight + naviBarHeight + headVi
 
 @interface ZJVc9Controller ()<ZJScrollPageViewDelegate, UIScrollViewDelegate, PageTableViewDelegate> {
     CGFloat _childOffsetY;
-//    CGFloat _currentOffsetY;
+    //    CGFloat _currentOffsetY;
     
 }
 @property(strong, nonatomic)NSArray<NSString *> *titles;
@@ -27,7 +27,7 @@ static CGFloat const defaultOffSetY = segmentViewHeight + naviBarHeight + headVi
 @property(strong, nonatomic)UIView *containerView;
 @property (strong, nonatomic) ZJScrollSegmentView *segmentView;
 @property (strong, nonatomic) ZJContentView *contentView;
-@property(strong, nonatomic)UIButton *headView;
+@property(strong, nonatomic)UIView *headView;
 @property(strong, nonatomic)UIScrollView *scrollView;
 @property(assign, nonatomic)CGFloat currentOffsetY;
 
@@ -41,10 +41,15 @@ static CGFloat const defaultOffSetY = segmentViewHeight + naviBarHeight + headVi
     //必要的设置, 如果没有设置可能导致内容显示不正常
     self.automaticallyAdjustsScrollViewInsets = NO;
     
-    [self addSubviews];
-    
     [self commonSet];
-
+    [self addSubviews];
+    // 模拟信息加载
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, self.headView.bounds.size.width, self.headView.bounds.size.height)];
+        [btn setBackgroundImage:[UIImage imageNamed:@"fruit"] forState:UIControlStateNormal];
+        [self.headView addSubview:btn];
+    });
+    
 }
 
 
@@ -71,19 +76,19 @@ static CGFloat const defaultOffSetY = segmentViewHeight + naviBarHeight + headVi
     
     self.currentOffsetY = scrollView.contentOffset.y;
     self.headView.zj_y = self.currentOffsetY;
-
+    
     if (self.currentOffsetY < 0) {
         self.containerView.zj_y = -self.currentOffsetY;
         return;
     } else {
         self.containerView.zj_y = 0;
-
+        
     }
-
+    
     if (_currentChildVc.scrollView.contentOffset.y == self.currentOffsetY - defaultOffSetY) {
         return;
     }
-
+    
     [_currentChildVc.scrollView setContentOffset:CGPointMake(0, self.currentOffsetY - defaultOffSetY)];
 }
 
@@ -91,8 +96,8 @@ static CGFloat const defaultOffSetY = segmentViewHeight + naviBarHeight + headVi
     _childOffsetY = scrollView.contentOffset.y;
     self.currentOffsetY = _childOffsetY + defaultOffSetY;
     
-//    NSLog(@"%f", _currentOffsetY);
-
+    //    NSLog(@"%f", _currentOffsetY);
+    
     if (self.currentOffsetY <= 0 ) {// 让headView停在navigationBar下面
         self.segmentView.zj_y = -_childOffsetY - segmentViewHeight;
         self.scrollView.zj_y = self.segmentView.zj_y - headViewHeight;
@@ -102,7 +107,7 @@ static CGFloat const defaultOffSetY = segmentViewHeight + naviBarHeight + headVi
         // 使滑块停在navigationBar下面
         self.scrollView.zj_y = naviBarHeight - headViewHeight;
         self.segmentView.zj_y = naviBarHeight;
-
+        
     }
     
     else {
@@ -114,38 +119,32 @@ static CGFloat const defaultOffSetY = segmentViewHeight + naviBarHeight + headVi
             return;
         }
         [self.scrollView setContentOffset:CGPointMake(0, self.currentOffsetY)];
-
+        
     }
-
+    
     
 }
 
 - (void)setupScrollViewOffSetYWhenViewWillAppear:(UIScrollView *)scrollView {
-
-    dispatch_block_t setHeight = ^ {
-        _childOffsetY = scrollView.contentOffset.y;
-        [scrollView setContentSize:CGSizeMake(0, MAX(scrollView.bounds.size.height - naviBarHeight - segmentViewHeight, scrollView.contentSize.height))];
-    };
     
-    if (_childOffsetY < -(naviBarHeight + segmentViewHeight)) {
-        [scrollView setContentOffset:CGPointMake(0, _childOffsetY)];
-        setHeight();
-        return;
-    } else {
+    
+    if (self.segmentView.zj_y<=naviBarHeight) {
         if (scrollView.contentOffset.y < -(naviBarHeight + segmentViewHeight)) {
             [scrollView setContentOffset:CGPointMake(0, -(naviBarHeight + segmentViewHeight))];
-
-            // 使滑块停在navigationBar下面
-            self.scrollView.zj_y = naviBarHeight - headViewHeight;
-            self.segmentView.zj_y = naviBarHeight;
-            setHeight();
-            return;
+            
+        } else {
+            
+            [scrollView setContentOffset:CGPointMake(0, scrollView.contentOffset.y)];
         }
         
-        setHeight();
-        return;
+    } else {
+        [scrollView setContentOffset:CGPointMake(0, -(CGRectGetMaxY(self.segmentView.frame)))];
         
     }
+    _childOffsetY = scrollView.contentOffset.y;
+    [scrollView setContentSize:CGSizeMake(0, MAX(scrollView.bounds.size.height - naviBarHeight - segmentViewHeight, scrollView.contentSize.height))];
+    
+    
     
 }
 
@@ -158,18 +157,19 @@ static CGFloat const defaultOffSetY = segmentViewHeight + naviBarHeight + headVi
 - (UIViewController<ZJScrollPageViewChildVcDelegate> *)childViewController:(UIViewController<ZJScrollPageViewChildVcDelegate> *)reuseViewController forIndex:(NSInteger)index {
     UIViewController<ZJScrollPageViewChildVcDelegate> *childVc = reuseViewController;
     
+    // 可以在这里为每个childVc设置title, 然后就可以在相应的childVc里面通过 viewDidLoad加载初始数据
     if (!childVc) {
         if (index%2==0) {
             childVc = [[ZJTableViewController alloc] init];
-
+            // 触发viewDidLoad
             childVc.view.backgroundColor = [UIColor blueColor];
         } else {
             childVc = [[ZJCollectionController alloc] init];
-
+            
             childVc.view.backgroundColor = [UIColor redColor];
             
         }
-
+        
     }
     
     
@@ -234,11 +234,10 @@ static CGFloat const defaultOffSetY = segmentViewHeight + naviBarHeight + headVi
     return _contentView;
 }
 
-- (UIButton *)headView {
+- (UIView *)headView {
     if (!_headView) {
-        _headView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, headViewHeight)];
-        [_headView setBackgroundImage:[UIImage imageNamed:@"fruit"] forState:UIControlStateNormal
-         ];
+        _headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, headViewHeight)];
+        
         _headView.backgroundColor = [UIColor greenColor];
     }
     
@@ -247,7 +246,7 @@ static CGFloat const defaultOffSetY = segmentViewHeight + naviBarHeight + headVi
 
 - (void)setCurrentOffsetY:(CGFloat)currentOffsetY {
     _currentOffsetY = currentOffsetY;
-//    NSLog(@"%f", currentOffsetY);
+    //    NSLog(@"%f", currentOffsetY);
 }
 
 - (UIScrollView *)scrollView {

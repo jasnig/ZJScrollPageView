@@ -10,6 +10,7 @@
 
 @interface ZJTableViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property(strong, nonatomic)UITableView *tableView;
+@property(strong, nonatomic)NSArray *data;
 
 @end
 
@@ -20,15 +21,26 @@ static NSString *cellId = @"cellId";
 // 每次页面出现的时候会调用
 - (void)setUpWhenViewWillAppearForTitle:(NSString *)title forIndex:(NSInteger)index firstTimeAppear: (BOOL)isFirstTime {
     [self.delegate setupScrollViewOffSetYWhenViewWillAppear:self.tableView];
-
+    
     if(isFirstTime) {
         // 加载数据
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            self.data = @[@"sfa",@"sfa",@"sfa",@"sfa",@"sfa",@"sfa",@"sfa",@"sfa",@"sfa",@"sfa",@"sfa",@"sfa",@"sfa",@"sfa",@"sfa",@"sfa",@"sfa",@"sfa"];
+            [self.tableView reloadData];
+            // 加载完成后重新设置contentSize
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.delegate setupScrollViewOffSetYWhenViewWillAppear:self.tableView];
+                
+            });
+        });
+        
     } else {
         //刷新...
     }
 }
 #pragma UIScrollViewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    
     [self.delegate scrollViewIsScrolling:scrollView];
 }
 
@@ -51,7 +63,7 @@ static NSString *cellId = @"cellId";
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 100;
+    return self.data.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -70,13 +82,13 @@ static NSString *cellId = @"cellId";
     return self.tableView;
 }
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

@@ -62,6 +62,7 @@
     
     if (!childVc) {
         childVc = [[ZJTestViewController alloc] init];
+        childVc.title = self.titles[index];
     }
     
     
