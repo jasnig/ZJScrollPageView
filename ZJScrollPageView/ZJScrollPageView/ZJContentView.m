@@ -82,9 +82,11 @@
 
         if (childVc != strongSelf.currentChildVc) {
             [_childVcsDic removeObjectForKey:key];
+            [ZJContentView removeChildVc:childVc];
         }
 
     }];
+
 }
 
 
@@ -104,7 +106,14 @@
 
 /** 给外界刷新视图的方法 */
 - (void)reload {
+    
+    [self.childVcsDic enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, UIViewController<ZJScrollPageViewChildVcDelegate> * _Nonnull childVc, BOOL * _Nonnull stop) {
+        [ZJContentView removeChildVc:childVc];
+        childVc = nil;
+
+    }];
     self.childVcsDic = nil;
+
     [self.collectionView reloadData];
 
 }
@@ -120,6 +129,13 @@
         _itemsCount = [_delegate numberOfChildViewControllers];
     }
     return _itemsCount;
+}
+
+
++ (void)removeChildVc:(UIViewController *)childVc {
+    [childVc willMoveToParentViewController:nil];
+    [childVc.view removeFromSuperview];
+    [childVc removeFromParentViewController];
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {

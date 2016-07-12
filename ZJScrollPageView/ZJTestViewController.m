@@ -32,7 +32,7 @@
 
 - (void)dealloc
 {
-//    NSLog(@"%@-----test", self.description);
+    NSLog(@"%@-----test---销毁", self.description);
 }
 
 - (void)didReceiveMemoryWarning {
