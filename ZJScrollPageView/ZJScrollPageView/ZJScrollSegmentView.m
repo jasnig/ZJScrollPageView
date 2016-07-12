@@ -75,7 +75,6 @@
     NSLog(@"ZJScrollSegmentView ---- 销毁");
 }
 
-
 #pragma mark - button action
 
 - (void)titleLabelOnClick:(UITapGestureRecognizer *)tapGes {
@@ -97,7 +96,6 @@
         self.extraBtnOnClick(extraBtn);
     }
 }
-
 
 #pragma mark - private helper
 
@@ -233,8 +231,6 @@
     }
     
 }
-
-
 
 - (void)setupScrollLineAndCover {
     
@@ -496,7 +492,6 @@
     
 }
 
-
 #pragma mark - getter --- setter
 
 - (UIView *)scrollLine {
@@ -557,7 +552,6 @@
     }
     return _extraBtn;
 }
-
 
 - (UIScrollView *)scrollView {
     
@@ -627,7 +621,6 @@
     }
     return _deltaRGB;
 }
-
 
 - (NSArray *)normalColorRgb {
     if (!_normalColorRgb) {

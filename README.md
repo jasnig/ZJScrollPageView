@@ -30,8 +30,9 @@
 
 ## Installation
 
-###直接将下载文件的ZJScrollPageView文件夹下的文件拖进您的项目中然后#import "ZJScrollPageView.h"就可以使用了 
-
+* ###直接将下载文件的ZJScrollPageView文件夹下的文件拖进您的项目中然后#import "ZJScrollPageView.h"就可以使用了
+ 
+* 使用cocoaPods, 在你项目的Podfile文件里面添加 `pod ZJScrollPageView`
 
 ##usage
 
