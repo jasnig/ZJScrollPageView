@@ -1,73 +1,70 @@
 //
-//  ZJVc2Controller.m
+//  ZJVc10Controller.m
 //  ZJScrollPageView
 //
-//  Created by jasnig on 16/5/7.
+//  Created by ZeroJ on 16/8/21.
 //  Copyright © 2016年 ZeroJ. All rights reserved.
 //
 
-#import "ZJVc1Controller.h"
+#import "ZJVc10Controller.h"
 #import "ZJScrollPageView.h"
 #import "ZJTestViewController.h"
 #import "ZJTest1Controller.h"
-@interface ZJVc1Controller ()<ZJScrollPageViewDelegate>
+@interface ZJVc10Controller ()<ZJScrollPageViewDelegate>
 @property(weak, nonatomic)ZJScrollPageView *scrollPageView;
 @property(strong, nonatomic)NSArray<NSString *> *titles;
 @property(strong, nonatomic)NSArray<UIViewController<ZJScrollPageViewChildVcDelegate> *> *childVcs;
 
 @end
 
-@implementation ZJVc1Controller
+@implementation ZJVc10Controller
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"效果示例";
-
+    
     //必要的设置, 如果没有设置可能导致内容显示不正常
     self.automaticallyAdjustsScrollViewInsets = NO;
     
     ZJSegmentStyle *style = [[ZJSegmentStyle alloc] init];
-    //显示遮盖
-    style.showCover = YES;
-    style.segmentViewBounces = NO;
-    // 颜色渐变
-    style.gradualChangeTitleColor = YES;
-    // 显示附加的按钮
-    style.showExtraButton = YES;
-    // 设置附加按钮的背景图片
-    style.extraBtnBackgroundImageName = @"extraBtnBackgroundImage";
+    /// 显示遮盖
+    style.showLine = YES;
+    /// 设置滚动条高度
     style.segmentHeight = 60;
-    // 当标题宽度总和小于ZJScrollPageView的宽度的时候, 标题会自适应宽度
+    /// 显示图片
+    style.showImage = YES;
+    /// 平分宽度
+//    style.scrollTitle = NO;
+    /// 图片位置
+    style.imagePosition = TitleImagePositionCenter;
+    // 当标题(和图片)宽度总和小于ZJScrollPageView的宽度的时候, 标题会自适应宽度
     
     __weak typeof(self) weakSelf = self;
-
+    
     // 初始化
     CGRect scrollPageViewFrame = CGRectMake(0, 64.0, self.view.bounds.size.width, self.view.bounds.size.height - 64.0);
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        __strong typeof(self) strongSelf = weakSelf;
-        
-        strongSelf.titles = @[@"新闻头条",
-                              @"国际要闻",
-                              @"中国足球"
-                              ];
-        
-        ZJScrollPageView *scrollPageView = [[ZJScrollPageView alloc] initWithFrame:scrollPageViewFrame segmentStyle:style titles:_titles parentViewController:strongSelf delegate:strongSelf];
-        strongSelf.scrollPageView = scrollPageView;
-        // 额外的按钮响应的block
-        
-//        [strongSelf.scrollPageView setSelectedIndex:1 animated:true];
-        
-        strongSelf.scrollPageView.extraBtnOnClick = ^(UIButton *extraBtn){
-            weakSelf.title = @"点击了extraBtn";
-            NSLog(@"点击了extraBtn");
-            
-        };
-        [strongSelf.view addSubview:strongSelf.scrollPageView];
-        
-    });
 
+    self.titles = @[@"新闻头条",
+                    @"国际要闻",
+                    @"中国足球"
+                    ];
     
-
+    ZJScrollPageView *scrollPageView = [[ZJScrollPageView alloc] initWithFrame:scrollPageViewFrame segmentStyle:style titles:_titles parentViewController:self delegate:self];
+    self.scrollPageView = scrollPageView;
+    // 额外的按钮响应的block
+    
+    //        [strongSelf.scrollPageView setSelectedIndex:1 animated:true];
+    
+    self.scrollPageView.extraBtnOnClick = ^(UIButton *extraBtn){
+        weakSelf.title = @"点击了extraBtn";
+        NSLog(@"点击了extraBtn");
+        
+    };
+    [self.view addSubview:self.scrollPageView];
+        
+    
+    
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -79,8 +76,14 @@
     return self.titles.count;
 }
 
-- (UIViewController<ZJScrollPageViewChildVcDelegate> *)childViewController:(UIViewController<ZJScrollPageViewChildVcDelegate> *)reuseViewController forIndex:(NSInteger)index {
+/// 设置图片
+- (void)setUpTitleView:(ZJTitleView *)titleView forIndex:(NSInteger)index {
+    titleView.normalImage = [UIImage imageNamed:[NSString stringWithFormat:@"normal_%ld", index+1]];
+    titleView.selectedImage = [UIImage imageNamed:@"selected"];
+}
 
+- (UIViewController<ZJScrollPageViewChildVcDelegate> *)childViewController:(UIViewController<ZJScrollPageViewChildVcDelegate> *)reuseViewController forIndex:(NSInteger)index {
+    
     // 根据不同的下标或者title返回相应的控制器, 但是控制器必须要遵守ZJScrollPageViewChildVcDelegate
     // 并且可以通过实现协议中的方法来加载不同的数据
     // 注意ZJScrollPageView不会保证viewWillAppear等生命周期方法一定会调用
@@ -104,7 +107,7 @@
             childVc = [[ZJTestViewController alloc] init];
             childVc.view.backgroundColor = [UIColor redColor];
         }
-
+        
         return childVc;
     } else {
         ZJTest1Controller *childVc = (ZJTest1Controller *)reuseViewController;
@@ -116,16 +119,9 @@
         if (index%2==0) {
             childVc.view.backgroundColor = [UIColor orangeColor];
         }
-
+        
         return childVc;
     }
-}
-
-
-- (void)dealloc
-{
-//        NSLog(@"%@-----test", self.description);
-
 }
 
 

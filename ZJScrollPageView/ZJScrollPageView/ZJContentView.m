@@ -128,9 +128,9 @@
     if (_delegate && [_delegate respondsToSelector:@selector(numberOfChildViewControllers)]) {
         _itemsCount = [_delegate numberOfChildViewControllers];
     }
+    
     return _itemsCount;
 }
-
 
 + (void)removeChildVc:(UIViewController *)childVc {
     [childVc willMoveToParentViewController:nil];

@@ -214,7 +214,7 @@ static CGFloat const defaultOffSetY = segmentViewHeight + naviBarHeight + headVi
         
         // 注意: 一定要避免循环引用!!
         __weak typeof(self) weakSelf = self;
-        ZJScrollSegmentView *segment = [[ZJScrollSegmentView alloc] initWithFrame:CGRectMake(0, naviBarHeight + headViewHeight, self.view.bounds.size.width, segmentViewHeight) segmentStyle:style titles:self.titles titleDidClick:^(UILabel *label, NSInteger index) {
+        ZJScrollSegmentView *segment = [[ZJScrollSegmentView alloc] initWithFrame:CGRectMake(0, naviBarHeight + headViewHeight, self.view.bounds.size.width, segmentViewHeight) segmentStyle:style delegate:self titles:self.titles titleDidClick:^(ZJTitleView *titleView, NSInteger index) {
             
             [weakSelf.contentView setContentOffSet:CGPointMake(weakSelf.contentView.bounds.size.width * index, 0.0) animated:YES];
             

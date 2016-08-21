@@ -7,10 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "UIViewController+ZJScrollPageController.h"
 
 @interface ZJSegmentStyle : NSObject
-
+typedef NS_ENUM(NSInteger, TitleImagePosition) {
+    TitleImagePositionLeft,
+    TitleImagePositionRight,
+    TitleImagePositionTop,
+    TitleImagePositionCenter
+};
 /** 是否显示遮盖 默认为NO */
 @property (assign, nonatomic, getter=isShowCover) BOOL showCover;
 /** 是否显示滚动条 默认为NO*/
@@ -29,6 +33,9 @@
 @property (assign, nonatomic, getter=isScrollContentView) BOOL scrollContentView;
 /** 当设置scrollTitle=NO的时候标题会平分宽度, 如果你希望在滚动的过程中cover或者scrollLine的宽度随着变化设置这个属性为YES 默认为NO*/
 @property (assign, nonatomic, getter=isAdjustCoverOrLineWidth) BOOL adjustCoverOrLineWidth;
+/** 是否显示图片 */
+@property (assign, nonatomic, getter=isShowImage) BOOL showImage;
+
 /** 设置附加按钮的背景图片 默认为nil*/
 @property (strong, nonatomic) NSString *extraBtnBackgroundImageName;
 /** 滚动条的高度 默认为2 */
@@ -53,7 +60,8 @@
 @property (strong, nonatomic) UIColor *selectedTitleColor;
 /** segmentVIew的高度, 这个属性只在使用ZJScrollPageVIew的时候设置生效 */
 @property (assign, nonatomic) CGFloat segmentHeight;
-
+/** 标题中图片的位置 */
+@property (assign, nonatomic) TitleImagePosition imagePosition;
 
 
 @end

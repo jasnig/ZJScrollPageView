@@ -21,6 +21,7 @@
         self.showExtraButton = NO;
         self.scrollContentView = YES;
         self.adjustCoverOrLineWidth = NO;
+        self.showImage = NO;
         self.extraBtnBackgroundImageName = nil;
         self.scrollLineHeight = 2.0;
         self.scrollLineColor = [UIColor brownColor];
@@ -31,7 +32,6 @@
         self.titleFont = [UIFont systemFontOfSize:14.0];
         self.titleBigScale = 1.3;
         self.normalTitleColor = [UIColor colorWithRed:51.0/255.0 green:53.0/255.0 blue:75/255.0 alpha:1.0];
-        
         self.selectedTitleColor = [UIColor colorWithRed:255.0/255.0 green:0.0/255.0 blue:121/255.0 alpha:1.0];
         
         self.segmentHeight = 44.0;

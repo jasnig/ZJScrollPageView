@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4A765C511D6959CE00BD42C9 /* ZJVc10Controller.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A765C501D6959CE00BD42C9 /* ZJVc10Controller.m */; };
 		4AAF4F0F1D24D88D009F6D3F /* ZJTest1Controller.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AAF4F0E1D24D88D009F6D3F /* ZJTest1Controller.m */; };
 		4AD142241D2CE6AD001113FC /* ZJVc9Controller.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD142231D2CE6AD001113FC /* ZJVc9Controller.m */; };
 		4AD142281D2CE807001113FC /* ZJPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD142271D2CE807001113FC /* ZJPageViewController.m */; };
@@ -23,7 +24,7 @@
 		4B7429C51CDD9ACB009CC9B2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4B7429C41CDD9ACB009CC9B2 /* Main.storyboard */; };
 		4B7429DB1CDD9C16009CC9B2 /* UIView+ZJFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7429D01CDD9C16009CC9B2 /* UIView+ZJFrame.m */; };
 		4B7429DC1CDD9C16009CC9B2 /* ZJContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7429D21CDD9C16009CC9B2 /* ZJContentView.m */; };
-		4B7429DD1CDD9C16009CC9B2 /* ZJCustomLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7429D41CDD9C16009CC9B2 /* ZJCustomLabel.m */; };
+		4B7429DD1CDD9C16009CC9B2 /* ZJTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7429D41CDD9C16009CC9B2 /* ZJTitleView.m */; };
 		4B7429DE1CDD9C16009CC9B2 /* ZJScrollPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7429D61CDD9C16009CC9B2 /* ZJScrollPageView.m */; };
 		4B7429DF1CDD9C16009CC9B2 /* ZJScrollSegmentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7429D81CDD9C16009CC9B2 /* ZJScrollSegmentView.m */; };
 		4B7429E01CDD9C16009CC9B2 /* ZJSegmentStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7429DA1CDD9C16009CC9B2 /* ZJSegmentStyle.m */; };
@@ -56,6 +57,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4A765C4F1D6959CE00BD42C9 /* ZJVc10Controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJVc10Controller.h; sourceTree = "<group>"; };
+		4A765C501D6959CE00BD42C9 /* ZJVc10Controller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZJVc10Controller.m; sourceTree = "<group>"; };
 		4AAF4F0A1D24C172009F6D3F /* ZJScrollPageViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJScrollPageViewDelegate.h; sourceTree = "<group>"; };
 		4AAF4F0D1D24D88D009F6D3F /* ZJTest1Controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJTest1Controller.h; sourceTree = "<group>"; };
 		4AAF4F0E1D24D88D009F6D3F /* ZJTest1Controller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZJTest1Controller.m; sourceTree = "<group>"; };
@@ -89,8 +92,8 @@
 		4B7429D01CDD9C16009CC9B2 /* UIView+ZJFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+ZJFrame.m"; sourceTree = "<group>"; };
 		4B7429D11CDD9C16009CC9B2 /* ZJContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJContentView.h; sourceTree = "<group>"; };
 		4B7429D21CDD9C16009CC9B2 /* ZJContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZJContentView.m; sourceTree = "<group>"; };
-		4B7429D31CDD9C16009CC9B2 /* ZJCustomLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJCustomLabel.h; sourceTree = "<group>"; };
-		4B7429D41CDD9C16009CC9B2 /* ZJCustomLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZJCustomLabel.m; sourceTree = "<group>"; };
+		4B7429D31CDD9C16009CC9B2 /* ZJTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJTitleView.h; sourceTree = "<group>"; };
+		4B7429D41CDD9C16009CC9B2 /* ZJTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZJTitleView.m; sourceTree = "<group>"; };
 		4B7429D51CDD9C16009CC9B2 /* ZJScrollPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJScrollPageView.h; sourceTree = "<group>"; };
 		4B7429D61CDD9C16009CC9B2 /* ZJScrollPageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZJScrollPageView.m; sourceTree = "<group>"; };
 		4B7429D71CDD9C16009CC9B2 /* ZJScrollSegmentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJScrollSegmentView.h; sourceTree = "<group>"; };
@@ -142,6 +145,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4A765C4E1D6959B100BD42C9 /* 显示图片的效果 */ = {
+			isa = PBXGroup;
+			children = (
+				4A765C4F1D6959CE00BD42C9 /* ZJVc10Controller.h */,
+				4A765C501D6959CE00BD42C9 /* ZJVc10Controller.m */,
+			);
+			path = "显示图片的效果";
+			sourceTree = "<group>";
+		};
 		4AD142251D2CE6BC001113FC /* 微博&简书个人主页效果 */ = {
 			isa = PBXGroup;
 			children = (
@@ -238,6 +250,7 @@
 				4B7429C71CDD9C0D009CC9B2 /* 动态更改显示内容和标题 效果 */,
 				4B7429F91CDDE1B9009CC9B2 /* 更改选中的下标的效果 */,
 				4AD142251D2CE6BC001113FC /* 微博&简书个人主页效果 */,
+				4A765C4E1D6959B100BD42C9 /* 显示图片的效果 */,
 			);
 			path = "使用示例";
 			sourceTree = "<group>";
@@ -316,8 +329,8 @@
 				4B56CB9E1D06E1E900D58BFA /* UIViewController+ZJScrollPageController.m */,
 				4B7429D11CDD9C16009CC9B2 /* ZJContentView.h */,
 				4B7429D21CDD9C16009CC9B2 /* ZJContentView.m */,
-				4B7429D31CDD9C16009CC9B2 /* ZJCustomLabel.h */,
-				4B7429D41CDD9C16009CC9B2 /* ZJCustomLabel.m */,
+				4B7429D31CDD9C16009CC9B2 /* ZJTitleView.h */,
+				4B7429D41CDD9C16009CC9B2 /* ZJTitleView.m */,
 				4B7429D51CDD9C16009CC9B2 /* ZJScrollPageView.h */,
 				4B7429D61CDD9C16009CC9B2 /* ZJScrollPageView.m */,
 				4B7429D71CDD9C16009CC9B2 /* ZJScrollSegmentView.h */,
@@ -476,6 +489,7 @@
 				4B7429E91CDDCE18009CC9B2 /* ZJVc4Controller.m in Sources */,
 				4B7429DE1CDD9C16009CC9B2 /* ZJScrollPageView.m in Sources */,
 				4B7429F51CDDD4DA009CC9B2 /* ZJVc7Controller.m in Sources */,
+				4A765C511D6959CE00BD42C9 /* ZJVc10Controller.m in Sources */,
 				4B7429FC1CDDE1E5009CC9B2 /* ZJVc8Controller.m in Sources */,
 				4B7429EC1CDDCE29009CC9B2 /* ZJVc3Controller.m in Sources */,
 				4B7429DF1CDD9C16009CC9B2 /* ZJScrollSegmentView.m in Sources */,
@@ -492,7 +506,7 @@
 				4B7429E61CDDB3E4009CC9B2 /* ZJVc1Controller.m in Sources */,
 				4B0C06311CDC55080079E8F3 /* main.m in Sources */,
 				4B7429F21CDDD409009CC9B2 /* ZJVc5Controller.m in Sources */,
-				4B7429DD1CDD9C16009CC9B2 /* ZJCustomLabel.m in Sources */,
+				4B7429DD1CDD9C16009CC9B2 /* ZJTitleView.m in Sources */,
 				4AAF4F0F1D24D88D009F6D3F /* ZJTest1Controller.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

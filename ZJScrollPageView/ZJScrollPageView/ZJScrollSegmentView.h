@@ -8,10 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "ZJSegmentStyle.h"
-
+#import "ZJScrollPageViewDelegate.h"
 @class ZJSegmentStyle;
+@class ZJTitleView;
 
-typedef void(^TitleBtnOnClickBlock)(UILabel *label, NSInteger index);
+typedef void(^TitleBtnOnClickBlock)(ZJTitleView *titleView, NSInteger index);
 typedef void(^ExtraBtnOnClick)(UIButton *extraBtn);
 
 @interface ZJScrollSegmentView : UIView
@@ -21,10 +22,12 @@ typedef void(^ExtraBtnOnClick)(UIButton *extraBtn);
 // 所有标题的设置
 @property (strong, nonatomic) ZJSegmentStyle *segmentStyle;
 @property (copy, nonatomic) ExtraBtnOnClick extraBtnOnClick;
-
+@property (weak, nonatomic) id<ZJScrollPageViewDelegate> delegate;
 @property (strong, nonatomic) UIImage *backgroundImage;
 
-- (instancetype)initWithFrame:(CGRect )frame segmentStyle:(ZJSegmentStyle *)segmentStyle titles:(NSArray *)titles titleDidClick:(TitleBtnOnClickBlock)titleDidClick;
+- (instancetype)initWithFrame:(CGRect )frame segmentStyle:(ZJSegmentStyle *)segmentStyle delegate:(id<ZJScrollPageViewDelegate>)delegate titles:(NSArray *)titles titleDidClick:(TitleBtnOnClickBlock)titleDidClick;
+
+
 /** 点击按钮的时候调整UI*/
 - (void)adjustUIWhenBtnOnClickWithAnimate:(BOOL)animated;
 /** 切换下标的时候根据progress同步设置UI*/

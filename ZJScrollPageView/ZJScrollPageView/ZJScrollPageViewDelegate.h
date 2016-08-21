@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 @class ZJContentView;
-
+@class ZJTitleView;
 
 @protocol ZJScrollPageViewChildVcDelegate <NSObject>
 
@@ -41,7 +41,7 @@
  */
 - (UIViewController<ZJScrollPageViewChildVcDelegate> *)childViewController:(UIViewController<ZJScrollPageViewChildVcDelegate> *)reuseViewController forIndex:(NSInteger)index;
 
-
-
+@optional
+- (void)setUpTitleView:(ZJTitleView *)titleView forIndex:(NSInteger)index;
 @end
 

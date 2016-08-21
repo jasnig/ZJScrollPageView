@@ -10,7 +10,7 @@
 #import "UIView+ZJFrame.h"
 #import "UIViewController+ZJScrollPageController.h"
 #import "ZJContentView.h"
-#import "ZJCustomLabel.h"
+#import "ZJTitleView.h"
 #import "ZJScrollSegmentView.h"
 #import "ZJSegmentStyle.h"
 #import "ZJScrollPageViewDelegate.h"
