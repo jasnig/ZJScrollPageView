@@ -13,6 +13,10 @@
 ![滚动示例7.gif](http://upload-images.jianshu.io/upload_images/1271831-d4c09a66bd840fe4.gif?imageMogr2/auto-orient/strip)
 ![滚动示例8.gif](http://upload-images.jianshu.io/upload_images/1271831-c6b1d54295f4bcb1.gif?imageMogr2/auto-orient/strip)
 
+![tupian1](http://upload-images.jianshu.io/upload_images/1271831-7cd2608c83794f15.gif?imageMogr2/auto-orient/strip)
+![tupian2.gif](http://upload-images.jianshu.io/upload_images/1271831-6910abfdf29dc67f.gif?imageMogr2/auto-orient/strip)
+![tupian3.gif](http://upload-images.jianshu.io/upload_images/1271831-b62f7976f4051931.gif?imageMogr2/auto-orient/strip)
+![tupian4.gif](http://upload-images.jianshu.io/upload_images/1271831-bb2c00f01725c010.gif?imageMogr2/auto-orient/strip)
 
 ----
 ### 可以简单快速灵活的实现上图中的效果
@@ -51,7 +55,7 @@
 * 2016/06/12 增加了一个分类, 提供了 scrollPageParentViewController属性, 方便在每个界面获取到父控制器
 * 2016/06/29 更改了初始化方法, 改为了使用代理来传递相关的自控制器 方便动态更新
 * 2016/06/30 新增加了子控制器遵守的协议ZJScrollPageViewChildVcDelegate, 用于页面出现的时候加载数据
-
+* 2016/08/21 增加了可以显示图片, 和设置图片的不同位置的功能
 ----
 
 
