@@ -36,6 +36,7 @@
     style.showCover = YES;
     // 不要滚动标题, 每个标题将平分宽度
     style.scrollTitle = NO;
+    
     // 渐变
     style.gradualChangeTitleColor = YES;
     // 遮盖背景颜色

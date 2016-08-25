@@ -42,10 +42,10 @@
 @end
 
 @implementation ZJScrollSegmentView
-#define xGap 5.0
-#define wGap 2*xGap
-#define contentSizeXOff 20.0
 
+static CGFloat const xGap = 5.0;
+static CGFloat const wGap = 2*xGap;
+static CGFloat const contentSizeXOff = 20.0;
 
 #pragma mark - life cycle
 - (instancetype)initWithFrame:(CGRect )frame segmentStyle:(ZJSegmentStyle *)segmentStyle delegate:(id<ZJScrollPageViewDelegate>)delegate titles:(NSArray *)titles titleDidClick:(TitleBtnOnClickBlock)titleDidClick {

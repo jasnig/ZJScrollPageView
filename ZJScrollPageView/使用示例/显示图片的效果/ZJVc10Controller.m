@@ -30,16 +30,15 @@
     /// 显示遮盖
     style.showLine = YES;
     /// 设置滚动条高度
-    style.segmentHeight = 60;
-    /// 显示图片
+    style.segmentHeight = 80;
+    /// 显示图片 (在显示图片的时候只有下划线的效果可以开启, 其他的'遮盖','渐变',效果会被内部关闭)
     style.showImage = YES;
     /// 平分宽度
 //    style.scrollTitle = NO;
     /// 图片位置
-    style.imagePosition = TitleImagePositionCenter;
+    style.imagePosition = TitleImagePositionTop;
     // 当标题(和图片)宽度总和小于ZJScrollPageView的宽度的时候, 标题会自适应宽度
     
-    __weak typeof(self) weakSelf = self;
     
     // 初始化
     CGRect scrollPageViewFrame = CGRectMake(0, 64.0, self.view.bounds.size.width, self.view.bounds.size.height - 64.0);
@@ -52,9 +51,7 @@
     ZJScrollPageView *scrollPageView = [[ZJScrollPageView alloc] initWithFrame:scrollPageViewFrame segmentStyle:style titles:_titles parentViewController:self delegate:self];
     self.scrollPageView = scrollPageView;
     // 额外的按钮响应的block
-    
-    //        [strongSelf.scrollPageView setSelectedIndex:1 animated:true];
-    
+    __weak typeof(self) weakSelf = self;
     self.scrollPageView.extraBtnOnClick = ^(UIButton *extraBtn){
         weakSelf.title = @"点击了extraBtn";
         NSLog(@"点击了extraBtn");
@@ -62,9 +59,6 @@
     };
     [self.view addSubview:self.scrollPageView];
         
-    
-    
-    
 }
 
 - (void)didReceiveMemoryWarning {

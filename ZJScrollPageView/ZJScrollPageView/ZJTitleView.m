@@ -17,6 +17,9 @@
 @property (strong, nonatomic) UIImageView *imageView;
 @property (strong, nonatomic) UILabel *label;
 @property (strong, nonatomic) UIView *contentView;
+/** 后续添加 */
+// TODO: - 添加badge
+@property (nonatomic) UIView *badgeView;
 
 @end
 
@@ -34,7 +37,6 @@
         _isShowImage = NO;
         [self addSubview:self.label];
         
-
     }
     
     return self;
@@ -70,6 +72,11 @@
     
     switch (self.imagePosition) {
         case TitleImagePositionTop: {
+            CGRect contentViewFrame = self.contentView.frame;
+            contentViewFrame.size.height = _imageHeight + _titleSize.height;
+            contentViewFrame.origin.y = (self.frame.size.height - contentViewFrame.size.height)*0.5;
+            self.contentView.frame = contentViewFrame;
+            
             self.imageView.frame = CGRectMake(0, 0, _imageWidth, _imageHeight);
             CGPoint center = self.imageView.center;
             center.x = self.label.center.x;
@@ -172,6 +179,7 @@
 - (void)setTextColor:(UIColor *)textColor {
     _textColor = textColor;
     self.label.textColor = textColor;
+    
 }
 
 - (void)setSelected:(BOOL)selected {
@@ -182,7 +190,7 @@
 - (UIImageView *)imageView {
     if (_imageView == nil) {
         _imageView = [[UIImageView alloc] init];
-        _imageView.contentMode = UIViewContentModeScaleAspectFit;
+        _imageView.contentMode = UIViewContentModeCenter;
     }
     return _imageView;
 }

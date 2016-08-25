@@ -19,7 +19,7 @@ typedef NS_ENUM(NSInteger, TitleImagePosition) {
 @property (assign, nonatomic, getter=isShowCover) BOOL showCover;
 /** 是否显示滚动条 默认为NO*/
 @property (assign, nonatomic, getter=isShowLine) BOOL showLine;
-/** 是否缩放标题 默认为NO*/
+/** 是否缩放标题 不能滚动的时候就不要把缩放和遮盖或者滚动条同时使用, 否则显示效果不好 默认为NO*/
 @property (assign, nonatomic, getter=isScaleTitle) BOOL scaleTitle;
 /** 是否滚动标题 默认为YES 设置为NO的时候所有的标题将不会滚动, 并且宽度会平分 和系统的segment效果相似 */
 @property (assign, nonatomic, getter=isScrollTitle) BOOL scrollTitle;
