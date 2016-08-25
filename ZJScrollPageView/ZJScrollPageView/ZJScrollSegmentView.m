@@ -224,16 +224,19 @@ static CGFloat const contentSizeXOff = 20.0;
         }
         
     } else {
-        float allTitlesWidth = self.segmentStyle.titleMargin;
-        for (int i = 0; i<self.titleWidths.count; i++) {
-            allTitlesWidth = allTitlesWidth + [self.titleWidths[i] floatValue] + self.segmentStyle.titleMargin;
-        }
-        
-
-        float addedMargin = allTitlesWidth < self.scrollView.bounds.size.width ? (self.scrollView.bounds.size.width - allTitlesWidth)/self.titleWidths.count : 0 ;
-        
         NSInteger index = 0;
         float lastLableMaxX = self.segmentStyle.titleMargin;
+        float addedMargin = 0.0f;
+        if (self.segmentStyle.isAutoAdjustTitlesWidth) {
+            
+            float allTitlesWidth = self.segmentStyle.titleMargin;
+            for (int i = 0; i<self.titleWidths.count; i++) {
+                allTitlesWidth = allTitlesWidth + [self.titleWidths[i] floatValue] + self.segmentStyle.titleMargin;
+            }
+            
+            
+            addedMargin = allTitlesWidth < self.scrollView.bounds.size.width ? (self.scrollView.bounds.size.width - allTitlesWidth)/self.titleWidths.count : 0 ;
+        }
 
         for (ZJTitleView *titleView in self.titleViews) {
             titleW = [self.titleWidths[index] floatValue];
