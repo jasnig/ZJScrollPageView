@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ZJPageViewController.h"
-@interface ZJTableViewController : ZJPageViewController
+#import "ZJPageController.h"
+@interface ZJTableViewController : ZJPageController
 
 @end

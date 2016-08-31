@@ -37,7 +37,10 @@
     // 设置附加按钮的背景图片
     style.extraBtnBackgroundImageName = @"extraBtnBackgroundImage";
     style.segmentHeight = 60;
-    style.autoAdjustTitlesWidth = YES;
+    
+    style.autoAdjustTitlesWidth = NO;
+    
+//    style.segmentViewComponent = SegmentViewComponentShowCover |  SegmentViewComponentShowExtraButton | SegmentViewComponentGraduallyChangeTitleColor;
     // 当标题宽度总和小于ZJScrollPageView的宽度的时候, 标题会自适应宽度
     
     __weak typeof(self) weakSelf = self;

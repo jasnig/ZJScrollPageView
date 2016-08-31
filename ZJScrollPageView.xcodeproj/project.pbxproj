@@ -7,10 +7,34 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4A1DDE1B1D76762E006F4C69 /* ZJVc9Controller.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A1DDE1A1D76762E006F4C69 /* ZJVc9Controller.m */; };
+		4A1DDE1E1D7677B6006F4C69 /* ZJPageCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A1DDE1D1D7677B6006F4C69 /* ZJPageCollectionViewController.m */; };
+		4A1DDE211D7677C6006F4C69 /* ZJPageTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A1DDE201D7677C6006F4C69 /* ZJPageTableViewController.m */; };
+		4A1DDE261D767859006F4C69 /* ZJPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A1DDE251D767859006F4C69 /* ZJPageViewController.m */; };
+		4A1DDE651D769C3E006F4C69 /* MJRefreshAutoFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A1DDE391D769C3D006F4C69 /* MJRefreshAutoFooter.m */; };
+		4A1DDE661D769C3E006F4C69 /* MJRefreshBackFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A1DDE3B1D769C3D006F4C69 /* MJRefreshBackFooter.m */; };
+		4A1DDE671D769C3E006F4C69 /* MJRefreshComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A1DDE3D1D769C3E006F4C69 /* MJRefreshComponent.m */; };
+		4A1DDE681D769C3E006F4C69 /* MJRefreshFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A1DDE3F1D769C3E006F4C69 /* MJRefreshFooter.m */; };
+		4A1DDE691D769C3E006F4C69 /* MJRefreshHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A1DDE411D769C3E006F4C69 /* MJRefreshHeader.m */; };
+		4A1DDE6A1D769C3E006F4C69 /* MJRefreshAutoGifFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A1DDE461D769C3E006F4C69 /* MJRefreshAutoGifFooter.m */; };
+		4A1DDE6B1D769C3E006F4C69 /* MJRefreshAutoNormalFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A1DDE481D769C3E006F4C69 /* MJRefreshAutoNormalFooter.m */; };
+		4A1DDE6C1D769C3E006F4C69 /* MJRefreshAutoStateFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A1DDE4A1D769C3E006F4C69 /* MJRefreshAutoStateFooter.m */; };
+		4A1DDE6D1D769C3E006F4C69 /* MJRefreshBackGifFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A1DDE4D1D769C3E006F4C69 /* MJRefreshBackGifFooter.m */; };
+		4A1DDE6E1D769C3E006F4C69 /* MJRefreshBackNormalFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A1DDE4F1D769C3E006F4C69 /* MJRefreshBackNormalFooter.m */; };
+		4A1DDE6F1D769C3E006F4C69 /* MJRefreshBackStateFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A1DDE511D769C3E006F4C69 /* MJRefreshBackStateFooter.m */; };
+		4A1DDE701D769C3E006F4C69 /* MJRefreshGifHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A1DDE541D769C3E006F4C69 /* MJRefreshGifHeader.m */; };
+		4A1DDE711D769C3E006F4C69 /* MJRefreshNormalHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A1DDE561D769C3E006F4C69 /* MJRefreshNormalHeader.m */; };
+		4A1DDE721D769C3E006F4C69 /* MJRefreshStateHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A1DDE581D769C3E006F4C69 /* MJRefreshStateHeader.m */; };
+		4A1DDE731D769C3E006F4C69 /* MJRefresh.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4A1DDE591D769C3E006F4C69 /* MJRefresh.bundle */; };
+		4A1DDE741D769C3E006F4C69 /* MJRefreshConst.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A1DDE5C1D769C3E006F4C69 /* MJRefreshConst.m */; };
+		4A1DDE751D769C3E006F4C69 /* NSBundle+MJRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A1DDE5E1D769C3E006F4C69 /* NSBundle+MJRefresh.m */; };
+		4A1DDE761D769C3E006F4C69 /* UIScrollView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A1DDE601D769C3E006F4C69 /* UIScrollView+MJExtension.m */; };
+		4A1DDE771D769C3E006F4C69 /* UIScrollView+MJRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A1DDE621D769C3E006F4C69 /* UIScrollView+MJRefresh.m */; };
+		4A1DDE781D769C3E006F4C69 /* UIView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A1DDE641D769C3E006F4C69 /* UIView+MJExtension.m */; };
 		4A765C511D6959CE00BD42C9 /* ZJVc10Controller.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A765C501D6959CE00BD42C9 /* ZJVc10Controller.m */; };
 		4AAF4F0F1D24D88D009F6D3F /* ZJTest1Controller.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AAF4F0E1D24D88D009F6D3F /* ZJTest1Controller.m */; };
-		4AD142241D2CE6AD001113FC /* ZJVc9Controller.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD142231D2CE6AD001113FC /* ZJVc9Controller.m */; };
-		4AD142281D2CE807001113FC /* ZJPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD142271D2CE807001113FC /* ZJPageViewController.m */; };
+		4AD142241D2CE6AD001113FC /* ZJVc0Controller.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD142231D2CE6AD001113FC /* ZJVc0Controller.m */; };
+		4AD142281D2CE807001113FC /* ZJPageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD142271D2CE807001113FC /* ZJPageController.m */; };
 		4AD1422E1D2E2A00001113FC /* ZJCollectionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD1422D1D2E2A00001113FC /* ZJCollectionController.m */; };
 		4AD142311D2E33DA001113FC /* ZJTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD142301D2E33DA001113FC /* ZJTableViewController.m */; };
 		4B0C06311CDC55080079E8F3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B0C06301CDC55080079E8F3 /* main.m */; };
@@ -57,15 +81,63 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4A1DDE191D76762E006F4C69 /* ZJVc9Controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJVc9Controller.h; sourceTree = "<group>"; };
+		4A1DDE1A1D76762E006F4C69 /* ZJVc9Controller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZJVc9Controller.m; sourceTree = "<group>"; };
+		4A1DDE1C1D7677B6006F4C69 /* ZJPageCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJPageCollectionViewController.h; sourceTree = "<group>"; };
+		4A1DDE1D1D7677B6006F4C69 /* ZJPageCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZJPageCollectionViewController.m; sourceTree = "<group>"; };
+		4A1DDE1F1D7677C6006F4C69 /* ZJPageTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJPageTableViewController.h; sourceTree = "<group>"; };
+		4A1DDE201D7677C6006F4C69 /* ZJPageTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZJPageTableViewController.m; sourceTree = "<group>"; };
+		4A1DDE241D767859006F4C69 /* ZJPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJPageViewController.h; sourceTree = "<group>"; };
+		4A1DDE251D767859006F4C69 /* ZJPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZJPageViewController.m; sourceTree = "<group>"; };
+		4A1DDE381D769C3D006F4C69 /* MJRefreshAutoFooter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshAutoFooter.h; sourceTree = "<group>"; };
+		4A1DDE391D769C3D006F4C69 /* MJRefreshAutoFooter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshAutoFooter.m; sourceTree = "<group>"; };
+		4A1DDE3A1D769C3D006F4C69 /* MJRefreshBackFooter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshBackFooter.h; sourceTree = "<group>"; };
+		4A1DDE3B1D769C3D006F4C69 /* MJRefreshBackFooter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshBackFooter.m; sourceTree = "<group>"; };
+		4A1DDE3C1D769C3E006F4C69 /* MJRefreshComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshComponent.h; sourceTree = "<group>"; };
+		4A1DDE3D1D769C3E006F4C69 /* MJRefreshComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshComponent.m; sourceTree = "<group>"; };
+		4A1DDE3E1D769C3E006F4C69 /* MJRefreshFooter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshFooter.h; sourceTree = "<group>"; };
+		4A1DDE3F1D769C3E006F4C69 /* MJRefreshFooter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshFooter.m; sourceTree = "<group>"; };
+		4A1DDE401D769C3E006F4C69 /* MJRefreshHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshHeader.h; sourceTree = "<group>"; };
+		4A1DDE411D769C3E006F4C69 /* MJRefreshHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshHeader.m; sourceTree = "<group>"; };
+		4A1DDE451D769C3E006F4C69 /* MJRefreshAutoGifFooter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshAutoGifFooter.h; sourceTree = "<group>"; };
+		4A1DDE461D769C3E006F4C69 /* MJRefreshAutoGifFooter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshAutoGifFooter.m; sourceTree = "<group>"; };
+		4A1DDE471D769C3E006F4C69 /* MJRefreshAutoNormalFooter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshAutoNormalFooter.h; sourceTree = "<group>"; };
+		4A1DDE481D769C3E006F4C69 /* MJRefreshAutoNormalFooter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshAutoNormalFooter.m; sourceTree = "<group>"; };
+		4A1DDE491D769C3E006F4C69 /* MJRefreshAutoStateFooter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshAutoStateFooter.h; sourceTree = "<group>"; };
+		4A1DDE4A1D769C3E006F4C69 /* MJRefreshAutoStateFooter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshAutoStateFooter.m; sourceTree = "<group>"; };
+		4A1DDE4C1D769C3E006F4C69 /* MJRefreshBackGifFooter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshBackGifFooter.h; sourceTree = "<group>"; };
+		4A1DDE4D1D769C3E006F4C69 /* MJRefreshBackGifFooter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshBackGifFooter.m; sourceTree = "<group>"; };
+		4A1DDE4E1D769C3E006F4C69 /* MJRefreshBackNormalFooter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshBackNormalFooter.h; sourceTree = "<group>"; };
+		4A1DDE4F1D769C3E006F4C69 /* MJRefreshBackNormalFooter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshBackNormalFooter.m; sourceTree = "<group>"; };
+		4A1DDE501D769C3E006F4C69 /* MJRefreshBackStateFooter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshBackStateFooter.h; sourceTree = "<group>"; };
+		4A1DDE511D769C3E006F4C69 /* MJRefreshBackStateFooter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshBackStateFooter.m; sourceTree = "<group>"; };
+		4A1DDE531D769C3E006F4C69 /* MJRefreshGifHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshGifHeader.h; sourceTree = "<group>"; };
+		4A1DDE541D769C3E006F4C69 /* MJRefreshGifHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshGifHeader.m; sourceTree = "<group>"; };
+		4A1DDE551D769C3E006F4C69 /* MJRefreshNormalHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshNormalHeader.h; sourceTree = "<group>"; };
+		4A1DDE561D769C3E006F4C69 /* MJRefreshNormalHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshNormalHeader.m; sourceTree = "<group>"; };
+		4A1DDE571D769C3E006F4C69 /* MJRefreshStateHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshStateHeader.h; sourceTree = "<group>"; };
+		4A1DDE581D769C3E006F4C69 /* MJRefreshStateHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshStateHeader.m; sourceTree = "<group>"; };
+		4A1DDE591D769C3E006F4C69 /* MJRefresh.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MJRefresh.bundle; sourceTree = "<group>"; };
+		4A1DDE5A1D769C3E006F4C69 /* MJRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefresh.h; sourceTree = "<group>"; };
+		4A1DDE5B1D769C3E006F4C69 /* MJRefreshConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshConst.h; sourceTree = "<group>"; };
+		4A1DDE5C1D769C3E006F4C69 /* MJRefreshConst.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshConst.m; sourceTree = "<group>"; };
+		4A1DDE5D1D769C3E006F4C69 /* NSBundle+MJRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBundle+MJRefresh.h"; sourceTree = "<group>"; };
+		4A1DDE5E1D769C3E006F4C69 /* NSBundle+MJRefresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSBundle+MJRefresh.m"; sourceTree = "<group>"; };
+		4A1DDE5F1D769C3E006F4C69 /* UIScrollView+MJExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+MJExtension.h"; sourceTree = "<group>"; };
+		4A1DDE601D769C3E006F4C69 /* UIScrollView+MJExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+MJExtension.m"; sourceTree = "<group>"; };
+		4A1DDE611D769C3E006F4C69 /* UIScrollView+MJRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+MJRefresh.h"; sourceTree = "<group>"; };
+		4A1DDE621D769C3E006F4C69 /* UIScrollView+MJRefresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+MJRefresh.m"; sourceTree = "<group>"; };
+		4A1DDE631D769C3E006F4C69 /* UIView+MJExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+MJExtension.h"; sourceTree = "<group>"; };
+		4A1DDE641D769C3E006F4C69 /* UIView+MJExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+MJExtension.m"; sourceTree = "<group>"; };
 		4A765C4F1D6959CE00BD42C9 /* ZJVc10Controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJVc10Controller.h; sourceTree = "<group>"; };
 		4A765C501D6959CE00BD42C9 /* ZJVc10Controller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZJVc10Controller.m; sourceTree = "<group>"; };
 		4AAF4F0A1D24C172009F6D3F /* ZJScrollPageViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJScrollPageViewDelegate.h; sourceTree = "<group>"; };
 		4AAF4F0D1D24D88D009F6D3F /* ZJTest1Controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJTest1Controller.h; sourceTree = "<group>"; };
 		4AAF4F0E1D24D88D009F6D3F /* ZJTest1Controller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZJTest1Controller.m; sourceTree = "<group>"; };
-		4AD142221D2CE6AD001113FC /* ZJVc9Controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJVc9Controller.h; sourceTree = "<group>"; };
-		4AD142231D2CE6AD001113FC /* ZJVc9Controller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZJVc9Controller.m; sourceTree = "<group>"; };
-		4AD142261D2CE807001113FC /* ZJPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJPageViewController.h; sourceTree = "<group>"; };
-		4AD142271D2CE807001113FC /* ZJPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZJPageViewController.m; sourceTree = "<group>"; };
+		4AD142221D2CE6AD001113FC /* ZJVc0Controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJVc0Controller.h; sourceTree = "<group>"; };
+		4AD142231D2CE6AD001113FC /* ZJVc0Controller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZJVc0Controller.m; sourceTree = "<group>"; };
+		4AD142261D2CE807001113FC /* ZJPageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJPageController.h; sourceTree = "<group>"; };
+		4AD142271D2CE807001113FC /* ZJPageController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZJPageController.m; sourceTree = "<group>"; };
 		4AD1422C1D2E2A00001113FC /* ZJCollectionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJCollectionController.h; sourceTree = "<group>"; };
 		4AD1422D1D2E2A00001113FC /* ZJCollectionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZJCollectionController.m; sourceTree = "<group>"; };
 		4AD1422F1D2E33DA001113FC /* ZJTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJTableViewController.h; sourceTree = "<group>"; };
@@ -145,6 +217,131 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4A1DDE221D7677D4006F4C69 /* 之前的方法 已废弃 */ = {
+			isa = PBXGroup;
+			children = (
+				4AD142221D2CE6AD001113FC /* ZJVc0Controller.h */,
+				4AD142231D2CE6AD001113FC /* ZJVc0Controller.m */,
+				4AD142261D2CE807001113FC /* ZJPageController.h */,
+				4AD142271D2CE807001113FC /* ZJPageController.m */,
+				4AD1422C1D2E2A00001113FC /* ZJCollectionController.h */,
+				4AD1422D1D2E2A00001113FC /* ZJCollectionController.m */,
+				4AD1422F1D2E33DA001113FC /* ZJTableViewController.h */,
+				4AD142301D2E33DA001113FC /* ZJTableViewController.m */,
+			);
+			name = "之前的方法 已废弃";
+			sourceTree = "<group>";
+		};
+		4A1DDE231D7677F2006F4C69 /* 现在用的方法 */ = {
+			isa = PBXGroup;
+			children = (
+				4A1DDE191D76762E006F4C69 /* ZJVc9Controller.h */,
+				4A1DDE1A1D76762E006F4C69 /* ZJVc9Controller.m */,
+				4A1DDE1C1D7677B6006F4C69 /* ZJPageCollectionViewController.h */,
+				4A1DDE1D1D7677B6006F4C69 /* ZJPageCollectionViewController.m */,
+				4A1DDE1F1D7677C6006F4C69 /* ZJPageTableViewController.h */,
+				4A1DDE201D7677C6006F4C69 /* ZJPageTableViewController.m */,
+				4A1DDE241D767859006F4C69 /* ZJPageViewController.h */,
+				4A1DDE251D767859006F4C69 /* ZJPageViewController.m */,
+			);
+			name = "现在用的方法";
+			sourceTree = "<group>";
+		};
+		4A1DDE361D769C3D006F4C69 /* MJRefresh */ = {
+			isa = PBXGroup;
+			children = (
+				4A1DDE371D769C3D006F4C69 /* Base */,
+				4A1DDE421D769C3E006F4C69 /* Custom */,
+				4A1DDE591D769C3E006F4C69 /* MJRefresh.bundle */,
+				4A1DDE5A1D769C3E006F4C69 /* MJRefresh.h */,
+				4A1DDE5B1D769C3E006F4C69 /* MJRefreshConst.h */,
+				4A1DDE5C1D769C3E006F4C69 /* MJRefreshConst.m */,
+				4A1DDE5D1D769C3E006F4C69 /* NSBundle+MJRefresh.h */,
+				4A1DDE5E1D769C3E006F4C69 /* NSBundle+MJRefresh.m */,
+				4A1DDE5F1D769C3E006F4C69 /* UIScrollView+MJExtension.h */,
+				4A1DDE601D769C3E006F4C69 /* UIScrollView+MJExtension.m */,
+				4A1DDE611D769C3E006F4C69 /* UIScrollView+MJRefresh.h */,
+				4A1DDE621D769C3E006F4C69 /* UIScrollView+MJRefresh.m */,
+				4A1DDE631D769C3E006F4C69 /* UIView+MJExtension.h */,
+				4A1DDE641D769C3E006F4C69 /* UIView+MJExtension.m */,
+			);
+			path = MJRefresh;
+			sourceTree = "<group>";
+		};
+		4A1DDE371D769C3D006F4C69 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				4A1DDE381D769C3D006F4C69 /* MJRefreshAutoFooter.h */,
+				4A1DDE391D769C3D006F4C69 /* MJRefreshAutoFooter.m */,
+				4A1DDE3A1D769C3D006F4C69 /* MJRefreshBackFooter.h */,
+				4A1DDE3B1D769C3D006F4C69 /* MJRefreshBackFooter.m */,
+				4A1DDE3C1D769C3E006F4C69 /* MJRefreshComponent.h */,
+				4A1DDE3D1D769C3E006F4C69 /* MJRefreshComponent.m */,
+				4A1DDE3E1D769C3E006F4C69 /* MJRefreshFooter.h */,
+				4A1DDE3F1D769C3E006F4C69 /* MJRefreshFooter.m */,
+				4A1DDE401D769C3E006F4C69 /* MJRefreshHeader.h */,
+				4A1DDE411D769C3E006F4C69 /* MJRefreshHeader.m */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		4A1DDE421D769C3E006F4C69 /* Custom */ = {
+			isa = PBXGroup;
+			children = (
+				4A1DDE431D769C3E006F4C69 /* Footer */,
+				4A1DDE521D769C3E006F4C69 /* Header */,
+			);
+			path = Custom;
+			sourceTree = "<group>";
+		};
+		4A1DDE431D769C3E006F4C69 /* Footer */ = {
+			isa = PBXGroup;
+			children = (
+				4A1DDE441D769C3E006F4C69 /* Auto */,
+				4A1DDE4B1D769C3E006F4C69 /* Back */,
+			);
+			path = Footer;
+			sourceTree = "<group>";
+		};
+		4A1DDE441D769C3E006F4C69 /* Auto */ = {
+			isa = PBXGroup;
+			children = (
+				4A1DDE451D769C3E006F4C69 /* MJRefreshAutoGifFooter.h */,
+				4A1DDE461D769C3E006F4C69 /* MJRefreshAutoGifFooter.m */,
+				4A1DDE471D769C3E006F4C69 /* MJRefreshAutoNormalFooter.h */,
+				4A1DDE481D769C3E006F4C69 /* MJRefreshAutoNormalFooter.m */,
+				4A1DDE491D769C3E006F4C69 /* MJRefreshAutoStateFooter.h */,
+				4A1DDE4A1D769C3E006F4C69 /* MJRefreshAutoStateFooter.m */,
+			);
+			path = Auto;
+			sourceTree = "<group>";
+		};
+		4A1DDE4B1D769C3E006F4C69 /* Back */ = {
+			isa = PBXGroup;
+			children = (
+				4A1DDE4C1D769C3E006F4C69 /* MJRefreshBackGifFooter.h */,
+				4A1DDE4D1D769C3E006F4C69 /* MJRefreshBackGifFooter.m */,
+				4A1DDE4E1D769C3E006F4C69 /* MJRefreshBackNormalFooter.h */,
+				4A1DDE4F1D769C3E006F4C69 /* MJRefreshBackNormalFooter.m */,
+				4A1DDE501D769C3E006F4C69 /* MJRefreshBackStateFooter.h */,
+				4A1DDE511D769C3E006F4C69 /* MJRefreshBackStateFooter.m */,
+			);
+			path = Back;
+			sourceTree = "<group>";
+		};
+		4A1DDE521D769C3E006F4C69 /* Header */ = {
+			isa = PBXGroup;
+			children = (
+				4A1DDE531D769C3E006F4C69 /* MJRefreshGifHeader.h */,
+				4A1DDE541D769C3E006F4C69 /* MJRefreshGifHeader.m */,
+				4A1DDE551D769C3E006F4C69 /* MJRefreshNormalHeader.h */,
+				4A1DDE561D769C3E006F4C69 /* MJRefreshNormalHeader.m */,
+				4A1DDE571D769C3E006F4C69 /* MJRefreshStateHeader.h */,
+				4A1DDE581D769C3E006F4C69 /* MJRefreshStateHeader.m */,
+			);
+			path = Header;
+			sourceTree = "<group>";
+		};
 		4A765C4E1D6959B100BD42C9 /* 显示图片的效果 */ = {
 			isa = PBXGroup;
 			children = (
@@ -157,14 +354,8 @@
 		4AD142251D2CE6BC001113FC /* 微博&简书个人主页效果 */ = {
 			isa = PBXGroup;
 			children = (
-				4AD142221D2CE6AD001113FC /* ZJVc9Controller.h */,
-				4AD142231D2CE6AD001113FC /* ZJVc9Controller.m */,
-				4AD142261D2CE807001113FC /* ZJPageViewController.h */,
-				4AD142271D2CE807001113FC /* ZJPageViewController.m */,
-				4AD1422C1D2E2A00001113FC /* ZJCollectionController.h */,
-				4AD1422D1D2E2A00001113FC /* ZJCollectionController.m */,
-				4AD1422F1D2E33DA001113FC /* ZJTableViewController.h */,
-				4AD142301D2E33DA001113FC /* ZJTableViewController.m */,
+				4A1DDE221D7677D4006F4C69 /* 之前的方法 已废弃 */,
+				4A1DDE231D7677F2006F4C69 /* 现在用的方法 */,
 			);
 			name = "微博&简书个人主页效果";
 			path = ..;
@@ -203,6 +394,7 @@
 				4B7429F71CDDDC35009CC9B2 /* ZJTestViewController.m */,
 				4AAF4F0D1D24D88D009F6D3F /* ZJTest1Controller.h */,
 				4AAF4F0E1D24D88D009F6D3F /* ZJTest1Controller.m */,
+				4A1DDE361D769C3D006F4C69 /* MJRefresh */,
 				4B7429C41CDD9ACB009CC9B2 /* Main.storyboard */,
 				4B0C063B1CDC55080079E8F3 /* Assets.xcassets */,
 				4B0C063D1CDC55080079E8F3 /* LaunchScreen.storyboard */,
@@ -458,6 +650,7 @@
 			files = (
 				4B7429C51CDD9ACB009CC9B2 /* Main.storyboard in Resources */,
 				4B0C063F1CDC55080079E8F3 /* LaunchScreen.storyboard in Resources */,
+				4A1DDE731D769C3E006F4C69 /* MJRefresh.bundle in Resources */,
 				4B0C063C1CDC55080079E8F3 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -485,26 +678,49 @@
 			files = (
 				4B7429E31CDD9F1B009CC9B2 /* ZJVc2Controller.m in Sources */,
 				4B56CB9F1D06E1E900D58BFA /* UIViewController+ZJScrollPageController.m in Sources */,
+				4A1DDE661D769C3E006F4C69 /* MJRefreshBackFooter.m in Sources */,
+				4A1DDE1B1D76762E006F4C69 /* ZJVc9Controller.m in Sources */,
 				4B7429EF1CDDCECD009CC9B2 /* ZJVc6Controller.m in Sources */,
+				4A1DDE6B1D769C3E006F4C69 /* MJRefreshAutoNormalFooter.m in Sources */,
 				4B7429E91CDDCE18009CC9B2 /* ZJVc4Controller.m in Sources */,
+				4A1DDE781D769C3E006F4C69 /* UIView+MJExtension.m in Sources */,
 				4B7429DE1CDD9C16009CC9B2 /* ZJScrollPageView.m in Sources */,
+				4A1DDE741D769C3E006F4C69 /* MJRefreshConst.m in Sources */,
+				4A1DDE6C1D769C3E006F4C69 /* MJRefreshAutoStateFooter.m in Sources */,
 				4B7429F51CDDD4DA009CC9B2 /* ZJVc7Controller.m in Sources */,
+				4A1DDE671D769C3E006F4C69 /* MJRefreshComponent.m in Sources */,
+				4A1DDE6D1D769C3E006F4C69 /* MJRefreshBackGifFooter.m in Sources */,
 				4A765C511D6959CE00BD42C9 /* ZJVc10Controller.m in Sources */,
 				4B7429FC1CDDE1E5009CC9B2 /* ZJVc8Controller.m in Sources */,
+				4A1DDE691D769C3E006F4C69 /* MJRefreshHeader.m in Sources */,
 				4B7429EC1CDDCE29009CC9B2 /* ZJVc3Controller.m in Sources */,
+				4A1DDE651D769C3E006F4C69 /* MJRefreshAutoFooter.m in Sources */,
 				4B7429DF1CDD9C16009CC9B2 /* ZJScrollSegmentView.m in Sources */,
-				4AD142281D2CE807001113FC /* ZJPageViewController.m in Sources */,
+				4AD142281D2CE807001113FC /* ZJPageController.m in Sources */,
+				4A1DDE261D767859006F4C69 /* ZJPageViewController.m in Sources */,
 				4B7429F81CDDDC35009CC9B2 /* ZJTestViewController.m in Sources */,
 				4AD1422E1D2E2A00001113FC /* ZJCollectionController.m in Sources */,
 				4B7429E01CDD9C16009CC9B2 /* ZJSegmentStyle.m in Sources */,
 				4AD142311D2E33DA001113FC /* ZJTableViewController.m in Sources */,
-				4AD142241D2CE6AD001113FC /* ZJVc9Controller.m in Sources */,
+				4A1DDE711D769C3E006F4C69 /* MJRefreshNormalHeader.m in Sources */,
+				4A1DDE721D769C3E006F4C69 /* MJRefreshStateHeader.m in Sources */,
+				4A1DDE701D769C3E006F4C69 /* MJRefreshGifHeader.m in Sources */,
+				4A1DDE751D769C3E006F4C69 /* NSBundle+MJRefresh.m in Sources */,
+				4A1DDE6E1D769C3E006F4C69 /* MJRefreshBackNormalFooter.m in Sources */,
+				4A1DDE761D769C3E006F4C69 /* UIScrollView+MJExtension.m in Sources */,
+				4AD142241D2CE6AD001113FC /* ZJVc0Controller.m in Sources */,
+				4A1DDE6A1D769C3E006F4C69 /* MJRefreshAutoGifFooter.m in Sources */,
 				4B7429DB1CDD9C16009CC9B2 /* UIView+ZJFrame.m in Sources */,
 				4B0C06371CDC55080079E8F3 /* ViewController.m in Sources */,
+				4A1DDE681D769C3E006F4C69 /* MJRefreshFooter.m in Sources */,
+				4A1DDE1E1D7677B6006F4C69 /* ZJPageCollectionViewController.m in Sources */,
 				4B0C06341CDC55080079E8F3 /* AppDelegate.m in Sources */,
 				4B7429DC1CDD9C16009CC9B2 /* ZJContentView.m in Sources */,
+				4A1DDE211D7677C6006F4C69 /* ZJPageTableViewController.m in Sources */,
+				4A1DDE771D769C3E006F4C69 /* UIScrollView+MJRefresh.m in Sources */,
 				4B7429E61CDDB3E4009CC9B2 /* ZJVc1Controller.m in Sources */,
 				4B0C06311CDC55080079E8F3 /* main.m in Sources */,
+				4A1DDE6F1D769C3E006F4C69 /* MJRefreshBackStateFooter.m in Sources */,
 				4B7429F21CDDD409009CC9B2 /* ZJVc5Controller.m in Sources */,
 				4B7429DD1CDD9C16009CC9B2 /* ZJTitleView.m in Sources */,
 				4AAF4F0F1D24D88D009F6D3F /* ZJTest1Controller.m in Sources */,

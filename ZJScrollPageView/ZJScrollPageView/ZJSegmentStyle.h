@@ -7,18 +7,37 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface ZJSegmentStyle : NSObject
 typedef NS_ENUM(NSInteger, TitleImagePosition) {
     TitleImagePositionLeft,
     TitleImagePositionRight,
     TitleImagePositionTop,
     TitleImagePositionCenter
 };
+
+typedef NS_OPTIONS(NSInteger, SegmentViewComponent) {
+    SegmentViewComponentShowCover = 1 << 0,
+    SegmentViewComponentShowLine = 1 << 1,
+    SegmentViewComponentShowImage = 1 << 2,
+    SegmentViewComponentShowExtraButton = 1 << 3,
+    SegmentViewComponentScaleTitle = 1 << 4,
+    SegmentViewComponentScrollTitle = 1 << 5,
+    SegmentViewComponentBounces = 1 << 6,
+    SegmentViewComponentGraduallyChangeTitleColor = 1 << 7,
+    SegmentViewComponentAdjustCoverOrLineWidth = 1 << 8,
+    SegmentViewComponentAutoAdjustTitlesWidth = 1 << 9,
+    
+};
+
+@interface ZJSegmentStyle : NSObject
+
 /** 是否显示遮盖 默认为NO */
 @property (assign, nonatomic, getter=isShowCover) BOOL showCover;
 /** 是否显示滚动条 默认为NO*/
 @property (assign, nonatomic, getter=isShowLine) BOOL showLine;
+/**是否显示图片 默认为NO*/
+@property (assign, nonatomic, getter=isShowImage) BOOL showImage;
+/** 是否显示附加的按钮 默认为NO*/
+@property (assign, nonatomic, getter=isShowExtraButton) BOOL showExtraButton;
 /** 是否缩放标题 不能滚动的时候就不要把缩放和遮盖或者滚动条同时使用, 否则显示效果不好 默认为NO*/
 @property (assign, nonatomic, getter=isScaleTitle) BOOL scaleTitle;
 /** 是否滚动标题 默认为YES 设置为NO的时候所有的标题将不会滚动, 并且宽度会平分 和系统的segment效果相似 */
@@ -27,16 +46,15 @@ typedef NS_ENUM(NSInteger, TitleImagePosition) {
 @property (assign, nonatomic, getter=isSegmentViewBounces) BOOL segmentViewBounces;
 /** 是否颜色渐变 默认为NO*/
 @property (assign, nonatomic, getter=isGradualChangeTitleColor) BOOL gradualChangeTitleColor;
-/** 是否显示附加的按钮 默认为NO*/
-@property (assign, nonatomic, getter=isShowExtraButton) BOOL showExtraButton;
+
 /** 内容view是否能滑动 默认为YES*/
 @property (assign, nonatomic, getter=isScrollContentView) BOOL scrollContentView;
 /** 当设置scrollTitle=NO的时候标题会平分宽度, 如果你希望在滚动的过程中cover或者scrollLine的宽度随着变化设置这个属性为YES 默认为NO*/
 @property (assign, nonatomic, getter=isAdjustCoverOrLineWidth) BOOL adjustCoverOrLineWidth;
-@property (assign, nonatomic, getter=isShowImage) BOOL showImage;
-
-/** 是否自动调整标题的宽度, 当设置为YES的时候 如果所有的标题的宽度之和小于segmentView的宽度的时候, 会自动调整title的位置, 达到类似"平分"的效果 */
+/** 是否自动调整标题的宽度, 当设置为YES的时候 如果所有的标题的宽度之和小于segmentView的宽度的时候, 会自动调整title的位置, 达到类似"平分"的效果 默认为NO*/
 @property (assign, nonatomic, getter=isAutoAdjustTitlesWidth) BOOL autoAdjustTitlesWidth;
+
+
 
 /** 设置附加按钮的背景图片 默认为nil*/
 @property (strong, nonatomic) NSString *extraBtnBackgroundImageName;
@@ -65,5 +83,7 @@ typedef NS_ENUM(NSInteger, TitleImagePosition) {
 /** 标题中图片的位置 */
 @property (assign, nonatomic) TitleImagePosition imagePosition;
 
+/**未使用*/
+//@property (assign, nonatomic) SegmentViewComponent segmentViewComponent;
 
 @end

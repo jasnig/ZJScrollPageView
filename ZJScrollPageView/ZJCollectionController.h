@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ZJPageViewController.h"
+#import "ZJPageController.h"
 
-@interface ZJCollectionController : ZJPageViewController
+@interface ZJCollectionController : ZJPageController
 
 @end

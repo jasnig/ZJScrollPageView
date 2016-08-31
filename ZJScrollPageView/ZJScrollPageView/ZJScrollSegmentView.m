@@ -220,7 +220,6 @@ static CGFloat const contentSizeXOff = 20.0;
                 [titleView adjustSubviewFrame];
             }
             index++;
-            
         }
         
     } else {

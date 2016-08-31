@@ -1,151 +1,67 @@
 //
-//  ZJVc8Controller.m
+//  ZJVcController.m
 //  ZJScrollPageView
 //
-//  Created by ZeroJ on 16/7/6.
+//  Created by ZeroJ on 16/8/31.
 //  Copyright © 2016年 ZeroJ. All rights reserved.
 //
 
 #import "ZJVc9Controller.h"
 #import "ZJScrollPageView.h"
-#import "ZJPageViewController.h"
-#import "UIView+ZJFrame.h"
-#import "ZJCollectionController.h"
-#import "ZJTableViewController.h"
+#import "ZJPageTableViewController.h"
+#import "ZJPageCollectionViewController.h"
+#import "MJRefresh/MJRefresh.h"
 static CGFloat const segmentViewHeight = 44.0;
 static CGFloat const naviBarHeight = 64.0;
 static CGFloat const headViewHeight = 200.0;
-static CGFloat const defaultOffSetY = segmentViewHeight + naviBarHeight + headViewHeight;
 
-@interface ZJVc9Controller ()<ZJScrollPageViewDelegate, UIScrollViewDelegate, PageTableViewDelegate> {
-    CGFloat _childOffsetY;
-    //    CGFloat _currentOffsetY;
-    
-}
-@property(strong, nonatomic)NSArray<NSString *> *titles;
-@property(strong, nonatomic)ZJPageViewController<ZJScrollPageViewChildVcDelegate> *currentChildVc;
-@property(strong, nonatomic)UIView *containerView;
-@property (strong, nonatomic) ZJScrollSegmentView *segmentView;
-@property (strong, nonatomic) ZJContentView *contentView;
-@property(strong, nonatomic)UIView *headView;
-@property(strong, nonatomic)UIScrollView *scrollView;
-@property(assign, nonatomic)CGFloat currentOffsetY;
+NSString *const ZJParentTableViewDidLeaveFromTopNotification = @"ZJParentTableViewDidLeaveFromTopNotification";
+
+
+@interface ZJCustomGestureTableView : UITableView
 
 @end
+
+@implementation ZJCustomGestureTableView
+
+/// 返回YES同时识别多个手势
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+    return [gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]] && [otherGestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]];
+}
+@end
+
+@interface ZJVc9Controller ()<ZJScrollPageViewDelegate, ZJPageViewControllerDelegate, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource>
+
+@property (strong, nonatomic) NSArray<NSString *> *titles;
+@property (strong, nonatomic) UIView *containerView;
+@property (strong, nonatomic) ZJScrollSegmentView *segmentView;
+@property (strong, nonatomic) ZJContentView *contentView;
+@property (strong, nonatomic) UIView *headView;
+@property (strong, nonatomic) UIScrollView *childScrollView;
+@property (strong, nonatomic) ZJCustomGestureTableView *tableView;
+
+@end
+
+static NSString * const cellID = @"cellID";
 
 @implementation ZJVc9Controller
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"效果示例";
-    //必要的设置, 如果没有设置可能导致内容显示不正常
+    self.title = @"微博个人页面";
     self.automaticallyAdjustsScrollViewInsets = NO;
+    [self.view addSubview:self.tableView];
     
-    [self commonSet];
-    [self addSubviews];
-    // 模拟信息加载
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, self.headView.bounds.size.width, self.headView.bounds.size.height)];
-        [btn setBackgroundImage:[UIImage imageNamed:@"fruit"] forState:UIControlStateNormal];
-        [self.headView addSubview:btn];
-    });
+    __weak typeof(self) weakself = self;
     
-}
+    /// 下拉刷新
+    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            typeof(weakself) strongSelf = weakself;
+            [strongSelf.tableView.mj_header endRefreshing];
+        });
+    }];
 
-
-- (void)commonSet {
-    self.currentOffsetY = 0.0;
-    _childOffsetY = -defaultOffSetY;
-}
-- (void)addSubviews {
-    [self.view addSubview:self.containerView];
-    // 先添加contentView
-    [self.containerView addSubview:self.contentView];
-    // 这个scrollView是为了headView能够滑动
-    [self.scrollView addSubview:self.headView];
-    // 在添加headView
-    [self.containerView addSubview:self.scrollView];
-    // 在添加segmentView
-    [self.containerView addSubview:self.segmentView];
-}
-
-
-#pragma scrollViewDelegate 代理方法
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    
-    self.currentOffsetY = scrollView.contentOffset.y;
-    self.headView.zj_y = self.currentOffsetY;
-    
-    if (self.currentOffsetY < 0) {
-        self.containerView.zj_y = -self.currentOffsetY;
-        return;
-    } else {
-        self.containerView.zj_y = 0;
-        
-    }
-    
-    if (_currentChildVc.scrollView.contentOffset.y == self.currentOffsetY - defaultOffSetY) {
-        return;
-    }
-    
-    [_currentChildVc.scrollView setContentOffset:CGPointMake(0, self.currentOffsetY - defaultOffSetY)];
-}
-
-- (void)scrollViewIsScrolling:(UIScrollView *)scrollView {
-    _childOffsetY = scrollView.contentOffset.y;
-    self.currentOffsetY = _childOffsetY + defaultOffSetY;
-    
-    //    NSLog(@"%f", _currentOffsetY);
-    
-    if (self.currentOffsetY <= 0 ) {// 让headView停在navigationBar下面
-        self.segmentView.zj_y = -_childOffsetY - segmentViewHeight;
-        self.scrollView.zj_y = self.segmentView.zj_y - headViewHeight;
-        
-    }
-    else if (self.currentOffsetY>=headViewHeight) {
-        // 使滑块停在navigationBar下面
-        self.scrollView.zj_y = naviBarHeight - headViewHeight;
-        self.segmentView.zj_y = naviBarHeight;
-        
-    }
-    
-    else {
-        // 这里是让滑块和headView随着上下滚动
-        self.segmentView.zj_y = -_childOffsetY - segmentViewHeight;
-        self.scrollView.zj_y = self.segmentView.zj_y - headViewHeight;
-        // "递归"
-        if (self.scrollView.contentOffset.y == self.currentOffsetY) {
-            return;
-        }
-        [self.scrollView setContentOffset:CGPointMake(0, self.currentOffsetY)];
-        
-    }
-    
-    
-}
-
-- (void)setupScrollViewOffSetYWhenViewWillAppear:(UIScrollView *)scrollView {
-    
-    
-    if (self.segmentView.zj_y<=naviBarHeight) {
-        if (scrollView.contentOffset.y < -(naviBarHeight + segmentViewHeight)) {
-            [scrollView setContentOffset:CGPointMake(0, -(naviBarHeight + segmentViewHeight))];
-            
-        } else {
-            
-            [scrollView setContentOffset:CGPointMake(0, scrollView.contentOffset.y)];
-        }
-        
-    } else {
-        [scrollView setContentOffset:CGPointMake(0, -(CGRectGetMaxY(self.segmentView.frame)))];
-        
-    }
-    _childOffsetY = scrollView.contentOffset.y;
-    [scrollView setContentSize:CGSizeMake(0, MAX(scrollView.bounds.size.height - naviBarHeight - segmentViewHeight, scrollView.contentSize.height))];
-    
-    
-    
 }
 
 
@@ -157,34 +73,76 @@ static CGFloat const defaultOffSetY = segmentViewHeight + naviBarHeight + headVi
 - (UIViewController<ZJScrollPageViewChildVcDelegate> *)childViewController:(UIViewController<ZJScrollPageViewChildVcDelegate> *)reuseViewController forIndex:(NSInteger)index {
     UIViewController<ZJScrollPageViewChildVcDelegate> *childVc = reuseViewController;
     
-    // 可以在这里为每个childVc设置title, 然后就可以在相应的childVc里面通过 viewDidLoad加载初始数据
     if (!childVc) {
         if (index%2==0) {
-            childVc = [[ZJTableViewController alloc] init];
-            // 触发viewDidLoad
-            childVc.view.backgroundColor = [UIColor blueColor];
+            childVc = [[ZJPageTableViewController alloc] init];
+            ZJPageTableViewController *vc = (ZJPageTableViewController *)childVc;
+            vc.delegate = self;
         } else {
-            childVc = [[ZJCollectionController alloc] init];
-            
-            childVc.view.backgroundColor = [UIColor redColor];
+            childVc = [[ZJPageCollectionViewController alloc] init];
+            ZJPageCollectionViewController *vc = (ZJPageCollectionViewController *)childVc;
+            vc.delegate = self;
             
         }
         
     }
-    
-    
-    // 设置代理, 用于处理子控制器的滚动
-    _currentChildVc = (ZJPageViewController *)childVc;
-    _currentChildVc.delegate = self;
     return childVc;
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+
+#pragma mark- ZJPageViewControllerDelegate
+
+- (void)scrollViewIsScrolling:(UIScrollView *)scrollView {
+    _childScrollView = scrollView;
+    if (self.tableView.contentOffset.y < headViewHeight) {
+        scrollView.contentOffset = CGPointZero;
+        scrollView.showsVerticalScrollIndicator = NO;
+    }
+    else {
+        self.tableView.contentOffset = CGPointMake(0.0f, headViewHeight);
+        scrollView.showsVerticalScrollIndicator = YES;
+    }
+    
+}
+
+#pragma mark- UIScrollViewDelegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    if (self.childScrollView && _childScrollView.contentOffset.y > 0) {
+        self.tableView.contentOffset = CGPointMake(0.0f, headViewHeight);
+    }
+    CGFloat offsetY = scrollView.contentOffset.y;
+    if(offsetY < headViewHeight) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:ZJParentTableViewDidLeaveFromTopNotification object:nil];
+
+    }
+}
+
+#pragma mark- UITableViewDelegate, UITableViewDataSource
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 1;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:cellID];
+    
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
+    }
+    
+    [cell.contentView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    [cell.contentView addSubview:self.contentView];
+    
+    return cell;
 }
 
 
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    return self.segmentView;
+}
+
+#pragma mark- setter getter
 - (ZJScrollSegmentView *)segmentView {
     if (_segmentView == nil) {
         ZJSegmentStyle *style = [[ZJSegmentStyle alloc] init];
@@ -237,37 +195,40 @@ static CGFloat const defaultOffSetY = segmentViewHeight + naviBarHeight + headVi
 - (UIView *)headView {
     if (!_headView) {
         _headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, headViewHeight)];
-        
+        UILabel *label = [[UILabel alloc] initWithFrame:_headView.bounds];
+        label.text = @"这是header~~~~~~~~~~~~~~";
+        label.textAlignment = NSTextAlignmentCenter;
+        label.textColor = [UIColor redColor];
+        [_headView addSubview:label];
         _headView.backgroundColor = [UIColor greenColor];
     }
     
     return _headView;
 }
 
-- (void)setCurrentOffsetY:(CGFloat)currentOffsetY {
-    _currentOffsetY = currentOffsetY;
-    //    NSLog(@"%f", currentOffsetY);
-}
-
-- (UIScrollView *)scrollView {
-    if (!_scrollView) {
-        UIScrollView *scroll = [[UIScrollView alloc] initWithFrame:CGRectMake(0, naviBarHeight, self.view.bounds.size.width, headViewHeight)];
-        
-        scroll.delegate = self;
-        scroll.scrollsToTop = NO;
-        scroll.contentSize = CGSizeMake(0, headViewHeight*2);
-        _scrollView = scroll;
+- (ZJCustomGestureTableView *)tableView {
+    if (!_tableView) {
+        CGRect frame = CGRectMake(0.0f, naviBarHeight, self.view.bounds.size.width, self.view.bounds.size.height);
+        ZJCustomGestureTableView *tableView = [[ZJCustomGestureTableView alloc] initWithFrame:frame style:UITableViewStylePlain];
+        // 设置tableView的headView
+        tableView.tableHeaderView = self.headView;
+        tableView.tableFooterView = [UIView new];
+        // 设置cell行高为contentView的高度
+        tableView.rowHeight = self.contentView.bounds.size.height;
+        tableView.delegate = self;
+        tableView.dataSource = self;
+        // 设置tableView的sectionHeadHeight为segmentViewHeight
+        tableView.sectionHeaderHeight = segmentViewHeight;
+        tableView.showsVerticalScrollIndicator = false;
+        _tableView = tableView;
     }
-    return _scrollView;
-}
-
-- (UIView *)containerView {
-    if (_containerView == nil) {
-        _containerView = [[UIView alloc] initWithFrame:self.view.bounds];
-        _containerView.backgroundColor = [UIColor whiteColor];
-    }
-    return _containerView;
     
+    return _tableView;
 }
+
 @end
+
+
+
+
 
