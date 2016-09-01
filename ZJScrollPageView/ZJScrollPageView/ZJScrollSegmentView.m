@@ -463,7 +463,22 @@ static CGFloat const contentSizeXOff = 20.0;
 }
 
 - (void)adjustTitleOffSetToCurrentIndex:(NSInteger)currentIndex {
-    
+    // 重置其他item的缩放和颜色
+    NSInteger leftIndex = currentIndex - 2;
+    NSInteger rightIndex = currentIndex + 2;
+    if (leftIndex >= 0) {
+        ZJTitleView *leftTitleView = _titleViews[leftIndex];
+        leftTitleView.textColor = self.segmentStyle.normalTitleColor;
+        leftTitleView.currentTransformSx = 1.0;
+        leftTitleView.selected = NO;
+    }
+    if (rightIndex < _titleViews.count - 1) {
+        ZJTitleView *rightTitleView = _titleViews[rightIndex];
+        rightTitleView.textColor = self.segmentStyle.normalTitleColor;
+        rightTitleView.currentTransformSx = 1.0;
+        rightTitleView.selected = NO;
+    }
+  
     if (self.scrollView.contentSize.width != self.scrollView.bounds.size.width + contentSizeXOff) {// 需要滚动
         
         ZJTitleView *currentLabel = (ZJTitleView *)self.titleViews[currentIndex];
@@ -485,20 +500,7 @@ static CGFloat const contentSizeXOff = 20.0;
         
         [self.scrollView setContentOffset:CGPointMake(offSetx, 0.0) animated:YES];
     }
-    // 重置其他item的缩放和颜色
-    NSInteger index = 0;
-    for (ZJTitleView *titleView in self.titleViews) {
-        if (index != currentIndex) {
-            titleView.textColor = self.segmentStyle.normalTitleColor;
-            titleView.currentTransformSx = 1.0;
-            titleView.selected = NO;
-        } else {
-            titleView.textColor = self.segmentStyle.selectedTitleColor;
-            titleView.selected = YES;
 
-        }
-        index++;
-    }
  
 }
 
