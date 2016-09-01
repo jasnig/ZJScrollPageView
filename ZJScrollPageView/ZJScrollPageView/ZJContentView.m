@@ -218,8 +218,7 @@
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    
-    if (self.forbidTouchToAdjustPosition) {
+    if (self.forbidTouchToAdjustPosition || scrollView.contentOffset.x < 0 || scrollView.contentOffset.x > scrollView.contentSize.width-scrollView.bounds.size.width) {// first or last
         return;
     }
     CGFloat offSetX = scrollView.contentOffset.x;
@@ -340,9 +339,8 @@
         collectionView.showsHorizontalScrollIndicator = NO;
         collectionView.delegate = self;
         collectionView.dataSource = self;
-//        collectionView.bounces = YES;
+        collectionView.bounces = self.segmentView.segmentStyle.isContentViewBounces;
         [collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:cellID];
-        collectionView.bounces = NO;
         collectionView.scrollEnabled = self.segmentView.segmentStyle.isScrollContentView;
         [self addSubview:collectionView];
         _collectionView = collectionView;

@@ -44,6 +44,9 @@ typedef NS_OPTIONS(NSInteger, SegmentViewComponent) {
 @property (assign, nonatomic, getter=isScrollTitle) BOOL scrollTitle;
 /** segmentView是否有弹性 默认为NO*/
 @property (assign, nonatomic, getter=isSegmentViewBounces) BOOL segmentViewBounces;
+/** segmentView是否有弹性 默认为NO*/
+@property (assign, nonatomic, getter=isContentViewBounces) BOOL contentViewBounces;
+
 /** 是否颜色渐变 默认为NO*/
 @property (assign, nonatomic, getter=isGradualChangeTitleColor) BOOL gradualChangeTitleColor;
 

@@ -63,7 +63,6 @@
     if (!childVc) {
         childVc = [[ZJTestViewController alloc] init];
         childVc.title = self.titles[index];
-        NSLog(@"加载页面----- %ld", index);
     }
     
     

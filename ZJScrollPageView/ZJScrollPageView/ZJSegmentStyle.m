@@ -17,6 +17,7 @@
         _scaleTitle = NO;
         _scrollTitle = YES;
         _segmentViewBounces = YES;
+        _contentViewBounces = YES;
         _gradualChangeTitleColor = NO;
         _showExtraButton = NO;
         _scrollContentView = YES;
