@@ -31,7 +31,8 @@
 @property (strong, nonatomic) NSMutableDictionary<NSString *, UIViewController<ZJScrollPageViewChildVcDelegate> *> *childVcsDic;
 // 当前控制器
 @property (strong, nonatomic) UIViewController<ZJScrollPageViewChildVcDelegate> *currentChildVc;
-
+/// 如果类似cell缓存一样, 虽然创建的控制器少了, 但是每个页面每次都要重新加载数据, 否则显示的内容就会出错, 貌似还不如每个页面创建一个控制器好
+@property (strong, nonatomic) NSCache *cacheChildVcs;
 
 @end
 
@@ -101,7 +102,29 @@
 /** 给外界可以设置ContentOffSet的方法 */
 - (void)setContentOffSet:(CGPoint)offset animated:(BOOL)animated {
     self.forbidTouchToAdjustPosition = YES;
-    [self.collectionView setContentOffset:offset animated:animated];
+    if (animated) {
+        CGFloat delta = offset.x - self.collectionView.contentOffset.x;
+        NSInteger page = fabs(delta)/self.collectionView.bounds.size.width;
+        if (page>=2) {// 需要滚动两页以上的时候, 跳过中间页的动画
+            CGFloat offsetX = delta > 0 ? offset.x - self.collectionView.bounds.size.width : offset.x + self.collectionView.bounds.size.width;
+            CGPoint tempOffset = CGPointMake(offsetX, offset.y);
+            [self.collectionView setContentOffset:tempOffset animated:NO];
+            __weak typeof(self) weakself = self;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                __strong typeof(weakself) strongSelf = weakself;
+                [strongSelf.collectionView setContentOffset:offset animated:YES];
+            });
+        }
+        else {
+            [self.collectionView setContentOffset:offset animated:animated];
+            
+        }
+    }
+    else {
+        [self.collectionView setContentOffset:offset animated:animated];
+ 
+    }
+    
 }
 
 /** 给外界刷新视图的方法 */

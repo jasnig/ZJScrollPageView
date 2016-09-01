@@ -49,6 +49,9 @@ typedef NS_OPTIONS(NSInteger, SegmentViewComponent) {
 
 /** 内容view是否能滑动 默认为YES*/
 @property (assign, nonatomic, getter=isScrollContentView) BOOL scrollContentView;
+/** 点击标题切换的时候,内容view是否会有动画 默认为YES*/
+@property (assign, nonatomic, getter=isAnimatedContentViewWhenTitleClicked) BOOL animatedContentViewWhenTitleClicked;
+
 /** 当设置scrollTitle=NO的时候标题会平分宽度, 如果你希望在滚动的过程中cover或者scrollLine的宽度随着变化设置这个属性为YES 默认为NO*/
 @property (assign, nonatomic, getter=isAdjustCoverOrLineWidth) BOOL adjustCoverOrLineWidth;
 /** 是否自动调整标题的宽度, 当设置为YES的时候 如果所有的标题的宽度之和小于segmentView的宽度的时候, 会自动调整title的位置, 达到类似"平分"的效果 默认为NO*/
