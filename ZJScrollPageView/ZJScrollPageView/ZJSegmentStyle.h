@@ -42,9 +42,9 @@ typedef NS_OPTIONS(NSInteger, SegmentViewComponent) {
 @property (assign, nonatomic, getter=isScaleTitle) BOOL scaleTitle;
 /** 是否滚动标题 默认为YES 设置为NO的时候所有的标题将不会滚动, 并且宽度会平分 和系统的segment效果相似 */
 @property (assign, nonatomic, getter=isScrollTitle) BOOL scrollTitle;
-/** segmentView是否有弹性 默认为NO*/
+/** segmentView是否有弹性 默认为YES*/
 @property (assign, nonatomic, getter=isSegmentViewBounces) BOOL segmentViewBounces;
-/** contentView是否有弹性 默认为NO*/
+/** contentView是否有弹性 默认为YES*/
 @property (assign, nonatomic, getter=isContentViewBounces) BOOL contentViewBounces;
 
 /** 是否颜色渐变 默认为NO*/
