@@ -70,6 +70,11 @@ static NSString *cellId = @"cellId";
     return cell;
 }
 
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    UIViewController *vc = [UIViewController new];
+    [self.navigationController showViewController:vc sender:nil];
+}
+
 
 @end
 
