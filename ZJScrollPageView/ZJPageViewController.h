@@ -18,4 +18,6 @@
 // 代理
 @property(weak, nonatomic)id<ZJPageViewControllerDelegate> delegate;
 
+@property (strong, nonatomic) UIScrollView *scrollView;
+
 @end

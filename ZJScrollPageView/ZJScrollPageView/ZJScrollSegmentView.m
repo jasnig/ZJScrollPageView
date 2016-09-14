@@ -463,27 +463,32 @@ static CGFloat const contentSizeXOff = 20.0;
 }
 
 - (void)adjustTitleOffSetToCurrentIndex:(NSInteger)currentIndex {
-    // 重置其他item的缩放和颜色
-    NSInteger leftIndex = currentIndex - 2;
-    NSInteger rightIndex = currentIndex + 2;
-    if (leftIndex >= 0) {
-        ZJTitleView *leftTitleView = _titleViews[leftIndex];
-        leftTitleView.textColor = self.segmentStyle.normalTitleColor;
-        leftTitleView.currentTransformSx = 1.0;
-        leftTitleView.selected = NO;
-    }
-    if (rightIndex < _titleViews.count - 1) {
-        ZJTitleView *rightTitleView = _titleViews[rightIndex];
-        rightTitleView.textColor = self.segmentStyle.normalTitleColor;
-        rightTitleView.currentTransformSx = 1.0;
-        rightTitleView.selected = NO;
+    // 重置附近其他item的缩放和颜色
+
+    for (NSInteger index = currentIndex - 3; index < currentIndex + 3; index++) {
+        if (index >= 0 && index <= _titles.count - 1) {
+            ZJTitleView *nextTitleView = _titleViews[index];
+            if (index != currentIndex) {
+                nextTitleView.textColor = self.segmentStyle.normalTitleColor;
+                nextTitleView.currentTransformSx = 1.0;
+                nextTitleView.selected = NO;
+            }
+            else {
+                nextTitleView.textColor = self.segmentStyle.selectedTitleColor;
+                if (self.segmentStyle.isScaleTitle) {
+                    nextTitleView.currentTransformSx = self.segmentStyle.titleBigScale;
+                }
+                nextTitleView.selected = YES;
+            }
+
+        }
     }
   
+
     if (self.scrollView.contentSize.width != self.scrollView.bounds.size.width + contentSizeXOff) {// 需要滚动
-        
-        ZJTitleView *currentLabel = (ZJTitleView *)self.titleViews[currentIndex];
-        
-        CGFloat offSetx = currentLabel.center.x - _currentWidth * 0.5;
+        ZJTitleView *currentTitleView = (ZJTitleView *)_titleViews[currentIndex];
+
+        CGFloat offSetx = currentTitleView.center.x - _currentWidth * 0.5;
         if (offSetx < 0) {
             offSetx = 0;
         }

@@ -9,7 +9,6 @@
 #import "ZJPageViewController.h"
 
 @interface ZJPageViewController ()<UIScrollViewDelegate>
-@property (strong, nonatomic) UIScrollView *scrollView;
 
 @end
 
@@ -27,10 +26,15 @@ extern NSString *const ZJParentTableViewDidLeaveFromTopNotification;
 - (void)leaveFromTop {
     _scrollView.contentOffset = CGPointZero;
 }
+
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     
-    _scrollView = scrollView;
-    
+    NSLog(@"gundon--- %@", self);
+    if (!_scrollView) {
+        _scrollView = scrollView;
+        _scrollView.bounces = NO;
+    }
+
     if (self.delegate && [self.delegate respondsToSelector:@selector(scrollViewIsScrolling:)]) {
         [self.delegate scrollViewIsScrolling:scrollView];
     }
