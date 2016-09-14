@@ -112,7 +112,9 @@
             __weak typeof(self) weakself = self;
             dispatch_async(dispatch_get_main_queue(), ^{
                 __strong typeof(weakself) strongSelf = weakself;
-                [strongSelf.collectionView setContentOffset:offset animated:YES];
+                if (strongSelf) {
+                    [strongSelf.collectionView setContentOffset:offset animated:YES];
+                }
             });
         }
         else {
