@@ -390,9 +390,9 @@ static CGFloat const contentSizeXOff = 20.0;
 
 - (void)adjustUIWithProgress:(CGFloat)progress oldIndex:(NSInteger)oldIndex currentIndex:(NSInteger)currentIndex {
     if (oldIndex < 0 ||
-        oldIndex > self.titles.count ||
+        oldIndex >= self.titles.count ||
         currentIndex < 0 ||
-        currentIndex > self.titles.count
+        currentIndex >= self.titles.count
         ) {
         return;
     }
