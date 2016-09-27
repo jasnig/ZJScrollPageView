@@ -25,6 +25,10 @@ typedef void(^ExtraBtnOnClick)(UIButton *extraBtn);
 @property (weak, nonatomic) id<ZJScrollPageViewDelegate> delegate;
 @property (strong, nonatomic) UIImage *backgroundImage;
 
+// 所有的子控制器(需要遵守ZJScrollPageViewChildVcDelegate协议)
+@property (weak, nonatomic) NSMutableDictionary<NSString *, UIViewController<ZJScrollPageViewChildVcDelegate> *> *childVcsDic;
+
+
 - (instancetype)initWithFrame:(CGRect )frame segmentStyle:(ZJSegmentStyle *)segmentStyle delegate:(id<ZJScrollPageViewDelegate>)delegate titles:(NSArray *)titles titleDidClick:(TitleBtnOnClickBlock)titleDidClick;
 
 

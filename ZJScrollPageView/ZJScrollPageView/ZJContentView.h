@@ -16,6 +16,10 @@
 /** 必须设置代理和实现相关的方法*/
 @property(weak, nonatomic)id<ZJScrollPageViewDelegate> delegate;
 
+// 所有的子控制器(需要遵守ZJScrollPageViewChildVcDelegate协议)
+@property (strong, nonatomic, readonly) NSMutableDictionary<NSString *, UIViewController<ZJScrollPageViewChildVcDelegate> *> *childVcsDic;
+
+
 /**初始化方法
  *
  */

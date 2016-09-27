@@ -187,8 +187,8 @@
     }
     // 这里建立子控制器和父控制器的关系
     [self addChildVc:_currentChildVc ToParentVcCell:cell];
-    
     [self viewWillAppearIsFirstTime:isFirstTime forIndex:indexPath.row];
+    self.segmentView.childVcsDic = self.childVcsDic;
     return cell;
 }
 
@@ -298,6 +298,20 @@
 
 #pragma mark - private helper
 - (void)contentViewDidMoveFromIndex:(NSInteger)fromIndex toIndex:(NSInteger)toIndex progress:(CGFloat)progress {
+    
+    NSString *fromIndexString = [NSString stringWithFormat:@"%ld", (long)fromIndex];
+    UIViewController *fromVC = self.childVcsDic[fromIndexString];
+    if ([fromVC respondsToSelector:@selector(childViewWillDisappear)]) {
+        [fromVC performSelector:@selector(childViewWillDisappear)];
+    }
+    
+    NSString *toIndexString = [NSString stringWithFormat:@"%ld", (long)toIndex];
+    UIViewController *toVC = self.childVcsDic[toIndexString];
+    if ([toVC respondsToSelector:@selector(childViewWillAppear)]) {
+        [toVC performSelector:@selector(childViewWillAppear)];
+    }
+    
+    
     if(self.segmentView) {
         [self.segmentView adjustUIWithProgress:progress oldIndex:fromIndex currentIndex:toIndex];
     }
