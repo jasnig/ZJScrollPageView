@@ -9,6 +9,7 @@
 #import "ZJVc3Controller.h"
 #import "ZJScrollPageView.h"
 #import "ZJTestViewController.h"
+#import "ZJTest1Controller.h"
 
 @interface ZJVc3Controller ()<ZJScrollPageViewDelegate>
 @property(strong, nonatomic)NSArray<NSString *> *titles;
@@ -58,14 +59,12 @@
 - (UIViewController<ZJScrollPageViewChildVcDelegate> *)childViewController:(UIViewController<ZJScrollPageViewChildVcDelegate> *)reuseViewController forIndex:(NSInteger)index {
     UIViewController<ZJScrollPageViewChildVcDelegate> *childVc = reuseViewController;
     
-    if (!childVc) {
-        childVc = [[ZJTestViewController alloc] init];
-    }
-    
     
     if (index%2==0) {
+        childVc = [[ZJTestViewController alloc] init];
         childVc.view.backgroundColor = [UIColor blueColor];
     } else {
+        childVc = [[ZJTest1Controller alloc] init];
         childVc.view.backgroundColor = [UIColor greenColor];
         
     }

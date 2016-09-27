@@ -322,6 +322,19 @@ static CGFloat const contentSizeXOff = 20.0;
 - (void)adjustUIWhenBtnOnClickWithAnimate:(BOOL)animated {
     if (_currentIndex == _oldIndex) { return; }
     
+    NSString *fromIndexString = [NSString stringWithFormat:@"%ld", (long)_oldIndex];
+    UIViewController *fromVC = self.childVcsDic[fromIndexString];
+    if ([fromVC respondsToSelector:@selector(childViewWillDisappear)]) {
+        [fromVC performSelector:@selector(childViewWillDisappear)];
+    }
+    
+    NSString *toIndexString = [NSString stringWithFormat:@"%ld", (long)_currentIndex];
+    UIViewController *toVC = self.childVcsDic[toIndexString];
+    if ([toVC respondsToSelector:@selector(childViewWillAppear)]) {
+        [toVC performSelector:@selector(childViewWillAppear)];
+    }
+
+    
     ZJTitleView *oldTitleView = (ZJTitleView *)self.titleViews[_oldIndex];
     ZJTitleView *currentTitleView = (ZJTitleView *)self.titleViews[_currentIndex];
     

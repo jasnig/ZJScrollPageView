@@ -26,6 +26,11 @@
 
 - (void)setUpWhenViewWillAppearForTitle:(NSString *)title forIndex:(NSInteger)index firstTimeAppear: (BOOL)isFirstTime;
 
+// 视图将要显示
+- (void)childViewWillAppear;
+// 视图将要消失
+- (void)childViewWillDisappear;
+
 // 还未实现相关功能
 //- (void)setUpWhenViewDidAppearForTitle:(NSString *)title forIndex:(NSInteger)index;
 @end
