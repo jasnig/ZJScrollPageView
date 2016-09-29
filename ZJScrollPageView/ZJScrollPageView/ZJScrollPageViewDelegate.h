@@ -44,10 +44,22 @@
 @optional
 - (void)setUpTitleView:(ZJTitleView *)titleView forIndex:(NSInteger)index;
 
+/**
+ *  页面将要出现
+ *
+ *  @param scrollPageController
+ *  @param childViewController
+ *  @param index
+ */
 - (void)scrollPageController:(UIViewController *)scrollPageController childViewControllWillAppear:(UIViewController *)childViewController forIndex:(NSInteger)index;
+/**
+ *  页面已经出现
+ *
+ *  @param scrollPageController
+ *  @param childViewController
+ *  @param index
+ */
 - (void)scrollPageController:(UIViewController *)scrollPageController childViewControllDidAppear:(UIViewController *)childViewController forIndex:(NSInteger)index;
-- (void)scrollPageController:(UIViewController *)scrollPageController childViewControllWillDisappear:(UIViewController *)childViewController forIndex:(NSInteger)index;
-- (void)scrollPageController:(UIViewController *)scrollPageController childViewControllDidDisappear:(UIViewController *)childViewController forIndex:(NSInteger)index;
 
 @end
 
