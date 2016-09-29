@@ -124,10 +124,7 @@ static NSString *const kContentOffsetOffKey = @"contentOffset";
 - (void)setContentOffSet:(CGPoint)offset animated:(BOOL)animated {
     self.forbidTouchToAdjustPosition = YES;
     NSInteger currentIndex = offset.x/self.collectionView.bounds.size.width;
-    UIViewController *currentController = [self.childVcsDic valueForKey:[NSString stringWithFormat:@"%ld", currentIndex]];
-    if (_delegate && [_delegate respondsToSelector:@selector(scrollPageController:childViewControllWillAppear:forIndex:)]) {
-        [_delegate scrollPageController:self.parentViewController childViewControllWillAppear:currentController forIndex:currentIndex];
-    }
+    [self childViewControllerWillAppearWithIndex:currentIndex];
     
     if (animated) {
         CGFloat delta = offset.x - self.collectionView.contentOffset.x;
@@ -142,27 +139,20 @@ static NSString *const kContentOffsetOffKey = @"contentOffset";
                 __strong typeof(weakself) strongSelf = weakself;
                 if (strongSelf) {
                     [strongSelf.collectionView setContentOffset:offset animated:YES];
-                    if (_delegate && [_delegate respondsToSelector:@selector(scrollPageController:childViewControllDidAppear:forIndex:)]) {
-                        [_delegate scrollPageController:self.parentViewController childViewControllDidAppear:currentController forIndex:currentIndex];
-                    }
+                    [self childViewControllerDidAppearWithIndex:currentIndex];
 
                 }
             });
         }
         else {
             [self.collectionView setContentOffset:offset animated:animated];
-            if (_delegate && [_delegate respondsToSelector:@selector(scrollPageController:childViewControllDidAppear:forIndex:)]) {
-                [_delegate scrollPageController:self.parentViewController childViewControllDidAppear:currentController forIndex:currentIndex];
-            }
-
+            [self childViewControllerDidAppearWithIndex:currentIndex];
             
         }
     }
     else {
         [self.collectionView setContentOffset:offset animated:animated];
-        if (_delegate && [_delegate respondsToSelector:@selector(scrollPageController:childViewControllDidAppear:forIndex:)]) {
-            [_delegate scrollPageController:self.parentViewController childViewControllDidAppear:currentController forIndex:currentIndex];
-        }
+        [self childViewControllerDidAppearWithIndex:currentIndex];
 
  
     }
@@ -224,17 +214,12 @@ static NSString *const kContentOffsetOffKey = @"contentOffset";
     } else {
         NSAssert(NO, @"必须设置代理和实现代理方法");
     }
-//    if (!_firstViewIsAppear) {
-//        viewControllerWillAppear(_currentChildVc);
-//        viewControllerDidAppear(_currentChildVc);
-//        _firstViewIsAppear = YES;
-//    }
-//    else {
-//        viewControllerWillAppear(_currentChildVc);
-//        self.lastChildVc = [self.childVcsDic valueForKey:[NSString stringWithFormat:@"%ld", _oldIndex]];
-//        viewControllerWillDisappear(self.lastChildVc);
-//    }
-    NSLog(@"当前下标     %ld", indexPath.row);
+    if (!_firstViewIsAppear) {
+        [self childViewControllerWillAppearWithIndex:indexPath.row];
+        [self childViewControllerDidAppearWithIndex:indexPath.row];
+        _firstViewIsAppear = YES;
+    }
+
     // 这里建立子控制器和父控制器的关系
     [self addChildVc:_currentChildVc ToParentVcCell:cell];
     return cell;
@@ -277,6 +262,19 @@ static void viewControllerDidDisappear(UIViewController *viewController) {
 }
 
 
+- (void)childViewControllerWillAppearWithIndex:(NSInteger)index {
+    UIViewController *currentController = [self.childVcsDic valueForKey:[NSString stringWithFormat:@"%ld", index]];
+    if (_delegate && [_delegate respondsToSelector:@selector(scrollPageController:childViewControllWillAppear:forIndex:)]) {
+        [_delegate scrollPageController:self.parentViewController childViewControllWillAppear:currentController forIndex:index];
+    }
+}
+
+- (void)childViewControllerDidAppearWithIndex:(NSInteger)index {
+    UIViewController *currentController = [self.childVcsDic valueForKey:[NSString stringWithFormat:@"%ld", index]];
+    if (_delegate && [_delegate respondsToSelector:@selector(scrollPageController:childViewControllDidAppear:forIndex:)]) {
+        [_delegate scrollPageController:self.parentViewController childViewControllDidAppear:currentController forIndex:index];
+    }
+}
 
 
 - (void)addChildVc:(UIViewController *)childVc ToParentVcCell:(UICollectionViewCell *) cell {
@@ -305,22 +303,18 @@ static void viewControllerDidDisappear(UIViewController *viewController) {
     CGFloat offSetX = scrollView.contentOffset.x;
     CGFloat tempProgress = offSetX / self.bounds.size.width;
     CGFloat progress = tempProgress - floor(tempProgress);
-
-    if (offSetX - _oldOffSetX >= 0 && (offSetX - _oldOffSetX != scrollView.bounds.size.width)) {// 向右
+    CGFloat deltaX = offSetX - _oldOffSetX;
+    if (deltaX > 0 && (deltaX != scrollView.bounds.size.width)) {// 向右
         _oldIndex =  offSetX / self.bounds.size.width;
         _currentIndex = _oldIndex + 1;
         self.nextIndex = _currentIndex;
         if (_currentIndex >= self.itemsCount) {
             _currentIndex = _oldIndex - 1;
         }
-        
-//        if (offSetX - _oldOffSetX == scrollView.bounds.size.width) {// 滚动完成
-//            progress = 1.0;
-//            _currentIndex = _oldIndex;
-//            _nextIndex = _currentIndex;
-//        }
 
-    } else {
+
+    }
+     else if (deltaX < 0) {
         
         _currentIndex = offSetX / self.bounds.size.width;
         _oldIndex = _currentIndex + 1;
@@ -329,7 +323,7 @@ static void viewControllerDidDisappear(UIViewController *viewController) {
         progress = 1.0 - progress;
         
     }
-
+     else return;
 
 //    NSLog(@"%f------%d----%d------", progress, _oldIndex, _currentIndex);
     
@@ -355,9 +349,7 @@ static void viewControllerDidDisappear(UIViewController *viewController) {
         _currentChildVc = [_delegate childViewController:_currentChildVc forIndex:currentIndex];
     }
     else {
-        if (_delegate && [_delegate respondsToSelector:@selector(scrollPageController:childViewControllDidAppear:forIndex:)]) {
-            [_delegate scrollPageController:self.parentViewController childViewControllDidAppear:_currentChildVc forIndex:_currentIndex];
-        }
+        [self childViewControllerDidAppearWithIndex:_currentIndex];
     }
 
 }
@@ -429,11 +421,8 @@ static void viewControllerDidDisappear(UIViewController *viewController) {
     if (_nextIndex != nextIndex &&
         nextIndex >= 0 &&
         nextIndex < self.itemsCount) {
-        
-        UIViewController *nextController = [self.childVcsDic valueForKey:[NSString stringWithFormat:@"%ld", nextIndex]];
-        if (_delegate && [_delegate respondsToSelector:@selector(scrollPageController:childViewControllWillAppear:forIndex:)]) {
-            [_delegate scrollPageController:self.parentViewController childViewControllWillAppear:nextController forIndex:nextIndex];
-        }
+        [self childViewControllerWillAppearWithIndex:nextIndex];
+
         _nextIndex = nextIndex;
     }
 }
