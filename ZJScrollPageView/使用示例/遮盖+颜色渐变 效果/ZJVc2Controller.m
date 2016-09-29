@@ -51,6 +51,9 @@
     [self.view addSubview:scrollPageView];
 }
 
+- (BOOL)shouldAutomaticallyForwardAppearanceMethods {
+    return NO;
+}
 
 #pragma ZJScrollPageViewDelegate 代理方法
 - (NSInteger)numberOfChildViewControllers {
@@ -59,7 +62,8 @@
 
 - (UIViewController<ZJScrollPageViewChildVcDelegate> *)childViewController:(UIViewController<ZJScrollPageViewChildVcDelegate> *)reuseViewController forIndex:(NSInteger)index {
     UIViewController<ZJScrollPageViewChildVcDelegate> *childVc = reuseViewController;
-    
+//    NSLog(@"%ld---------", index);
+
     if (!childVc) {
         childVc = [[ZJTestViewController alloc] init];
         childVc.title = self.titles[index];
@@ -67,7 +71,7 @@
     
     
     if (index%2==0) {
-        childVc.view.backgroundColor = [UIColor blueColor];
+//        childVc.view.backgroundColor = [UIColor blueColor];
     } else {
         childVc.view.backgroundColor = [UIColor greenColor];
 

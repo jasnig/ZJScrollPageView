@@ -7,16 +7,21 @@
 //
 
 #import "UIViewController+ZJScrollPageController.h"
-#import <objc/runtime.h>
+#import "ZJScrollPageViewDelegate.h"
+
 @implementation UIViewController (ZJScrollPageController)
 
-static char key;
-- (void)setScrollPageParentViewController:(UIViewController *)scrollPageParentViewController {
-    objc_setAssociatedObject(self, &key, scrollPageParentViewController, OBJC_ASSOCIATION_ASSIGN);
-}
+//@dynamic zj_scrollViewController;
 
-- (UIViewController *)scrollPageParentViewController {
-    return (UIViewController *)objc_getAssociatedObject(self, &key);
+- (UIViewController *)zj_scrollViewController {
+    UIViewController *controller = self;
+    while (controller) {
+        if ([controller conformsToProtocol:@protocol(ZJScrollPageViewDelegate)]) {
+            break;
+        }
+        controller = controller.parentViewController;
+    }
+    return controller;
 }
 
 @end

@@ -13,6 +13,7 @@
     NSInteger _oldIndex;
     NSInteger _currentIndex;
     CGFloat   _oldOffSetX;
+    BOOL _firstViewIsAppear;
 }
 // 用于处理重用和内容的显示
 @property (weak, nonatomic) UICollectionView *collectionView;
@@ -31,6 +32,8 @@
 @property (strong, nonatomic) NSMutableDictionary<NSString *, UIViewController<ZJScrollPageViewChildVcDelegate> *> *childVcsDic;
 // 当前控制器
 @property (strong, nonatomic) UIViewController<ZJScrollPageViewChildVcDelegate> *currentChildVc;
+@property (strong, nonatomic) UIViewController<ZJScrollPageViewChildVcDelegate> *lastChildVc;
+
 /// 如果类似cell缓存一样, 虽然创建的控制器少了, 但是每个页面每次都要重新加载数据, 否则显示的内容就会出错, 貌似还不如每个页面创建一个控制器好
 @property (strong, nonatomic) NSCache *cacheChildVcs;
 
@@ -39,7 +42,7 @@
 @implementation ZJContentView
 #define cellID @"cellID"
 
-
+static NSString *const kContentOffsetOffKey = @"contentOffset";
 #pragma mark - life cycle
 
 - (instancetype)initWithFrame:(CGRect)frame segmentView:(ZJScrollSegmentView *)segmentView parentViewController:(UIViewController *)parentViewController delegate:(id<ZJScrollPageViewDelegate>) delegate {
@@ -73,7 +76,22 @@
 //    // 发布通知 默认为0
 //    [self addCurrentShowIndexNotificationWithIndex:0];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveMemoryWarningHander:) name:UIApplicationDidReceiveMemoryWarningNotification object:nil];
+//    [self.collectionView addObserver:self forKeyPath:kContentOffsetOffKey options:NSKeyValueObservingOptionNew context:nil];
 }
+
+//
+//- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
+//    if ([keyPath isEqualToString:keyPath]) {
+//        CGFloat contentOffsetX = self.collectionView.contentOffset.x;
+//        CGFloat volicityX = [self.collectionView.panGestureRecognizer velocityInView:self.collectionView].x;
+//        if (!self.collectionView.isTracking && self.collectionView.isDecelerating) {
+//            NSLog(@"减速完成");
+//        }
+//        NSLog(@"%f ------", volicityX);
+//    }
+//}
+
+
 
 - (void)receiveMemoryWarningHander:(NSNotificationCenter *)noti {
     
@@ -94,6 +112,7 @@
 - (void)dealloc {
     self.parentViewController = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+//    [self.collectionView removeObserver:self forKeyPath:kContentOffsetOffKey];
     NSLog(@"ZJContentView---销毁");
 }
 
@@ -169,7 +188,6 @@
     [cell.contentView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     
     _currentChildVc = [self.childVcsDic valueForKey:[NSString stringWithFormat:@"%ld", (long)indexPath.row]];
-    BOOL isFirstTime = _currentChildVc == nil;
     
     if (_delegate && [_delegate respondsToSelector:@selector(childViewController:forIndex:)]) {
         if (_currentChildVc == nil) {
@@ -185,19 +203,60 @@
     } else {
         NSAssert(NO, @"必须设置代理和实现代理方法");
     }
+    if (!_firstViewIsAppear) {
+        viewControllerWillAppear(_currentChildVc);
+        viewControllerDidAppear(_currentChildVc);
+        _firstViewIsAppear = YES;
+    }
+    else {
+        viewControllerWillAppear(_currentChildVc);
+        self.lastChildVc = [self.childVcsDic valueForKey:[NSString stringWithFormat:@"%ld", _oldIndex]];
+        viewControllerWillDisappear(self.lastChildVc);
+    }
+    NSLog(@"当前下标     %ld", indexPath.row);
     // 这里建立子控制器和父控制器的关系
     [self addChildVc:_currentChildVc ToParentVcCell:cell];
-    
-    [self viewWillAppearIsFirstTime:isFirstTime forIndex:indexPath.row];
     return cell;
 }
 
-- (void)viewWillAppearIsFirstTime:(BOOL)isFirstTime forIndex:(NSInteger)index {
-    
-    if ([_currentChildVc respondsToSelector:@selector(setUpWhenViewWillAppearForTitle:forIndex:firstTimeAppear:)]) {
-        [_currentChildVc setUpWhenViewWillAppearForTitle:self.segmentView.titles[index] forIndex:index firstTimeAppear:isFirstTime];
+// 结束滚动
+- (void)collectionView:(UICollectionView *)collectionView didEndDisplayingCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
+    if (!collectionView.isTracking) {
+        NSInteger currentIndex = (collectionView.contentOffset.x / self.bounds.size.width);
+        
+        [self contentViewDidMoveFromIndex:currentIndex toIndex:currentIndex progress:1.0];
+        // 调整title
+        [self adjustSegmentTitleOffsetToCurrentIndex:currentIndex];
+    }
+
+    if (collectionView.contentOffset.x == _oldOffSetX) {// 滚动未完成就返回了
+        viewControllerWillDisappear(_currentChildVc);
+        viewControllerDidDisappear(_currentChildVc);
+    }
+    else {
+        viewControllerDidAppear(_currentChildVc);
+        viewControllerDidDisappear(self.lastChildVc);
+
     }
 }
+
+
+static void viewControllerWillAppear(UIViewController *viewController) {
+    [viewController beginAppearanceTransition:YES animated:YES];
+
+}
+static void viewControllerDidAppear(UIViewController *viewController) {
+    [viewController endAppearanceTransition];
+}
+static void viewControllerWillDisappear(UIViewController *viewController) {
+    [viewController beginAppearanceTransition:NO animated:YES];
+}
+static void viewControllerDidDisappear(UIViewController *viewController) {
+    [viewController endAppearanceTransition];
+}
+
+
+
 
 - (void)addChildVc:(UIViewController *)childVc ToParentVcCell:(UICollectionViewCell *) cell {
     if ([childVc isKindOfClass:[UINavigationController class]]) {
@@ -205,8 +264,7 @@
         
     }
     
-    if (childVc.scrollPageParentViewController != self.parentViewController) {
-        childVc.scrollPageParentViewController = self.parentViewController;
+    if (childVc.zj_scrollViewController != self.parentViewController) {
         [self.parentViewController addChildViewController:childVc];
     }
     childVc.view.frame = self.bounds;
@@ -256,44 +314,12 @@
 }
 
 
-/** 滚动减速完成时再更新title的位置 */
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    NSInteger currentIndex = (scrollView.contentOffset.x / self.bounds.size.width);
-
-    [self contentViewDidMoveFromIndex:currentIndex toIndex:currentIndex progress:1.0];
-    // 调整title
-    [self adjustSegmentTitleOffsetToCurrentIndex:currentIndex];
-
-    if (scrollView.contentOffset.x == _oldOffSetX) {// 滚动未完成
-        _currentChildVc = [self.childVcsDic valueForKey:[NSString stringWithFormat:@"%ld", (long)currentIndex]];
-
-        _currentChildVc = [_delegate childViewController:_currentChildVc forIndex:currentIndex];
-
-    }
-}
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-
-
-    if (scrollView.contentOffset.x == 0 || scrollView.contentOffset.x == scrollView.contentSize.width - scrollView.bounds.size.width) {
-        NSInteger currentIndex = (scrollView.contentOffset.x / self.bounds.size.width);
-        if (scrollView.contentOffset.x == _oldOffSetX) {
-            [self contentViewDidMoveFromIndex:currentIndex toIndex:currentIndex progress:1.0];
-            
-            if (scrollView.contentOffset.x == _oldOffSetX) {// 滚动未完成
-                _currentChildVc = [self.childVcsDic valueForKey:[NSString stringWithFormat:@"%ld", (long)currentIndex]];
-                
-                _currentChildVc = [_delegate childViewController:_currentChildVc forIndex:currentIndex];
-                
-            }
-        }
-    }
-}
 
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
     _oldOffSetX = scrollView.contentOffset.x;
     self.forbidTouchToAdjustPosition = NO;
+    
 }
 
 #pragma mark - private helper

@@ -74,6 +74,11 @@
 
 }
 
+
+- (BOOL)shouldAutomaticallyForwardAppearanceMethods {
+    return NO;
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -84,12 +89,12 @@
 }
 
 - (UIViewController<ZJScrollPageViewChildVcDelegate> *)childViewController:(UIViewController<ZJScrollPageViewChildVcDelegate> *)reuseViewController forIndex:(NSInteger)index {
-
+    
     // 根据不同的下标或者title返回相应的控制器, 但是控制器必须要遵守ZJScrollPageViewChildVcDelegate
     // 并且可以通过实现协议中的方法来加载不同的数据
     // 注意ZJScrollPageView不会保证viewWillAppear等生命周期方法一定会调用
     // 所以建议使用ZJScrollPageViewChildVcDelegate中的方法来加载不同的数据
-    
+    NSLog(@"%ld---------", index);
     if (index == 0) {
         // 注意这个效果和tableView的deque...方法一样, 会返回一个可重用的childVc
         // 请首先判断返回给你的是否是可重用的
