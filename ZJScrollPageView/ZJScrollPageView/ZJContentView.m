@@ -350,7 +350,7 @@ static NSString *const kContentOffsetOffKey = @"contentOffset";
 - (void)setCurrentIndex:(NSInteger)currentIndex andScrollDirection:(ZJScrollPageControllerScrollDirection)scrollDirection {
     if (currentIndex != _currentIndex) {
         
-        NSLog(@"current -- %ld   _current ---- %ld _oldIndex --- %ld", currentIndex, _currentIndex, _oldIndex);
+//        NSLog(@"current -- %ld   _current ---- %ld _oldIndex --- %ld", currentIndex, _currentIndex, _oldIndex);
         [self setupSubviewsWithCurrentIndex:currentIndex oldIndex:_oldIndex];
 
         if (_scrollDirection != ZJScrollPageControllerScrollDirectionNone) {
@@ -369,7 +369,7 @@ static NSString *const kContentOffsetOffKey = @"contentOffset";
         _scrollDirection = scrollDirection;
         _currentIndex = currentIndex;
 
-        NSLog(@"%@",self.scrollView.subviews);
+//        NSLog(@"%@",self.scrollView.subviews);
     }
     
 }
