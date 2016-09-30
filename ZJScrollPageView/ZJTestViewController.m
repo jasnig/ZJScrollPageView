@@ -19,14 +19,6 @@
 }
 
 
-- (void)setUpWhenViewWillAppearForTitle:(NSString *)title forIndex:(NSInteger)index firstTimeAppear:(BOOL)isFirstTime {
-    if (isFirstTime) {
-        if ([title isEqualToString:@"国际要闻"]) {
-            NSLog(@"加载'国际要闻'相关的内容");
-        }
-    }
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     UIButton *testBtn = [[UIButton alloc] initWithFrame:CGRectMake(100, 100, 100, 100)];
@@ -40,27 +32,29 @@
     self.zj_scrollViewController.title  = @"测试过";
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    
+
+- (void)zj_viewWillAppearForIndex:(NSInteger)index {
     NSLog(@"viewWillAppear------");
- 
+    
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
+
+- (void)zj_viewDidAppearForIndex:(NSInteger)index {
     NSLog(@"viewDidAppear-----");
+    
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
+
+- (void)zj_viewWillDisappearForIndex:(NSInteger)index {
     NSLog(@"viewWillDisappear-----");
+
 }
 
-- (void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
+- (void)zj_viewDidDisappearForIndex:(NSInteger)index {
     NSLog(@"viewDidDisappear--------");
+
 }
+
 
 - (void)dealloc
 {

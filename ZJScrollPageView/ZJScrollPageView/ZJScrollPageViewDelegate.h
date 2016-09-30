@@ -13,21 +13,16 @@
 @protocol ZJScrollPageViewChildVcDelegate <NSObject>
 
 @optional
-
-// 已经实现
 /**
  *
- * 根据不同的下标或者title返回相应的控制器, 但是控制器必须要遵守ZJScrollPageViewChildVcDelegate
- * 并且可以通过实现协议中的方法来加载不同的数据
  * 注意ZJScrollPageView不会保证viewWillAppear等生命周期方法一定会调用
- * 所以建议使用ZJScrollPageViewChildVcDelegate中的方法来加载不同的数据
- * firstTimeAppear - 会告诉你是否页面是第一次出现
+ * 所以建议使用ZJScrollPageViewChildVcDelegate中的方法来替代对应的生命周期方法完成数据的加载
  */
+- (void)zj_viewWillAppearForIndex:(NSInteger)index;
+- (void)zj_viewDidAppearForIndex:(NSInteger)index;
+- (void)zj_viewWillDisappearForIndex:(NSInteger)index;
+- (void)zj_viewDidDisappearForIndex:(NSInteger)index;
 
-- (void)setUpWhenViewWillAppearForTitle:(NSString *)title forIndex:(NSInteger)index firstTimeAppear: (BOOL)isFirstTime;
-
-// 还未实现相关功能
-//- (void)setUpWhenViewDidAppearForTitle:(NSString *)title forIndex:(NSInteger)index;
 @end
 
 
@@ -60,6 +55,10 @@
  *  @param index
  */
 - (void)scrollPageController:(UIViewController *)scrollPageController childViewControllDidAppear:(UIViewController *)childViewController forIndex:(NSInteger)index;
+
+- (void)scrollPageController:(UIViewController *)scrollPageController childViewControllWillDisappear:(UIViewController *)childViewController forIndex:(NSInteger)index;
+- (void)scrollPageController:(UIViewController *)scrollPageController childViewControllDidDisappear:(UIViewController *)childViewController forIndex:(NSInteger)index;
+
 
 @end
 

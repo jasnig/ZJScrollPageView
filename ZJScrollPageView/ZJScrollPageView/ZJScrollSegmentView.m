@@ -10,7 +10,7 @@
 #import "ZJTitleView.h"
 #import "UIView+ZJFrame.h"
 
-@interface ZJScrollSegmentView () {
+@interface ZJScrollSegmentView ()<UIScrollViewDelegate> {
     CGFloat _currentWidth;
     NSUInteger _currentIndex;
     NSUInteger _oldIndex;
@@ -494,10 +494,13 @@ static CGFloat const contentSizeXOff = 20.0;
 
     if (self.scrollView.contentSize.width != self.scrollView.bounds.size.width + contentSizeXOff) {// 需要滚动
         ZJTitleView *currentTitleView = (ZJTitleView *)_titleViews[currentIndex];
+        self.userInteractionEnabled = NO;
 
         CGFloat offSetx = currentTitleView.center.x - _currentWidth * 0.5;
         if (offSetx < 0) {
             offSetx = 0;
+            self.userInteractionEnabled = YES;
+
         }
         CGFloat extraBtnW = self.extraBtn ? self.extraBtn.zj_width : 0.0;
         CGFloat maxOffSetX = self.scrollView.contentSize.width - (_currentWidth - extraBtnW);
@@ -508,8 +511,9 @@ static CGFloat const contentSizeXOff = 20.0;
         
         if (offSetx > maxOffSetX) {
             offSetx = maxOffSetX;
+            self.userInteractionEnabled = YES;
+
         }
-        
         [self.scrollView setContentOffset:CGPointMake(offSetx, 0.0) animated:YES];
     }
 
@@ -542,6 +546,10 @@ static CGFloat const contentSizeXOff = 20.0;
     [self setupUI];
     [self setSelectedIndex:0 animated:YES];
     
+}
+
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
+    self.userInteractionEnabled = YES;
 }
 
 #pragma mark - getter --- setter
@@ -610,7 +618,7 @@ static CGFloat const contentSizeXOff = 20.0;
         scrollView.scrollsToTop = NO;
         scrollView.bounces = self.segmentStyle.isSegmentViewBounces;
         scrollView.pagingEnabled = NO;
-        
+        scrollView.delegate = self;
         _scrollView = scrollView;
     }
     return _scrollView;

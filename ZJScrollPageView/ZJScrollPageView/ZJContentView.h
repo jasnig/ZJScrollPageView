@@ -15,6 +15,7 @@
 
 /** 必须设置代理和实现相关的方法*/
 @property(weak, nonatomic)id<ZJScrollPageViewDelegate> delegate;
+@property (strong, nonatomic, readonly) UIScrollView *scrollView;
 
 /**初始化方法
  *
