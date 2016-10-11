@@ -512,7 +512,27 @@ static CGFloat const contentSizeXOff = 20.0;
         if (offSetx > maxOffSetX) {
             offSetx = maxOffSetX;
             self.userInteractionEnabled = YES;
-
+        }
+        
+        if (!self.segmentStyle.isGradualChangeTitleColor) {
+            int index = 0;
+            for (ZJTitleView *titleView in _titleViews) {
+                if (index != currentIndex) {
+                    titleView.textColor = self.segmentStyle.normalTitleColor;
+                    titleView.currentTransformSx = 1.0;
+                    titleView.selected = NO;
+                }
+                else {
+                    titleView.textColor = self.segmentStyle.selectedTitleColor;
+                    if (self.segmentStyle.isScaleTitle) {
+                        titleView.currentTransformSx = self.segmentStyle.titleBigScale;
+                    }
+                    titleView.selected = YES;
+ 
+                }
+                
+                index++;
+            }
         }
         [self.scrollView setContentOffset:CGPointMake(offSetx, 0.0) animated:YES];
     }

@@ -19,6 +19,7 @@ typedef NS_ENUM(NSInteger, ZJScrollPageControllerScrollDirection) {
 @interface ZJContentView ()<UIScrollViewDelegate, UIGestureRecognizerDelegate> {
     CGFloat   _oldOffSetX;
     BOOL _isLoadFirstView;
+//    BOOL _isAnimating;
 }
 /** 避免循环引用*/
 @property (weak, nonatomic) ZJScrollSegmentView *segmentView;
@@ -182,8 +183,19 @@ static NSString *const kContentOffsetOffKey = @"contentOffset";
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    if (self.forbidTouchToAdjustPosition ) {// first or last
+    if (self.forbidTouchToAdjustPosition) {// first or last
         return;
+    }
+    
+    if (scrollView.contentOffset.x <= 0) {
+        [self contentViewDidMoveFromIndex:0 toIndex:0 progress:1.0];
+        return;
+
+    }
+    if (scrollView.contentOffset.x >= scrollView.contentSize.width - scrollView.bounds.size.width) {
+        [self contentViewDidMoveFromIndex:_itemsCount-1 toIndex:_itemsCount-1 progress:1.0];
+        return;
+
     }
     
     CGFloat tempProgress = scrollView.contentOffset.x / self.bounds.size.width;
@@ -194,12 +206,6 @@ static NSString *const kContentOffsetOffKey = @"contentOffset";
     if (deltaX > 0 && (deltaX != scrollView.bounds.size.width)) {// 向右
         _oldIndex = tempIndex;
         NSInteger tempCurrentIndex = tempIndex + 1;
-
-        if (scrollView.contentOffset.x > scrollView.contentSize.width - scrollView.bounds.size.width) { // 右边bounds 不要越界
-            _oldIndex = self.itemsCount - 1;
-            tempCurrentIndex = _oldIndex;
-            progress = 1.0f;
-        }
         
         [self setCurrentIndex:tempCurrentIndex andScrollDirection:ZJScrollPageControllerScrollDirectionRight];
 
@@ -209,11 +215,6 @@ static NSString *const kContentOffsetOffKey = @"contentOffset";
 
          _oldIndex = tempIndex + 1;
         
-        if (scrollView.contentOffset.x < 0) {// bounds 开启的时候 左边滑动很多 不要越界
-            _oldIndex = 0;
-            tempIndex = 0;
-            progress = 1.0f;
-        }
          [self setCurrentIndex:tempIndex andScrollDirection:ZJScrollPageControllerScrollDirectionLeft];
 
     }
@@ -221,7 +222,7 @@ static NSString *const kContentOffsetOffKey = @"contentOffset";
          return;
     }
 
-//    NSLog(@"%f------%d----%d------", progress, _oldIndex, _currentIndex);
+    NSLog(@"%f------%ld----%ld------", progress, _oldIndex, _currentIndex);
     
     [self contentViewDidMoveFromIndex:_oldIndex toIndex:_currentIndex progress:progress];
 
@@ -230,19 +231,17 @@ static NSString *const kContentOffsetOffKey = @"contentOffset";
 /** 滚动减速完成时再更新title的位置 */
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     NSInteger currentIndex = (scrollView.contentOffset.x / self.bounds.size.width);
-    // 不要触发set方法
-    
+    if (_scrollDirection == ZJScrollPageControllerScrollDirectionNone && !_forbidTouchToAdjustPosition) { // 开启bounds 在第一页和最后一页快速松开手又接触滑动的时候 会不合理的被调用这个代理方法 ---- 其实这个时候并没有在松开手的情况下减速完成
+        return;
+    }
     [self contentViewDidMoveFromIndex:currentIndex toIndex:currentIndex progress:1.0];
     // 调整title
     [self adjustSegmentTitleOffsetToCurrentIndex:currentIndex];
 
     if (scrollView.contentOffset.x == _oldOffSetX) {// 滚动未完成
-        [self didAppearWithIndex:_oldIndex];
-        [self didDisappearWithIndex:_currentIndex];
-        
-        _currentChildVc = [self.childVcsDic valueForKey:[NSString stringWithFormat:@"%ld", (long)currentIndex]];
 
-        _currentChildVc = [_delegate childViewController:_currentChildVc forIndex:currentIndex];
+        [self didAppearWithIndex:currentIndex];
+        [self didDisappearWithIndex:_currentIndex];
     }
     else {
         [self didAppearWithIndex:_currentIndex];
@@ -250,24 +249,10 @@ static NSString *const kContentOffsetOffKey = @"contentOffset";
     }
     // 重置_currentIndex 不触发set方法
     _currentIndex = currentIndex;
+    _scrollDirection = ZJScrollPageControllerScrollDirectionNone;
 
 }
 
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-
-
-    if (scrollView.contentOffset.x == 0 || scrollView.contentOffset.x == scrollView.contentSize.width - scrollView.bounds.size.width) {
-        NSInteger currentIndex = (scrollView.contentOffset.x / self.bounds.size.width);
-        if (scrollView.contentOffset.x == _oldOffSetX) { // 滚动未完成
-            [self contentViewDidMoveFromIndex:currentIndex toIndex:currentIndex progress:1.0];
-            
-            _currentChildVc = [self.childVcsDic valueForKey:[NSString stringWithFormat:@"%ld", (long)currentIndex]];
-            
-            _currentChildVc = [_delegate childViewController:_currentChildVc forIndex:currentIndex];
-                
-        }
-    }
-}
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
     _oldOffSetX = scrollView.contentOffset.x;
@@ -353,7 +338,7 @@ static NSString *const kContentOffsetOffKey = @"contentOffset";
 //        NSLog(@"current -- %ld   _current ---- %ld _oldIndex --- %ld", currentIndex, _currentIndex, _oldIndex);
         [self setupSubviewsWithCurrentIndex:currentIndex oldIndex:_oldIndex];
 
-        if (_scrollDirection != ZJScrollPageControllerScrollDirectionNone) {
+        if (scrollDirection != ZJScrollPageControllerScrollDirectionNone) {
             // 打开右边, 但是未松手又返回了打开左边
             // 打开左边, 但是未松手又返回了打开右边
             [self didDisappearWithIndex:_currentIndex];
@@ -448,6 +433,8 @@ static NSString *const kContentOffsetOffKey = @"contentOffset";
         [scrollView addSubview:self.oldView];
         
         scrollView.pagingEnabled = YES;
+        scrollView.showsVerticalScrollIndicator = NO;
+        scrollView.showsHorizontalScrollIndicator = NO;
         scrollView.bounces = self.segmentView.segmentStyle.isContentViewBounces;
         scrollView.scrollEnabled = self.segmentView.segmentStyle.isScrollContentView;
         scrollView.contentSize = CGSizeMake(self.itemsCount*self.bounds.size.width, self.bounds.size.height);
