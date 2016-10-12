@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name        = "ZJScrollPageView"
-  s.version     = "0.2.0"
+  s.version     = "0.4.0"
   s.summary     = "ZJScrollPageView is written in objective-C and it is useful and easy to do some interesting things with it."
   s.homepage    = "https://github.com/jasnig/ZJScrollPageView"
   s.license     = { :type => "MIT" }
