@@ -222,7 +222,7 @@ static NSString *const kContentOffsetOffKey = @"contentOffset";
          return;
     }
 
-    NSLog(@"%f------%ld----%ld------", progress, _oldIndex, _currentIndex);
+//    NSLog(@"%f------%ld----%ld------", progress, _oldIndex, _currentIndex);
     
     [self contentViewDidMoveFromIndex:_oldIndex toIndex:_currentIndex progress:progress];
 
@@ -385,22 +385,26 @@ static NSString *const kContentOffsetOffKey = @"contentOffset";
     if (currentController.zj_scrollViewController != self.parentViewController) {
         [self.parentViewController addChildViewController:currentController];
     }
-    [self.currentView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+//    [self.currentView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    self.currentView = currentController.view;
     self.currentView.frame = CGRectMake(currentIndex*width, 0, width, height);
-    [self.currentView addSubview:currentController.view];
+    [self.scrollView addSubview:currentController.view];
     [_currentChildVc didMoveToParentViewController:self.parentViewController];
     
     UIViewController *oldController = [self.childVcsDic valueForKey:[NSString stringWithFormat:@"%ld", (long)_oldIndex]];
     // 添加oldController
     if (oldController) {
+        if (oldController.zj_scrollViewController != self.parentViewController) {
+            [self.parentViewController addChildViewController:oldController];
+        }
 
-        [self.oldView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+//        [self.oldView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
         self.oldView.frame = CGRectMake(oldIndex*width, 0, width, height);
-        [self.oldView addSubview:oldController.view];
+        self.oldView = oldController.view;
+        [self.scrollView addSubview:oldController.view];
         [oldController didMoveToParentViewController:self.parentViewController];
     }
-    
-    [self setNeedsLayout];
+    NSLog(@"%@",self.currentView.subviews);
 }
 
 
@@ -431,7 +435,7 @@ static NSString *const kContentOffsetOffKey = @"contentOffset";
         scrollView.delegate = self;
         [scrollView addSubview:self.currentView];
         [scrollView addSubview:self.oldView];
-        
+        scrollView.scrollsToTop = NO;
         scrollView.pagingEnabled = YES;
         scrollView.showsVerticalScrollIndicator = NO;
         scrollView.showsHorizontalScrollIndicator = NO;

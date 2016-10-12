@@ -470,8 +470,7 @@ static CGFloat const contentSizeXOff = 20.0;
 }
 
 - (void)adjustTitleOffSetToCurrentIndex:(NSInteger)currentIndex {
-    // 重置附近其他item的缩放和颜色
-
+    // 重置渐变/缩放效果附近其他item的缩放和颜色
     for (NSInteger index = currentIndex - 3; index < currentIndex + 3; index++) {
         if (index >= 0 && index <= _titles.count - 1) {
             ZJTitleView *nextTitleView = _titleViews[index];
@@ -563,10 +562,6 @@ static CGFloat const contentSizeXOff = 20.0;
     [self setupUI];
     [self setSelectedIndex:0 animated:YES];
     
-}
-
-- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
-    self.userInteractionEnabled = YES;
 }
 
 #pragma mark - getter --- setter

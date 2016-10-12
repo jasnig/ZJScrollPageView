@@ -9,7 +9,7 @@
 #import "ZJVc2Controller.h"
 #import "ZJScrollPageView.h"
 #import "ZJTestViewController.h"
-
+#import "ZJPageTableViewController.h"
 @interface ZJVc2Controller ()<ZJScrollPageViewDelegate>
 
 @property(strong, nonatomic)NSArray<NSString *> *titles;
@@ -62,7 +62,7 @@
 //    NSLog(@"%ld---------", index);
 
     if (!childVc) {
-        childVc = [[ZJTestViewController alloc] init];
+        childVc = [[ZJPageTableViewController alloc] init];
         childVc.title = self.titles[index];
     }
     
