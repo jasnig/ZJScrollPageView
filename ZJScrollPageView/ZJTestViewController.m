@@ -29,6 +29,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:testBtn];
     NSLog(@"%@", self.zj_scrollViewController);
+    NSLog(@"%@",self.view);
     self.zj_scrollViewController.title  = @"测试过";
 }
 

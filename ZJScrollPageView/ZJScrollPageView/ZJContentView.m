@@ -336,7 +336,7 @@ static NSString *const kContentOffsetOffKey = @"contentOffset";
     if (currentIndex != _currentIndex) {
         
 //        NSLog(@"current -- %ld   _current ---- %ld _oldIndex --- %ld", currentIndex, _currentIndex, _oldIndex);
-        [self setupSubviewsWithCurrentIndex:currentIndex oldIndex:_oldIndex];
+        [self setupSubviewsWithCurrentIndex:currentIndex oldIndex:_oldIndex scrollDirection:scrollDirection];
 
         if (scrollDirection != ZJScrollPageControllerScrollDirectionNone) {
             // 打开右边, 但是未松手又返回了打开左边
@@ -359,7 +359,7 @@ static NSString *const kContentOffsetOffKey = @"contentOffset";
     
 }
 
-- (void)setupSubviewsWithCurrentIndex:(NSInteger)currentIndex oldIndex:(NSInteger)oldIndex {
+- (void)setupSubviewsWithCurrentIndex:(NSInteger)currentIndex oldIndex:(NSInteger)oldIndex scrollDirection:(ZJScrollPageControllerScrollDirection)scrollDirection {
     UIViewController<ZJScrollPageViewChildVcDelegate> *currentController = [self.childVcsDic valueForKey:[NSString stringWithFormat:@"%ld", (long)currentIndex]];
     
     if (_delegate && [_delegate respondsToSelector:@selector(childViewController:forIndex:)]) {
@@ -385,12 +385,11 @@ static NSString *const kContentOffsetOffKey = @"contentOffset";
     if (currentController.zj_scrollViewController != self.parentViewController) {
         [self.parentViewController addChildViewController:currentController];
     }
-//    [self.currentView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    self.currentView = currentController.view;
+
     self.currentView.frame = CGRectMake(currentIndex*width, 0, width, height);
-    [self.scrollView addSubview:currentController.view];
+    [self.currentView addSubview:currentController.view];
     [_currentChildVc didMoveToParentViewController:self.parentViewController];
-    
+
     UIViewController *oldController = [self.childVcsDic valueForKey:[NSString stringWithFormat:@"%ld", (long)_oldIndex]];
     // 添加oldController
     if (oldController) {
@@ -398,13 +397,21 @@ static NSString *const kContentOffsetOffKey = @"contentOffset";
             [self.parentViewController addChildViewController:oldController];
         }
 
-//        [self.oldView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
         self.oldView.frame = CGRectMake(oldIndex*width, 0, width, height);
-        self.oldView = oldController.view;
-        [self.scrollView addSubview:oldController.view];
+        [self.oldView addSubview:oldController.view];
         [oldController didMoveToParentViewController:self.parentViewController];
     }
-    NSLog(@"%@",self.currentView.subviews);
+    // 移除旧的
+    if (self.currentView.subviews.count>1) {
+        UIView *temp = self.currentView.subviews.firstObject;
+        [temp removeFromSuperview];
+    }
+    if (self.oldView.subviews.count>1) {
+        UIView *temp = self.oldView.subviews.firstObject;
+        [temp removeFromSuperview];
+    }
+
+//    NSLog(@"%@",self.oldView.subviews);
 }
 
 

@@ -63,12 +63,12 @@
     }
     
     
-    if (index%2==0) {
-        childVc.view.backgroundColor = [UIColor blueColor];
-    } else {
-        childVc.view.backgroundColor = [UIColor greenColor];
-        
-    }
+//    if (index%2==0) {
+//        childVc.view.backgroundColor = [UIColor blueColor];
+//    } else {
+//        childVc.view.backgroundColor = [UIColor greenColor];
+//        
+//    }
     
     NSLog(@"%ld-----%@",(long)index, childVc);
     

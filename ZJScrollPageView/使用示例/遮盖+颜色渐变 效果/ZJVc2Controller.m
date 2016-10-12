@@ -23,7 +23,6 @@
     self.title = @"效果示例";
     //必要的设置, 如果没有设置可能导致内容显示不正常
     self.automaticallyAdjustsScrollViewInsets = NO;
-    
     ZJSegmentStyle *style = [[ZJSegmentStyle alloc] init];
     // 缩放标题
     style.scaleTitle = YES;
