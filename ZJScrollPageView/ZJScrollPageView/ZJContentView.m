@@ -390,6 +390,12 @@ static NSString *const kContentOffsetOffKey = @"contentOffset";
     [self.currentView addSubview:currentController.view];
     [_currentChildVc didMoveToParentViewController:self.parentViewController];
 
+    // 重新布局，暂时不支持autolayout，使用此方法进行二次排版
+    if (_delegate && [_delegate respondsToSelector:@selector(frameOfChildControllerForContainer:)]) {
+        CGRect lastRect = [_delegate frameOfChildControllerForContainer:self.currentView];
+        currentController.view.frame = lastRect;
+    }
+    
     UIViewController *oldController = [self.childVcsDic valueForKey:[NSString stringWithFormat:@"%ld", (long)_oldIndex]];
     // 添加oldController
     if (oldController) {

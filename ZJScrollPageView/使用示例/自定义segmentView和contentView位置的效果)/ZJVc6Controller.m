@@ -111,4 +111,8 @@
     return childVc;
 }
 
+
+-(CGRect)frameOfChildControllerForContainer:(UIView *)containerView {
+    return  CGRectInset(containerView.bounds, 20, 20);
+}
 @end
