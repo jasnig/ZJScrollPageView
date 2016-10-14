@@ -199,14 +199,18 @@ static NSString *const kContentOffsetOffKey = @"contentOffset";
     }
     
     CGFloat tempProgress = scrollView.contentOffset.x / self.bounds.size.width;
-    NSInteger tempIndex = (NSInteger)tempProgress;
+    NSInteger tempIndex = tempProgress;
     CGFloat progress = tempProgress - floor(tempProgress);
     CGFloat deltaX = scrollView.contentOffset.x - _oldOffSetX;
-    
-    if (deltaX > 0 && (deltaX != scrollView.bounds.size.width)) {// 向右
+
+    if (deltaX > 0) {// 向右
+        if (progress == 0.0) {
+            return;
+        }
         _oldIndex = tempIndex;
         NSInteger tempCurrentIndex = tempIndex + 1;
-        
+        NSLog(@"%f------%ld----%ld------", progress, _oldIndex, _currentIndex);
+
         [self setCurrentIndex:tempCurrentIndex andScrollDirection:ZJScrollPageControllerScrollDirectionRight];
 
     }
@@ -221,8 +225,9 @@ static NSString *const kContentOffsetOffKey = @"contentOffset";
     else {
          return;
     }
+//    NSLog(@"tempIndex -- %ld   _current ---- %ld _oldIndex --- %ld", tempIndex, _currentIndex, _oldIndex);
 
-//    NSLog(@"%f------%ld----%ld------", progress, _oldIndex, _currentIndex);
+
     
     [self contentViewDidMoveFromIndex:_oldIndex toIndex:_currentIndex progress:progress];
 
@@ -231,12 +236,14 @@ static NSString *const kContentOffsetOffKey = @"contentOffset";
 /** 滚动减速完成时再更新title的位置 */
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     NSInteger currentIndex = (scrollView.contentOffset.x / self.bounds.size.width);
-    if (_scrollDirection == ZJScrollPageControllerScrollDirectionNone && !_forbidTouchToAdjustPosition) { // 开启bounds 在第一页和最后一页快速松开手又接触滑动的时候 会不合理的被调用这个代理方法 ---- 其实这个时候并没有在松开手的情况下减速完成
-        return;
-    }
     [self contentViewDidMoveFromIndex:currentIndex toIndex:currentIndex progress:1.0];
     // 调整title
     [self adjustSegmentTitleOffsetToCurrentIndex:currentIndex];
+    
+
+    if ((_oldOffSetX == 0 || _oldOffSetX == scrollView.contentSize.width-scrollView.bounds.size.width) && _scrollDirection == ZJScrollPageControllerScrollDirectionNone) {// 开启bounds 在第一页和最后一页快速松开手又接触滑动的时候 会不合理的被调用这个代理方法 ---- 其实这个时候并没有在松开手的情况下减速完成
+        return;
+    }
 
     if (scrollView.contentOffset.x == _oldOffSetX) {// 滚动未完成
 
@@ -335,10 +342,9 @@ static NSString *const kContentOffsetOffKey = @"contentOffset";
 - (void)setCurrentIndex:(NSInteger)currentIndex andScrollDirection:(ZJScrollPageControllerScrollDirection)scrollDirection {
     if (currentIndex != _currentIndex) {
         
-//        NSLog(@"current -- %ld   _current ---- %ld _oldIndex --- %ld", currentIndex, _currentIndex, _oldIndex);
         [self setupSubviewsWithCurrentIndex:currentIndex oldIndex:_oldIndex scrollDirection:scrollDirection];
 
-        if (scrollDirection != ZJScrollPageControllerScrollDirectionNone) {
+        if (_scrollDirection != ZJScrollPageControllerScrollDirectionNone) {
             // 打开右边, 但是未松手又返回了打开左边
             // 打开左边, 但是未松手又返回了打开右边
             [self didDisappearWithIndex:_currentIndex];
@@ -366,6 +372,16 @@ static NSString *const kContentOffsetOffKey = @"contentOffset";
         if (currentController == nil) {
             currentController = [_delegate childViewController:nil forIndex:currentIndex];
             [self.childVcsDic setValue:currentController forKey:[NSString stringWithFormat:@"%ld", (long)currentIndex]];
+            
+            // 添加currentController
+            if (currentController.zj_scrollViewController != self.parentViewController) {
+                [self.parentViewController addChildViewController:currentController];
+                currentController.view.frame = self.bounds;
+            }
+
+            if ([currentController respondsToSelector:@selector(zj_viewDidLoadForIndex:)]) {
+                [currentController zj_viewDidLoadForIndex:currentIndex];
+            }
         } else {
             [_delegate childViewController:currentController forIndex:currentIndex];
         }
@@ -380,17 +396,12 @@ static NSString *const kContentOffsetOffKey = @"contentOffset";
     
     CGFloat width = self.bounds.size.width;
     CGFloat height = self.bounds.size.height;
-    
-    // 添加currentController
-    if (currentController.zj_scrollViewController != self.parentViewController) {
-        [self.parentViewController addChildViewController:currentController];
-    }
 
     self.currentView.frame = CGRectMake(currentIndex*width, 0, width, height);
     [self.currentView addSubview:currentController.view];
     [_currentChildVc didMoveToParentViewController:self.parentViewController];
 
-    UIViewController *oldController = [self.childVcsDic valueForKey:[NSString stringWithFormat:@"%ld", (long)_oldIndex]];
+    UIViewController *oldController = [self.childVcsDic valueForKey:[NSString stringWithFormat:@"%ld", (long)oldIndex]];
     // 添加oldController
     if (oldController) {
         if (oldController.zj_scrollViewController != self.parentViewController) {
@@ -398,6 +409,8 @@ static NSString *const kContentOffsetOffKey = @"contentOffset";
         }
 
         self.oldView.frame = CGRectMake(oldIndex*width, 0, width, height);
+        oldController.view.frame = self.bounds;
+
         [self.oldView addSubview:oldController.view];
         [oldController didMoveToParentViewController:self.parentViewController];
     }

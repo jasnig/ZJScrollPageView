@@ -10,5 +10,4 @@
 #import "ZJScrollPageViewDelegate.h"
 
 @interface ZJTestViewController : UIViewController <ZJScrollPageViewChildVcDelegate>
-
 @end

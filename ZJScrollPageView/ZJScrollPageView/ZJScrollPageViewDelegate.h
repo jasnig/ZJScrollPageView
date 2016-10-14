@@ -23,6 +23,8 @@
 - (void)zj_viewWillDisappearForIndex:(NSInteger)index;
 - (void)zj_viewDidDisappearForIndex:(NSInteger)index;
 
+- (void)zj_viewDidLoadForIndex:(NSInteger)index;
+
 @end
 
 
