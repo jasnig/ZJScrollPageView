@@ -33,7 +33,11 @@
     self.zj_scrollViewController.title  = @"测试过";
 }
 
+- (void)zj_viewDidLoadForIndex:(NSInteger)index {
+    NSLog(@"%@",self.view);
+    NSLog(@"%@", self.zj_scrollViewController);
 
+}
 - (void)zj_viewWillAppearForIndex:(NSInteger)index {
     NSLog(@"viewWillAppear------");
     

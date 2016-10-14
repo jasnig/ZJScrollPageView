@@ -9,7 +9,7 @@
 #import "ZJPageTableViewController.h"
 @interface ZJPageTableViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property(strong, nonatomic)UITableView *tableView;
-@property(strong, nonatomic)NSArray *data;
+@property(assign, nonatomic)NSInteger index;
 
 @end
 
@@ -21,6 +21,10 @@ static NSString * const cellId = @"cellID";
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+}
+
+- (void)zj_viewDidLoadForIndex:(NSInteger)index {
+    
     self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
@@ -29,21 +33,22 @@ static NSString * const cellId = @"cellID";
     [self.view addSubview:self.tableView];
 }
 
-#pragma mark- ZJScrollPageViewChildVcDelegate
-// 每次页面出现的时候会调用
-- (void)setUpWhenViewWillAppearForTitle:(NSString *)title forIndex:(NSInteger)index firstTimeAppear: (BOOL)isFirstTime {
-    
-    if(isFirstTime) {
-        // 加载数据
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            self.data = @[@"sfa",@"sfa",@"sfa",@"sfa",@"sfa",@"sfa",@"sfa",@"sfa",@"sfa",@"sfa",@"sfa",@"sfa",@"sfa",@"sfa",@"sfa",@"sfa",@"sfa",@"sfa"];
-            [self.tableView reloadData];
-        });
-        
-    } else {
-        //刷新...
-    }
+- (void)zj_viewDidAppearForIndex:(NSInteger)index {
+    self.index = index;
+    NSLog(@"已经出现   标题: --- %@  index: -- %ld", self.title, index);
+    // 加载数据
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        self.data = @[@"sfa",@"sfa",@"sfa",@"sfa",@"sfa",@"sfa",@"sfa",@"sfa",@"sfa",@"sfa",@"sfa",@"sfa",@"sfa",@"sfa",@"sfa",@"sfa",@"sfa",@"sfa"];
+        [self.tableView reloadData];
+//    });
 }
+
+//- (void)zj_viewDidDisappearForIndex:(NSInteger)index {
+//    NSLog(@"已经消失   标题: --- %@  index: -- %ld", self.title, index);
+//    
+//}
+
+#pragma mark- ZJScrollPageViewChildVcDelegate
 
 #pragma mark- UITableViewDelegate, UITableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -51,12 +56,12 @@ static NSString * const cellId = @"cellID";
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 2;
+    return self.data.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId forIndexPath:indexPath];
-    cell.textLabel.text = [NSString stringWithFormat:@"测试---- %ld", (long)indexPath.row];
+    cell.textLabel.text = [NSString stringWithFormat:@"测试---- %@-----%ld", self.data[indexPath.row],self.index];
     return cell;
 }
 

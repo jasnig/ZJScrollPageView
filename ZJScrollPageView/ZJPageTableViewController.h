@@ -11,5 +11,6 @@
 #import "ZJScrollPageViewDelegate.h"
 
 @interface ZJPageTableViewController : ZJPageViewController<ZJScrollPageViewChildVcDelegate>
+@property (strong, nonatomic) NSArray *data;
 
 @end
