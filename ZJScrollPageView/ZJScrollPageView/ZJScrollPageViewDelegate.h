@@ -60,7 +60,11 @@
 
 - (void)scrollPageController:(UIViewController *)scrollPageController childViewControllWillDisappear:(UIViewController *)childViewController forIndex:(NSInteger)index;
 - (void)scrollPageController:(UIViewController *)scrollPageController childViewControllDidDisappear:(UIViewController *)childViewController forIndex:(NSInteger)index;
-
-
+/**
+ *  页面添加到父视图时，在父视图中显示的位置
+ *  @param  containerView   childController 的 self.view 父视图
+ *  @return 返回最终显示的位置
+ */
+- (CGRect)frameOfChildControllerForContainer:(UIView *)containerView;
 @end
 

@@ -401,7 +401,15 @@ static NSString *const kContentOffsetOffKey = @"contentOffset";
     [self.currentView addSubview:currentController.view];
     [_currentChildVc didMoveToParentViewController:self.parentViewController];
 
+    
+    // 重新布局，暂时不支持autolayout，使用此方法进行二次排版
+    if (_delegate && [_delegate respondsToSelector:@selector(frameOfChildControllerForContainer:)]) {
+        CGRect lastRect = [_delegate frameOfChildControllerForContainer:self.currentView];
+        currentController.view.frame = lastRect;
+    }
+    
     UIViewController *oldController = [self.childVcsDic valueForKey:[NSString stringWithFormat:@"%ld", (long)oldIndex]];
+    
     // 添加oldController
     if (oldController) {
         if (oldController.zj_scrollViewController != self.parentViewController) {
@@ -409,7 +417,8 @@ static NSString *const kContentOffsetOffKey = @"contentOffset";
         }
 
         self.oldView.frame = CGRectMake(oldIndex*width, 0, width, height);
-        oldController.view.frame = self.bounds;
+        // Fix：修改旧视图坐标会引起之前坐标显示错误
+//        oldController.view.frame = self.bounds;
 
         [self.oldView addSubview:oldController.view];
         [oldController didMoveToParentViewController:self.parentViewController];
