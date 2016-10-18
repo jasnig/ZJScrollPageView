@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ZJScrollPageView.h"
 
 @interface ZJVc8Controller : UIViewController
+@property (weak, nonatomic,readonly) ZJScrollPageView *scrollPageView;
 
 @end

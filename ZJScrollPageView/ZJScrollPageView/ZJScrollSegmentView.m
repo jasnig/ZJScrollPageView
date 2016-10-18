@@ -119,7 +119,7 @@ static CGFloat const contentSizeXOff = 20.0;
     
     _currentIndex = currentLabel.tag;
     
-    [self adjustUIWhenBtnOnClickWithAnimate:true];
+    [self adjustUIWhenBtnOnClickWithAnimate:true taped:YES];
 }
 
 - (void)extraBtnOnClick:(UIButton *)extraBtn {
@@ -319,8 +319,8 @@ static CGFloat const contentSizeXOff = 20.0;
 
 #pragma mark - public helper
 
-- (void)adjustUIWhenBtnOnClickWithAnimate:(BOOL)animated {
-    if (_currentIndex == _oldIndex) { return; }
+- (void)adjustUIWhenBtnOnClickWithAnimate:(BOOL)animated taped:(BOOL)taped {
+    if (_currentIndex == _oldIndex && taped) { return; }
     
     ZJTitleView *oldTitleView = (ZJTitleView *)self.titleViews[_oldIndex];
     ZJTitleView *currentTitleView = (ZJTitleView *)self.titleViews[_currentIndex];
@@ -544,7 +544,7 @@ static CGFloat const contentSizeXOff = 20.0;
     }
     
     _currentIndex = index;
-    [self adjustUIWhenBtnOnClickWithAnimate:animated];
+    [self adjustUIWhenBtnOnClickWithAnimate:animated taped:NO];
 }
 
 - (void)reloadTitlesWithNewTitles:(NSArray *)titles {

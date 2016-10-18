@@ -144,17 +144,30 @@ static NSString *const kContentOffsetOffKey = @"contentOffset";
             });
         }
         else {
-            [self.scrollView setContentOffset:offset animated:animated];
-            [self didAppearWithIndex:currentIndex];
-            [self didDisappearWithIndex:_oldIndex];
+            if (currentIndex == _oldIndex) {
+                [self didAppearWithIndex:currentIndex];
+
+            }
+            else {
+                [self.scrollView setContentOffset:offset animated:animated];
+                [self didAppearWithIndex:currentIndex];
+                [self didDisappearWithIndex:_oldIndex];
+                
+            }
 
         }
     }
     else {
-        [self.scrollView setContentOffset:offset animated:animated];
-        [self didAppearWithIndex:currentIndex];
-        [self didDisappearWithIndex:_oldIndex];
-
+        if (currentIndex == _oldIndex) {
+            [self didAppearWithIndex:currentIndex];
+            
+        }
+        else {
+            [self.scrollView setContentOffset:offset animated:animated];
+            [self didAppearWithIndex:currentIndex];
+            [self didDisappearWithIndex:_oldIndex];
+            
+        }
  
     }
     

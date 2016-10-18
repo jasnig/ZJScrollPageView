@@ -28,8 +28,6 @@ typedef void(^ExtraBtnOnClick)(UIButton *extraBtn);
 - (instancetype)initWithFrame:(CGRect )frame segmentStyle:(ZJSegmentStyle *)segmentStyle delegate:(id<ZJScrollPageViewDelegate>)delegate titles:(NSArray *)titles titleDidClick:(TitleBtnOnClickBlock)titleDidClick;
 
 
-/** 点击按钮的时候调整UI*/
-- (void)adjustUIWhenBtnOnClickWithAnimate:(BOOL)animated;
 /** 切换下标的时候根据progress同步设置UI*/
 - (void)adjustUIWithProgress:(CGFloat)progress oldIndex:(NSInteger)oldIndex currentIndex:(NSInteger)currentIndex;
 /** 让选中的标题居中*/

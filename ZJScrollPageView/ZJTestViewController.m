@@ -8,34 +8,35 @@
 
 #import "ZJTestViewController.h"
 #import "UIViewController+ZJScrollPageController.h"
-
+#import "ZJTest1Controller.h"
 @interface ZJTestViewController ()
 
 @end
 
 @implementation ZJTestViewController
 - (IBAction)testBtnOnClick:(UIButton *)sender {
-    [self showViewController:[ZJTestViewController new] sender:nil];
+    ZJTest1Controller *test = [ZJTest1Controller new];
+    [self showViewController:test sender:nil];
 }
 
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+}
+
+- (void)zj_viewDidLoadForIndex:(NSInteger)index {
+//    NSLog(@"%@",self.view);
+//    NSLog(@"%@", self.zj_scrollViewController);
     UIButton *testBtn = [[UIButton alloc] initWithFrame:CGRectMake(100, 100, 100, 100)];
     testBtn.backgroundColor = [UIColor whiteColor];
     [testBtn setTitle:@"点击" forState:UIControlStateNormal];
     [testBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [testBtn addTarget:self action:@selector(testBtnOnClick:) forControlEvents:UIControlEventTouchUpInside];
-    self.view.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:testBtn];
-    NSLog(@"%@", self.zj_scrollViewController);
-    NSLog(@"%@",self.view);
-    self.zj_scrollViewController.title  = @"测试过";
-}
 
-- (void)zj_viewDidLoadForIndex:(NSInteger)index {
-    NSLog(@"%@",self.view);
-    NSLog(@"%@", self.zj_scrollViewController);
+    self.zj_scrollViewController.title  = @"测试过";
+
 
 }
 - (void)zj_viewWillAppearForIndex:(NSInteger)index {

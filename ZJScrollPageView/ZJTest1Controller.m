@@ -7,17 +7,29 @@
 //
 
 #import "ZJTest1Controller.h"
-
+#import "ZJScrollPageView/ZJScrollPageView.h"
 @interface ZJTest1Controller ()
 
 @end
 
 @implementation ZJTest1Controller
+- (IBAction)testBtnOnClick:(UIButton *)sender {
+
+    if (_click) {
+        _click();
+    }
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-}
+    UIButton *testBtn = [[UIButton alloc] initWithFrame:CGRectMake(100, 100, 100, 100)];
+    testBtn.backgroundColor = [UIColor whiteColor];
+    [testBtn setTitle:@"点击" forState:UIControlStateNormal];
+    [testBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [testBtn addTarget:self action:@selector(testBtnOnClick:) forControlEvents:UIControlEventTouchUpInside];
+    self.view.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:testBtn];}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
