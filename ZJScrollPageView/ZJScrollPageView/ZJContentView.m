@@ -145,6 +145,7 @@ static NSString *const kContentOffsetOffKey = @"contentOffset";
         }
         else {
             if (currentIndex == _oldIndex) {
+                [self willAppearWithIndex:currentIndex];
                 [self didAppearWithIndex:currentIndex];
 
             }
@@ -159,6 +160,7 @@ static NSString *const kContentOffsetOffKey = @"contentOffset";
     }
     else {
         if (currentIndex == _oldIndex) {
+            [self willAppearWithIndex:currentIndex];
             [self didAppearWithIndex:currentIndex];
             
         }
