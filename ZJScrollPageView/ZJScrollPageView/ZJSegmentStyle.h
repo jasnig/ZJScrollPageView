@@ -59,7 +59,8 @@ typedef NS_OPTIONS(NSInteger, SegmentViewComponent) {
 @property (assign, nonatomic, getter=isAdjustCoverOrLineWidth) BOOL adjustCoverOrLineWidth;
 /** 是否自动调整标题的宽度, 当设置为YES的时候 如果所有的标题的宽度之和小于segmentView的宽度的时候, 会自动调整title的位置, 达到类似"平分"的效果 默认为NO*/
 @property (assign, nonatomic, getter=isAutoAdjustTitlesWidth) BOOL autoAdjustTitlesWidth;
-
+/** 是否在开始滚动的时候就调整标题栏 默认为NO */
+@property (assign, nonatomic, getter=isAdjustTitleWhenBeginDrag) BOOL adjustTitleWhenBeginDrag;
 
 
 /** 设置附加按钮的背景图片 默认为nil*/

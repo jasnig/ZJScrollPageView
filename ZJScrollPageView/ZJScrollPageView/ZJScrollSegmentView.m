@@ -470,26 +470,26 @@ static CGFloat const contentSizeXOff = 20.0;
 }
 
 - (void)adjustTitleOffSetToCurrentIndex:(NSInteger)currentIndex {
+    _oldIndex = currentIndex;
     // 重置渐变/缩放效果附近其他item的缩放和颜色
-    for (NSInteger index = currentIndex - 3; index < currentIndex + 3; index++) {
-        if (index >= 0 && index <= _titles.count - 1) {
-            ZJTitleView *nextTitleView = _titleViews[index];
-            if (index != currentIndex) {
-                nextTitleView.textColor = self.segmentStyle.normalTitleColor;
-                nextTitleView.currentTransformSx = 1.0;
-                nextTitleView.selected = NO;
-            }
-            else {
-                nextTitleView.textColor = self.segmentStyle.selectedTitleColor;
-                if (self.segmentStyle.isScaleTitle) {
-                    nextTitleView.currentTransformSx = self.segmentStyle.titleBigScale;
-                }
-                nextTitleView.selected = YES;
-            }
-
+    int index = 0;
+    for (ZJTitleView *titleView in _titleViews) {
+        if (index != currentIndex) {
+            titleView.textColor = self.segmentStyle.normalTitleColor;
+            titleView.currentTransformSx = 1.0;
+            titleView.selected = NO;
+            
         }
+        else {
+            titleView.textColor = self.segmentStyle.selectedTitleColor;
+            if (self.segmentStyle.isScaleTitle) {
+                titleView.currentTransformSx = self.segmentStyle.titleBigScale;
+            }
+            titleView.selected = YES;
+        }
+        index++;
     }
-  
+//
 
     if (self.scrollView.contentSize.width != self.scrollView.bounds.size.width + contentSizeXOff) {// 需要滚动
         ZJTitleView *currentTitleView = (ZJTitleView *)_titleViews[currentIndex];
@@ -510,26 +510,26 @@ static CGFloat const contentSizeXOff = 20.0;
             offSetx = maxOffSetX;
         }
         
-        if (!self.segmentStyle.isGradualChangeTitleColor) {
-            int index = 0;
-            for (ZJTitleView *titleView in _titleViews) {
-                if (index != currentIndex) {
-                    titleView.textColor = self.segmentStyle.normalTitleColor;
-                    titleView.currentTransformSx = 1.0;
-                    titleView.selected = NO;
-                }
-                else {
-                    titleView.textColor = self.segmentStyle.selectedTitleColor;
-                    if (self.segmentStyle.isScaleTitle) {
-                        titleView.currentTransformSx = self.segmentStyle.titleBigScale;
-                    }
-                    titleView.selected = YES;
- 
-                }
-                
-                index++;
-            }
-        }
+//        if (!self.segmentStyle.isGradualChangeTitleColor) {
+//            int index = 0;
+//            for (ZJTitleView *titleView in _titleViews) {
+//                if (index != currentIndex) {
+//                    titleView.textColor = self.segmentStyle.normalTitleColor;
+//                    titleView.currentTransformSx = 1.0;
+//                    titleView.selected = NO;
+//                }
+//                else {
+//                    titleView.textColor = self.segmentStyle.selectedTitleColor;
+//                    if (self.segmentStyle.isScaleTitle) {
+//                        titleView.currentTransformSx = self.segmentStyle.titleBigScale;
+//                    }
+//                    titleView.selected = YES;
+// 
+//                }
+//                
+//                index++;
+//            }
+//        }
         [self.scrollView setContentOffset:CGPointMake(offSetx, 0.0) animated:YES];
     }
 

@@ -29,10 +29,9 @@ extern NSString *const ZJParentTableViewDidLeaveFromTopNotification;
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     
-    NSLog(@"gundon--- %@", self);
     if (!_scrollView) {
         _scrollView = scrollView;
-        _scrollView.bounces = NO;
+//        _scrollView.bounces = NO;
     }
 
     if (self.delegate && [self.delegate respondsToSelector:@selector(scrollViewIsScrolling:)]) {

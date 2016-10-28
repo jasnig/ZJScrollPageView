@@ -37,6 +37,7 @@
 		4AD142281D2CE807001113FC /* ZJPageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD142271D2CE807001113FC /* ZJPageController.m */; };
 		4AD1422E1D2E2A00001113FC /* ZJCollectionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD1422D1D2E2A00001113FC /* ZJCollectionController.m */; };
 		4AD142311D2E33DA001113FC /* ZJTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD142301D2E33DA001113FC /* ZJTableViewController.m */; };
+		4ADF6D8A1DBDACE1008D207B /* ZJCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ADF6D891DBDACE1008D207B /* ZJCollectionView.m */; };
 		4B0C06311CDC55080079E8F3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B0C06301CDC55080079E8F3 /* main.m */; };
 		4B0C06341CDC55080079E8F3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B0C06331CDC55080079E8F3 /* AppDelegate.m */; };
 		4B0C06371CDC55080079E8F3 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B0C06361CDC55080079E8F3 /* ViewController.m */; };
@@ -142,6 +143,8 @@
 		4AD1422D1D2E2A00001113FC /* ZJCollectionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZJCollectionController.m; sourceTree = "<group>"; };
 		4AD1422F1D2E33DA001113FC /* ZJTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJTableViewController.h; sourceTree = "<group>"; };
 		4AD142301D2E33DA001113FC /* ZJTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZJTableViewController.m; sourceTree = "<group>"; };
+		4ADF6D881DBDACE1008D207B /* ZJCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJCollectionView.h; sourceTree = "<group>"; };
+		4ADF6D891DBDACE1008D207B /* ZJCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZJCollectionView.m; sourceTree = "<group>"; };
 		4B0C062C1CDC55080079E8F3 /* ZJScrollPageView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZJScrollPageView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B0C06301CDC55080079E8F3 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		4B0C06321CDC55080079E8F3 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -521,6 +524,8 @@
 				4B56CB9E1D06E1E900D58BFA /* UIViewController+ZJScrollPageController.m */,
 				4B7429D11CDD9C16009CC9B2 /* ZJContentView.h */,
 				4B7429D21CDD9C16009CC9B2 /* ZJContentView.m */,
+				4ADF6D881DBDACE1008D207B /* ZJCollectionView.h */,
+				4ADF6D891DBDACE1008D207B /* ZJCollectionView.m */,
 				4B7429D31CDD9C16009CC9B2 /* ZJTitleView.h */,
 				4B7429D41CDD9C16009CC9B2 /* ZJTitleView.m */,
 				4B7429D51CDD9C16009CC9B2 /* ZJScrollPageView.h */,
@@ -679,6 +684,7 @@
 				4B7429E31CDD9F1B009CC9B2 /* ZJVc2Controller.m in Sources */,
 				4B56CB9F1D06E1E900D58BFA /* UIViewController+ZJScrollPageController.m in Sources */,
 				4A1DDE661D769C3E006F4C69 /* MJRefreshBackFooter.m in Sources */,
+				4ADF6D8A1DBDACE1008D207B /* ZJCollectionView.m in Sources */,
 				4A1DDE1B1D76762E006F4C69 /* ZJVc9Controller.m in Sources */,
 				4B7429EF1CDDCECD009CC9B2 /* ZJVc6Controller.m in Sources */,
 				4A1DDE6B1D769C3E006F4C69 /* MJRefreshAutoNormalFooter.m in Sources */,

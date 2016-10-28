@@ -8,7 +8,8 @@
 
 #import "UIViewController+ZJScrollPageController.h"
 #import "ZJScrollPageViewDelegate.h"
-
+#import <objc/runtime.h>
+char ZJIndexKey;
 @implementation UIViewController (ZJScrollPageController)
 
 //@dynamic zj_scrollViewController;
@@ -23,5 +24,14 @@
     }
     return controller;
 }
+
+- (void)setZj_currentIndex:(NSInteger)zj_currentIndex {
+    objc_setAssociatedObject(self, &ZJIndexKey, [NSNumber numberWithInteger:zj_currentIndex], OBJC_ASSOCIATION_ASSIGN);
+}
+
+- (NSInteger)zj_currentIndex {
+    return [objc_getAssociatedObject(self, &ZJIndexKey) integerValue];
+}
+
 
 @end

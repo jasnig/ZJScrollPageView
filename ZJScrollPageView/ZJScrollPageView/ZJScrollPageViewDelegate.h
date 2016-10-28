@@ -9,14 +9,17 @@
 #import <UIKit/UIKit.h>
 @class ZJContentView;
 @class ZJTitleView;
-
+@class ZJCollectionView;
 @protocol ZJScrollPageViewChildVcDelegate <NSObject>
 
 @optional
+
 /**
- *
- * 注意ZJScrollPageView不会保证viewWillAppear等生命周期方法一定会调用
- * 所以建议使用ZJScrollPageViewChildVcDelegate中的方法来替代对应的生命周期方法完成数据的加载
+ * 请注意: 如果你希望所有的子控制器的view的系统生命周期方法被正确的调用
+ * 请重写父控制器的'shouldAutomaticallyForwardAppearanceMethods'方法 并且返回NO
+ * 当然如果你不做这个操作, 子控制器的生命周期方法将不会被正确的调用
+ * 如果你仍然想利用子控制器的生命周期方法, 请使用'ZJScrollPageViewChildVcDelegate'提供的代理方法
+ * 或者'ZJScrollPageViewDelegate'提供的代理方法
  */
 - (void)zj_viewWillAppearForIndex:(NSInteger)index;
 - (void)zj_viewDidAppearForIndex:(NSInteger)index;
@@ -39,6 +42,10 @@
 - (UIViewController<ZJScrollPageViewChildVcDelegate> *)childViewController:(UIViewController<ZJScrollPageViewChildVcDelegate> *)reuseViewController forIndex:(NSInteger)index;
 
 @optional
+
+
+- (BOOL)scrollPageController:(UIViewController *)scrollPageController contentScrollView:(ZJCollectionView *)scrollView shouldBeginPanGesture:(UIPanGestureRecognizer *)panGesture;
+
 - (void)setUpTitleView:(ZJTitleView *)titleView forIndex:(NSInteger)index;
 
 /**

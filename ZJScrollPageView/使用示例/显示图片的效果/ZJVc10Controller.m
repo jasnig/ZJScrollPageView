@@ -38,7 +38,7 @@
     /// 图片位置
     style.imagePosition = TitleImagePositionTop;
     // 当标题(和图片)宽度总和小于ZJScrollPageView的宽度的时候, 标题会自适应宽度
-    
+    style.adjustTitleWhenBeginDrag = YES;
     
     // 初始化
     CGRect scrollPageViewFrame = CGRectMake(0, 64.0, self.view.bounds.size.width, self.view.bounds.size.height - 64.0);

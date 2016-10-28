@@ -62,17 +62,13 @@
         childVc = [[ZJTestViewController alloc] init];
     }
     
-    
-//    if (index%2==0) {
-//        childVc.view.backgroundColor = [UIColor blueColor];
-//    } else {
-//        childVc.view.backgroundColor = [UIColor greenColor];
-//        
-//    }
-    
-    NSLog(@"%ld-----%@",(long)index, childVc);
+//    NSLog(@"%ld-----%@",(long)index, childVc);
     
     return childVc;
+}
+
+- (BOOL)shouldAutomaticallyForwardAppearanceMethods {
+    return NO;
 }
 
 

@@ -43,9 +43,13 @@
 ####特别说明
 因为大家可能会复用同一个controller来显示内容
 * 在对应的controller的viewWillAppear()等生命周期里面可以根据不同的title来显示不同的内容或者刷新视图
-* 但是注意ZJScrollPageView不会保证viewWillAppear等生命周期方法一定会调用
-* 所以建议在子控制器中使用ZJScrollPageViewChildVcDelegate中的方法来加载不同的数据
 
+ * 请注意: 如果你希望所有的子控制器的view的系统生命周期方法被正确的调用
+ * 请重写父控制器的'shouldAutomaticallyForwardAppearanceMethods'方法 并且返回NO
+ * 当然如果你不做这个操作, 子控制器的生命周期方法将不会被正确的调用
+ * 如果你仍然想利用子控制器的生命周期方法, 请使用'ZJScrollPageViewChildVcDelegate'提供的代理方法
+ * 或者'ZJScrollPageViewDelegate'提供的代理方法
+ 
 
 ----
 ###更新说明
@@ -56,6 +60,7 @@
 * 2016/06/29 更改了初始化方法, 改为了使用代理来传递相关的自控制器 方便动态更新
 * 2016/06/30 新增加了子控制器遵守的协议ZJScrollPageViewChildVcDelegate, 用于页面出现的时候加载数据
 * 2016/08/21 增加了可以显示图片, 和设置图片的不同位置的功能
+* 2016/10/28 修复一直bug, 保证了子控制器的生命周期方法被正确调用.
 ----
 
 
