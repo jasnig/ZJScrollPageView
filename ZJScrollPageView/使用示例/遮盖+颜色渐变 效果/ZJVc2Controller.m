@@ -65,14 +65,6 @@
         childVc.title = self.titles[index];
     }
     
-    
-    if (index%2==0) {
-        childVc.view.backgroundColor = [UIColor blueColor];
-    } else {
-        childVc.view.backgroundColor = [UIColor greenColor];
-
-    }
-    
     return childVc;
 }
 

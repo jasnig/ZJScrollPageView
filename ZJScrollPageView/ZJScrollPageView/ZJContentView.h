@@ -10,12 +10,12 @@
 #import "ZJScrollPageViewDelegate.h"
 @class ZJScrollSegmentView;
 @class ZJContentView;
-
+@class ZJCollectionView;
 @interface ZJContentView : UIView
 
 /** 必须设置代理和实现相关的方法*/
 @property(weak, nonatomic)id<ZJScrollPageViewDelegate> delegate;
-@property (strong, nonatomic, readonly) UIScrollView *scrollView;
+@property (strong, nonatomic, readonly) ZJCollectionView *collectionView;
 
 /**初始化方法
  *
