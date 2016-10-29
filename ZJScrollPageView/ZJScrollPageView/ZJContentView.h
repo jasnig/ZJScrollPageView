@@ -11,6 +11,7 @@
 @class ZJScrollSegmentView;
 @class ZJContentView;
 @class ZJCollectionView;
+
 @interface ZJContentView : UIView
 
 /** 必须设置代理和实现相关的方法*/

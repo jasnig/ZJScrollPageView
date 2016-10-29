@@ -14,13 +14,11 @@
 @interface ZJContentView ()<UIScrollViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource> {
     CGFloat   _oldOffSetX;
     BOOL _isLoadFirstView;
-    BOOL _isNewCellAppear;
-    BOOL _isOldCellDisappear;
 }
 @property (weak, nonatomic) ZJScrollSegmentView *segmentView;
 
 // 用于处理重用和内容的显示
-@property (weak, nonatomic) ZJCollectionView *collectionView;
+@property (strong, nonatomic) ZJCollectionView *collectionView;
 // collectionView的布局
 @property (strong, nonatomic) UICollectionViewFlowLayout *collectionViewLayout;
 // 父类 用于处理添加子控制器  使用weak避免循环引用
@@ -443,8 +441,6 @@ static NSString *const kContentOffsetOffKey = @"contentOffset";
         }
     }
 
-
-    _isNewCellAppear = YES;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didEndDisplayingCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -486,7 +482,6 @@ static NSString *const kContentOffsetOffKey = @"contentOffset";
         }
         else {
              // 滚动没有完成又快速的反向打开了另一页
-            _isOldCellDisappear = YES;
             if (_needManageLifeCycle) {
                 UIViewController<ZJScrollPageViewChildVcDelegate> *currentVc = [self.childVcsDic valueForKey:[NSString stringWithFormat:@"%ld", _oldIndex]];
                 // 开始出现
