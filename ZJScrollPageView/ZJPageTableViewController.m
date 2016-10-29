@@ -36,6 +36,13 @@ static NSString * const cellId = @"cellID";
 - (void)zj_viewDidAppearForIndex:(NSInteger)index {
     self.index = index;
     NSLog(@"已经出现   标题: --- %@  index: -- %ld", self.title, index);
+    
+    if (index%2==0) {
+        self.view.backgroundColor = [UIColor blueColor];
+    } else {
+        self.view.backgroundColor = [UIColor greenColor];
+        
+    }
     // 加载数据
 //    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         self.data = @[@"sfa",@"sfa",@"sfa",@"sfa",@"sfa",@"sfa",@"sfa",@"sfa",@"sfa",@"sfa",@"sfa",@"sfa",@"sfa",@"sfa",@"sfa",@"sfa",@"sfa",@"sfa"];
