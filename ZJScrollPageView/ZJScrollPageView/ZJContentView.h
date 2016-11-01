@@ -8,9 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "ZJScrollPageViewDelegate.h"
-@class ZJScrollSegmentView;
-@class ZJContentView;
-@class ZJCollectionView;
+#import "ZJCollectionView.h"
+#import "ZJScrollSegmentView.h"
+#import "UIViewController+ZJScrollPageController.h"
 
 @interface ZJContentView : UIView
 

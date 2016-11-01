@@ -208,7 +208,7 @@ static CGFloat const contentSizeXOff = 20.0;
     CGFloat titleH = self.zj_height - self.segmentStyle.scrollLineHeight;
     
     if (!self.segmentStyle.isScrollTitle) {// 标题不能滚动, 平分宽度
-        titleW = _currentWidth / self.titles.count;
+        titleW = self.scrollView.bounds.size.width / self.titles.count;
         
         NSInteger index = 0;
         for (ZJTitleView *titleView in self.titleViews) {

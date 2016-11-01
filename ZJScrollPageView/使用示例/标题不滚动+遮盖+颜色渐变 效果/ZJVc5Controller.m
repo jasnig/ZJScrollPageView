@@ -28,22 +28,31 @@
     ZJSegmentStyle *style = [[ZJSegmentStyle alloc] init];
     //显示遮盖
     style.showCover = YES;
-    // 同步调整遮盖或者滚动条的宽度
-    style.adjustCoverOrLineWidth = YES;
+
+    // 根据title总宽度自动调整位置 -- 达到个数少的时候会'平分'的效果, 个数多的时候就是可以滚动的效果 只有当scrollTitle == YES的时候才有效
+//    style.autoAdjustTitlesWidth = YES;
     // 不滚动标题
     style.scrollTitle = NO;
+    // 同步调整遮盖或者滚动条的宽度 -- 只有当scrollTitle == NO的时候有效
+    //    style.adjustCoverOrLineWidth = YES;
     // 颜色渐变
     style.gradualChangeTitleColor = YES;
-    
+//    style.showExtraButton = YES;
     self.titles = @[@"新闻头条",
                     @"国际要闻",
-                    @"体育",
-                    @"中国足球"
+//                    @"体育",
+//                    @"中国足球"
                     ];
     // 初始化
     ZJScrollPageView *scrollPageView = [[ZJScrollPageView alloc] initWithFrame:CGRectMake(0, 64.0, self.view.bounds.size.width, self.view.bounds.size.height - 64.0) segmentStyle:style titles:self.titles parentViewController:self delegate:self];
-    
+//    scrollPageView.extraBtnOnClick = ^(UIButton *btn){
+//        NSLog(@"ffff");
+//    };
     [self.view addSubview:scrollPageView];
+}
+
+- (BOOL)shouldAutomaticallyForwardAppearanceMethods {
+    return NO;
 }
 
 - (NSInteger)numberOfChildViewControllers {
@@ -56,14 +65,6 @@
     
     if (!childVc) {
         childVc = [[ZJTestViewController alloc] init];
-    }
-    
-    
-    if (index%2==0) {
-        childVc.view.backgroundColor = [UIColor blueColor];
-    } else {
-        childVc.view.backgroundColor = [UIColor greenColor];
-        
     }
     
     return childVc;

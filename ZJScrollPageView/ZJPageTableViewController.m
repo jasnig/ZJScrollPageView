@@ -74,7 +74,7 @@ static NSString * const cellId = @"cellID";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-
+    NSLog(@"点击了%ld行----", indexPath.row);
 }
 
 - (void)didReceiveMemoryWarning {

@@ -7,9 +7,6 @@
 //
 
 #import "ZJContentView.h"
-#import "ZJCollectionView.h"
-#import "ZJScrollSegmentView.h"
-#import "UIViewController+ZJScrollPageController.h"
 
 @interface ZJContentView ()<UIScrollViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource> {
     CGFloat   _oldOffSetX;

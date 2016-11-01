@@ -92,8 +92,13 @@
     
     // 根据不同的下标或者title返回相应的控制器, 但是控制器必须要遵守ZJScrollPageViewChildVcDelegate
     // 并且可以通过实现协议中的方法来加载不同的数据
-    // 注意ZJScrollPageView不会保证viewWillAppear等生命周期方法一定会调用
-    // 所以建议使用ZJScrollPageViewChildVcDelegate中的方法来加载不同的数据
+    /**
+     * 请注意: 如果你希望所有的子控制器的view的系统生命周期方法被正确的调用
+     * 请重写父控制器的'shouldAutomaticallyForwardAppearanceMethods'方法 并且返回NO
+     * 当然如果你不做这个操作, 子控制器的生命周期方法将不会被正确的调用
+     * 如果你仍然想利用子控制器的生命周期方法, 请使用'ZJScrollPageViewChildVcDelegate'提供的代理方法
+     * 或者'ZJScrollPageViewDelegate'提供的代理方法
+     */
     NSLog(@"%ld---------", index);
     if (index == 0) {
         // 注意这个效果和tableView的deque...方法一样, 会返回一个可重用的childVc
