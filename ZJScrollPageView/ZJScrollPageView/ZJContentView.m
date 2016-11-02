@@ -76,7 +76,7 @@ static NSString *const kContentOffsetOffKey = @"contentOffset";
     
     UINavigationController *navi = (UINavigationController *)self.parentViewController.parentViewController;
 
-    if (navi) {
+    if ([navi isKindOfClass:[UINavigationController class]]) {
         if (navi.viewControllers.count == 1) return;
         
         if (navi.interactivePopGestureRecognizer) {
@@ -242,7 +242,7 @@ static NSString *const kContentOffsetOffKey = @"contentOffset";
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
     UINavigationController *navi = (UINavigationController *)self.parentViewController.parentViewController;
-    if (navi.interactivePopGestureRecognizer) {
+    if ([navi isKindOfClass:[UINavigationController class]] && navi.interactivePopGestureRecognizer) {
         navi.interactivePopGestureRecognizer.enabled = YES;
     }
 }
