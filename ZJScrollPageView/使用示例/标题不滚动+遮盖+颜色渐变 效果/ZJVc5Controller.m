@@ -40,11 +40,14 @@
 //    style.showExtraButton = YES;
     self.titles = @[@"新闻头条",
                     @"国际要闻",
-//                    @"体育",
-//                    @"中国足球"
+                    @"体育",
+                    @"中国足球"
                     ];
     // 初始化
     ZJScrollPageView *scrollPageView = [[ZJScrollPageView alloc] initWithFrame:CGRectMake(0, 64.0, self.view.bounds.size.width, self.view.bounds.size.height - 64.0) segmentStyle:style titles:self.titles parentViewController:self delegate:self];
+    
+    NSLog(@"%@", self.view);
+    
 //    scrollPageView.extraBtnOnClick = ^(UIButton *btn){
 //        NSLog(@"ffff");
 //    };
@@ -59,6 +62,12 @@
     return self.titles.count;
 }
 
+
+- (void)setUpTitleView:(ZJTitleView *)titleView forIndex:(NSInteger)index {
+//    titleView.label.backgroundColor = [UIColor redColor];
+    titleView.label.layer.cornerRadius = 15;
+    titleView.label.layer.masksToBounds = YES;
+}
 
 - (UIViewController<ZJScrollPageViewChildVcDelegate> *)childViewController:(UIViewController<ZJScrollPageViewChildVcDelegate> *)reuseViewController forIndex:(NSInteger)index {
     UIViewController<ZJScrollPageViewChildVcDelegate> *childVc = reuseViewController;

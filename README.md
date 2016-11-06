@@ -248,11 +248,8 @@
     
     
     
-###如果有建议, 请随意issue或者P-R
 
-
-####如果对你有帮助,请随手给个star 
-####如果你在使用中遇到问题: 可以联系我QQ: 854136959
+####如果你在使用中遇到问题: 可以通过[简书](http://www.jianshu.com/users/fb31a3d1ec30/latest_articles)私信给我
 
 ## License
 

@@ -120,6 +120,14 @@ static NSString *const kContentOffsetOffKey = @"contentOffset";
 
 }
 
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    if (self.currentChildVc) {
+        self.currentChildVc.view.frame = self.bounds;
+    }
+}
+
 - (void)dealloc {
     self.parentViewController = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
