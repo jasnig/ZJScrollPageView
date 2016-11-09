@@ -36,7 +36,7 @@
 
 * ###直接将下载文件的ZJScrollPageView文件夹下的文件拖进您的项目中然后#import "ZJScrollPageView.h"就可以使用了
  
-* 使用cocoaPods, 在你项目的Podfile文件里面添加 `pod ZJScrollPageView`
+~~使用cocoaPods, 在你项目的Podfile文件里面添加 `pod ZJScrollPageView`(未更新)~~
 
 ##usage
 
@@ -251,6 +251,11 @@
 
 ####如果你在使用中遇到问题: 可以通过[简书](http://www.jianshu.com/users/fb31a3d1ec30/latest_articles)私信给我
 
+这是我写的<iOS自定义控件剖析>这本书籍中OC的一个demo, 如果你希望知道具体的实现过程和其他的一些常用效果的实现, 那么你应该能轻易在网上下载到免费的盗版书籍.
+
+当然作为本书的写作者, 还是希望有人能支持正版书籍. 如果你有意购买书籍, 在这篇文章中, 介绍了书籍中所有的内容和书籍适合阅读的人群, 和一些试读章节, 以及购买链接. 在你准备购买之前, 请一定读一读里面的说明. 否则, 如果不适合你阅读, 虽然书籍售价35不是很贵, 但是也是一笔损失.
+
+如果你希望联系到我, 可以通过简书联系到我
 ## License
 
 ScrollPageView is released under the MIT license. See LICENSE for details.
