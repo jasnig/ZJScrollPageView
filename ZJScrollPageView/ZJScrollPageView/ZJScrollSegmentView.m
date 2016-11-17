@@ -550,6 +550,8 @@ static CGFloat const contentSizeXOff = 20.0;
 - (void)reloadTitlesWithNewTitles:(NSArray *)titles {
     [self.scrollView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     
+    _currentIndex = 0;
+    _oldIndex = 0;
     self.titleWidths = nil;
     self.titleViews = nil;
     self.titles = nil;

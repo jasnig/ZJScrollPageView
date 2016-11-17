@@ -110,7 +110,7 @@ static NSString *const kContentOffsetOffKey = @"contentOffset";
     __weak typeof(self) weakSelf = self;
     [_childVcsDic enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, UIViewController<ZJScrollPageViewChildVcDelegate> * _Nonnull childVc, BOOL * _Nonnull stop) {
         __strong typeof(self) strongSelf = weakSelf;
-
+        
         if (childVc != strongSelf.currentChildVc) {
             [_childVcsDic removeObjectForKey:key];
             [ZJContentView removeChildVc:childVc];
