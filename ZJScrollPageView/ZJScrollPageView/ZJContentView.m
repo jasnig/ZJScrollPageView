@@ -11,6 +11,7 @@
 @interface ZJContentView ()<UIScrollViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource> {
     CGFloat   _oldOffSetX;
     BOOL _isLoadFirstView;
+    NSInteger _sysVersion;
 }
 @property (weak, nonatomic) ZJScrollSegmentView *segmentView;
 
@@ -69,6 +70,8 @@ static NSString *const kContentOffsetOffKey = @"contentOffset";
     _oldOffSetX = 0.0f;
     _forbidTouchToAdjustPosition = NO;
     _isLoadFirstView = YES;
+    _sysVersion = [[[UIDevice currentDevice] systemVersion] integerValue];
+    
     if ([_delegate respondsToSelector:@selector(numberOfChildViewControllers)]) {
         self.itemsCount = [_delegate numberOfChildViewControllers];
     }
@@ -110,10 +113,11 @@ static NSString *const kContentOffsetOffKey = @"contentOffset";
     __weak typeof(self) weakSelf = self;
     [_childVcsDic enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, UIViewController<ZJScrollPageViewChildVcDelegate> * _Nonnull childVc, BOOL * _Nonnull stop) {
         __strong typeof(self) strongSelf = weakSelf;
-        
-        if (childVc != strongSelf.currentChildVc) {
-            [_childVcsDic removeObjectForKey:key];
-            [ZJContentView removeChildVc:childVc];
+        if (strongSelf) {
+            if (childVc != strongSelf.currentChildVc) {
+                [_childVcsDic removeObjectForKey:key];
+                [ZJContentView removeChildVc:childVc];
+            }
         }
 
     }];
@@ -352,19 +356,26 @@ static NSString *const kContentOffsetOffKey = @"contentOffset";
     return _itemsCount;
 }
 
+
+
+
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellID forIndexPath:indexPath];
     // 移除subviews 避免重用内容显示错误
     [cell.contentView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
-
+    
+    
+    
+    if (_sysVersion < 8) {
+        [self setupChildVcForCell:cell atIndexPath:indexPath];
+    }
+    
 
     return cell;
 }
 
 
-- (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
-//    NSLog(@"出现出现:current:---- %ld   old ----- %ld indexpathRow----%ld ", _currentIndex, _oldIndex, indexPath.row);
-
+- (void)setupChildVcForCell:(UICollectionViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     _currentChildVc = [self.childVcsDic valueForKey:[NSString stringWithFormat:@"%ld", (long)indexPath.row]];
     BOOL isFirstLoaded = _currentChildVc == nil;
     if (_delegate && [_delegate respondsToSelector:@selector(childViewController:forIndex:)]) {
@@ -444,6 +455,15 @@ static NSString *const kContentOffsetOffKey = @"contentOffset";
             [self willDisappearWithIndex:_oldIndex];
             
         }
+    }
+    
+
+}
+
+- (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
+//    NSLog(@"出现出现:current:---- %ld   old ----- %ld indexpathRow----%ld ", _currentIndex, _oldIndex, indexPath.row);
+    if (_sysVersion >= 8) {
+        [self setupChildVcForCell:cell atIndexPath:indexPath];
     }
 
 }
