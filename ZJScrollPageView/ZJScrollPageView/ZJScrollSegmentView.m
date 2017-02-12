@@ -453,8 +453,17 @@ static CGFloat const contentSizeXOff = 20.0;
     // 渐变
     if (self.segmentStyle.isGradualChangeTitleColor) {
 
-        oldTitleView.textColor = [UIColor colorWithRed:[self.selectedColorRGBA[0] floatValue] + [self.deltaRGBA[0] floatValue] * progress green:[self.selectedColorRGBA[1] floatValue] + [self.deltaRGBA[1] floatValue] * progress blue:[self.selectedColorRGBA[2] floatValue] + [self.deltaRGBA[2] floatValue] * progress alpha:[self.selectedColorRGBA[3] floatValue] + [self.deltaRGBA[3] floatValue] * progress];
-        currentTitleView.textColor = [UIColor colorWithRed:[self.normalColorRGBA[0] floatValue] - [self.deltaRGBA[0] floatValue] * progress green:[self.normalColorRGBA[1] floatValue] - [self.deltaRGBA[1] floatValue] * progress blue:[self.normalColorRGBA[2] floatValue] - [self.deltaRGBA[2] floatValue] * progress alpha:[self.normalColorRGBA[3] floatValue] - [self.deltaRGBA[3] floatValue] * progress];
+        oldTitleView.textColor = [UIColor
+                                  colorWithRed:[self.selectedColorRGBA[0] floatValue] + [self.deltaRGBA[0] floatValue] * progress
+                                  green:[self.selectedColorRGBA[1] floatValue] + [self.deltaRGBA[1] floatValue] * progress
+                                  blue:[self.selectedColorRGBA[2] floatValue] + [self.deltaRGBA[2] floatValue] * progress
+                                  alpha:[self.selectedColorRGBA[3] floatValue] + [self.deltaRGBA[3] floatValue] * progress];
+        
+        currentTitleView.textColor = [UIColor
+                                      colorWithRed:[self.normalColorRGBA[0] floatValue] - [self.deltaRGBA[0] floatValue] * progress
+                                      green:[self.normalColorRGBA[1] floatValue] - [self.deltaRGBA[1] floatValue] * progress
+                                      blue:[self.normalColorRGBA[2] floatValue] - [self.deltaRGBA[2] floatValue] * progress
+                                      alpha:[self.normalColorRGBA[3] floatValue] - [self.deltaRGBA[3] floatValue] * progress];
         
     }
     
