@@ -104,5 +104,7 @@
     
 }
 
-
+- (BOOL)shouldAutomaticallyForwardAppearanceMethods {
+    return NO;
+}
 @end

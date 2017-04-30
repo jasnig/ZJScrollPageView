@@ -96,5 +96,7 @@
     return childVc;
 }
 
-
+- (BOOL)shouldAutomaticallyForwardAppearanceMethods {
+    return NO;
+}
 @end

@@ -36,6 +36,32 @@
     // Dispose of any resources that can be recreated.
 }
 
+
+// 使用系统的生命周期方法
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    NSLog(@"viewWillAppear------%ld", self.zj_currentIndex);
+    
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    NSLog(@"viewDidAppear-----%ld", self.zj_currentIndex);
+    
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    NSLog(@"viewWillDisappear-----%ld", self.zj_currentIndex);
+    
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    NSLog(@"viewDidDisappear--------%ld", self.zj_currentIndex);
+    
+}
+
 /*
 #pragma mark - Navigation
 

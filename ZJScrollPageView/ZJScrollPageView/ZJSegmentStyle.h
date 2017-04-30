@@ -34,7 +34,7 @@ typedef NS_OPTIONS(NSInteger, SegmentViewComponent) {
 @property (assign, nonatomic, getter=isShowCover) BOOL showCover;
 /** 是否显示滚动条 默认为NO*/
 @property (assign, nonatomic, getter=isShowLine) BOOL showLine;
-/**是否显示图片 默认为NO*/
+/** 是否显示图片 默认为NO*/
 @property (assign, nonatomic, getter=isShowImage) BOOL showImage;
 /** 是否显示附加的按钮 默认为NO*/
 @property (assign, nonatomic, getter=isShowExtraButton) BOOL showExtraButton;
@@ -52,7 +52,7 @@ typedef NS_OPTIONS(NSInteger, SegmentViewComponent) {
 
 /** 内容view是否能滑动 默认为YES*/
 @property (assign, nonatomic, getter=isScrollContentView) BOOL scrollContentView;
-/** 点击标题切换的时候,内容view是否会有动画 即使是设置为YES当跳过两页以上的时候都没有动画 默认为YES*/
+/** 点击标题切换的时候,内容view是否会有动画 默认为YES*/
 @property (assign, nonatomic, getter=isAnimatedContentViewWhenTitleClicked) BOOL animatedContentViewWhenTitleClicked;
 
 /** 当设置scrollTitle=NO的时候标题会平分宽度, 如果你希望在滚动的过程中cover或者scrollLine的宽度随着变化设置这个属性为YES 默认为NO*/

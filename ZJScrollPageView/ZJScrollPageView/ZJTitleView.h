@@ -21,7 +21,6 @@
 @property (strong, nonatomic) UIImage *normalImage;
 @property (strong, nonatomic) UIImage *selectedImage;
 
-
 @property (strong, nonatomic, readonly) UIImageView *imageView;
 @property (strong, nonatomic, readonly) UILabel *label;
 - (CGFloat)titleViewWidth;

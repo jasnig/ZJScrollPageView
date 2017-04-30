@@ -9,14 +9,14 @@
 #import "ZJTestViewController.h"
 #import "UIViewController+ZJScrollPageController.h"
 #import "ZJTest1Controller.h"
-
+#import "ZJTest2ViewController.h"
 @interface ZJTestViewController ()
 
 @end
 
 @implementation ZJTestViewController
 - (IBAction)testBtnOnClick:(UIButton *)sender {
-    ZJTest1Controller *test = [ZJTest1Controller new];
+    ZJTest2ViewController *test = [ZJTest2ViewController new];
     [self showViewController:test sender:nil];
 }
 

@@ -33,6 +33,7 @@
 		4A1DDE781D769C3E006F4C69 /* UIView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A1DDE641D769C3E006F4C69 /* UIView+MJExtension.m */; };
 		4A765C511D6959CE00BD42C9 /* ZJVc10Controller.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A765C501D6959CE00BD42C9 /* ZJVc10Controller.m */; };
 		4AAF4F0F1D24D88D009F6D3F /* ZJTest1Controller.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AAF4F0E1D24D88D009F6D3F /* ZJTest1Controller.m */; };
+		4AC695A71EB05379007BA04C /* ZJTest2ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC695A61EB05379007BA04C /* ZJTest2ViewController.m */; };
 		4AD142241D2CE6AD001113FC /* ZJVc0Controller.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD142231D2CE6AD001113FC /* ZJVc0Controller.m */; };
 		4AD142281D2CE807001113FC /* ZJPageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD142271D2CE807001113FC /* ZJPageController.m */; };
 		4AD1422E1D2E2A00001113FC /* ZJCollectionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD1422D1D2E2A00001113FC /* ZJCollectionController.m */; };
@@ -135,6 +136,8 @@
 		4AAF4F0A1D24C172009F6D3F /* ZJScrollPageViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJScrollPageViewDelegate.h; sourceTree = "<group>"; };
 		4AAF4F0D1D24D88D009F6D3F /* ZJTest1Controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJTest1Controller.h; sourceTree = "<group>"; };
 		4AAF4F0E1D24D88D009F6D3F /* ZJTest1Controller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZJTest1Controller.m; sourceTree = "<group>"; };
+		4AC695A51EB05379007BA04C /* ZJTest2ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJTest2ViewController.h; sourceTree = "<group>"; };
+		4AC695A61EB05379007BA04C /* ZJTest2ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZJTest2ViewController.m; sourceTree = "<group>"; };
 		4AD142221D2CE6AD001113FC /* ZJVc0Controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJVc0Controller.h; sourceTree = "<group>"; };
 		4AD142231D2CE6AD001113FC /* ZJVc0Controller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZJVc0Controller.m; sourceTree = "<group>"; };
 		4AD142261D2CE807001113FC /* ZJPageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJPageController.h; sourceTree = "<group>"; };
@@ -397,6 +400,8 @@
 				4B7429F71CDDDC35009CC9B2 /* ZJTestViewController.m */,
 				4AAF4F0D1D24D88D009F6D3F /* ZJTest1Controller.h */,
 				4AAF4F0E1D24D88D009F6D3F /* ZJTest1Controller.m */,
+				4AC695A51EB05379007BA04C /* ZJTest2ViewController.h */,
+				4AC695A61EB05379007BA04C /* ZJTest2ViewController.m */,
 				4A1DDE361D769C3D006F4C69 /* MJRefresh */,
 				4B7429C41CDD9ACB009CC9B2 /* Main.storyboard */,
 				4B0C063B1CDC55080079E8F3 /* Assets.xcassets */,
@@ -716,6 +721,7 @@
 				4A1DDE761D769C3E006F4C69 /* UIScrollView+MJExtension.m in Sources */,
 				4AD142241D2CE6AD001113FC /* ZJVc0Controller.m in Sources */,
 				4A1DDE6A1D769C3E006F4C69 /* MJRefreshAutoGifFooter.m in Sources */,
+				4AC695A71EB05379007BA04C /* ZJTest2ViewController.m in Sources */,
 				4B7429DB1CDD9C16009CC9B2 /* UIView+ZJFrame.m in Sources */,
 				4B0C06371CDC55080079E8F3 /* ViewController.m in Sources */,
 				4A1DDE681D769C3E006F4C69 /* MJRefreshFooter.m in Sources */,

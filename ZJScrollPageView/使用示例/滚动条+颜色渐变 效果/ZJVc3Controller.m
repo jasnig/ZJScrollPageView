@@ -13,6 +13,8 @@
 @interface ZJVc3Controller ()<ZJScrollPageViewDelegate>
 @property(strong, nonatomic)NSArray<NSString *> *titles;
 @property(strong, nonatomic)NSArray<UIViewController *> *childVcs;
+@property (nonatomic, strong) ZJScrollPageView *scrollPageView;
+
 @end
 
 @implementation ZJVc3Controller
@@ -44,16 +46,15 @@
                     @"头像",
                     ];
     // 初始化
-    ZJScrollPageView *scrollPageView = [[ZJScrollPageView alloc] initWithFrame:CGRectMake(0, 64.0, self.view.bounds.size.width, self.view.bounds.size.height - 64.0) segmentStyle:style titles:self.titles parentViewController:self delegate:self];
+    _scrollPageView = [[ZJScrollPageView alloc] initWithFrame:CGRectMake(0, 64.0, self.view.bounds.size.width, self.view.bounds.size.height - 64.0) segmentStyle:style titles:self.titles parentViewController:self delegate:self];
 
-    [self.view addSubview:scrollPageView];
+    [self.view addSubview:_scrollPageView];
 }
 
 
 - (NSInteger)numberOfChildViewControllers {
     return self.titles.count;
 }
-
 
 - (UIViewController<ZJScrollPageViewChildVcDelegate> *)childViewController:(UIViewController<ZJScrollPageViewChildVcDelegate> *)reuseViewController forIndex:(NSInteger)index {
     UIViewController<ZJScrollPageViewChildVcDelegate> *childVc = reuseViewController;
@@ -66,6 +67,7 @@
     
     return childVc;
 }
+
 
 - (BOOL)shouldAutomaticallyForwardAppearanceMethods {
     return NO;
