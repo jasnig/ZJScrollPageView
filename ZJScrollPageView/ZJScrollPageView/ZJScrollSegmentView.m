@@ -28,10 +28,10 @@
 @property (strong, nonatomic) UIButton *extraBtn;
 
 
-// 用于懒加载计算文字的rgb差值, 用于颜色渐变的时候设置
-@property (strong, nonatomic) NSArray *deltaRGB;
-@property (strong, nonatomic) NSArray *selectedColorRgb;
-@property (strong, nonatomic) NSArray *normalColorRgb;
+// 用于懒加载计算文字的rgba差值, 用于颜色渐变的时候设置
+@property (strong, nonatomic) NSArray *deltaRGBA;
+@property (strong, nonatomic) NSArray *selectedColorRGBA;
+@property (strong, nonatomic) NSArray *normalColorRGBA;
 /** 缓存所有标题label */
 @property (nonatomic, strong) NSMutableArray *titleViews;
 // 缓存计算出来的每个标题的宽度
@@ -453,8 +453,17 @@ static CGFloat const contentSizeXOff = 20.0;
     // 渐变
     if (self.segmentStyle.isGradualChangeTitleColor) {
 
-        oldTitleView.textColor = [UIColor colorWithRed:[self.selectedColorRgb[0] floatValue] + [self.deltaRGB[0] floatValue] * progress green:[self.selectedColorRgb[1] floatValue] + [self.deltaRGB[1] floatValue] * progress blue:[self.selectedColorRgb[2] floatValue] + [self.deltaRGB[2] floatValue] * progress alpha:1.0];
-        currentTitleView.textColor = [UIColor colorWithRed:[self.normalColorRgb[0] floatValue] - [self.deltaRGB[0] floatValue] * progress green:[self.normalColorRgb[1] floatValue] - [self.deltaRGB[1] floatValue] * progress blue:[self.normalColorRgb[2] floatValue] - [self.deltaRGB[2] floatValue] * progress alpha:1.0];
+        oldTitleView.textColor = [UIColor
+                                  colorWithRed:[self.selectedColorRGBA[0] floatValue] + [self.deltaRGBA[0] floatValue] * progress
+                                  green:[self.selectedColorRGBA[1] floatValue] + [self.deltaRGBA[1] floatValue] * progress
+                                  blue:[self.selectedColorRGBA[2] floatValue] + [self.deltaRGBA[2] floatValue] * progress
+                                  alpha:[self.selectedColorRGBA[3] floatValue] + [self.deltaRGBA[3] floatValue] * progress];
+        
+        currentTitleView.textColor = [UIColor
+                                      colorWithRed:[self.normalColorRGBA[0] floatValue] - [self.deltaRGBA[0] floatValue] * progress
+                                      green:[self.normalColorRGBA[1] floatValue] - [self.deltaRGBA[1] floatValue] * progress
+                                      blue:[self.normalColorRGBA[2] floatValue] - [self.deltaRGBA[2] floatValue] * progress
+                                      alpha:[self.normalColorRGBA[3] floatValue] - [self.deltaRGBA[3] floatValue] * progress];
         
     }
     
@@ -673,52 +682,53 @@ static CGFloat const contentSizeXOff = 20.0;
     return _titleWidths;
 }
 
-- (NSArray *)deltaRGB {
-    if (_deltaRGB == nil) {
-        NSArray *normalColorRgb = self.normalColorRgb;
-        NSArray *selectedColorRgb = self.selectedColorRgb;
+- (NSArray *)deltaRGBA {
+    if (_deltaRGBA == nil) {
+        NSArray *normalColorRgb = self.normalColorRGBA;
+        NSArray *selectedColorRgb = self.selectedColorRGBA;
         
         NSArray *delta;
         if (normalColorRgb && selectedColorRgb) {
             CGFloat deltaR = [normalColorRgb[0] floatValue] - [selectedColorRgb[0] floatValue];
             CGFloat deltaG = [normalColorRgb[1] floatValue] - [selectedColorRgb[1] floatValue];
             CGFloat deltaB = [normalColorRgb[2] floatValue] - [selectedColorRgb[2] floatValue];
-            delta = [NSArray arrayWithObjects:@(deltaR), @(deltaG), @(deltaB), nil];
-            _deltaRGB = delta;
+            CGFloat deltaA = [normalColorRgb[3] floatValue] - [selectedColorRgb[3] floatValue];
+            delta = [NSArray arrayWithObjects:@(deltaR), @(deltaG), @(deltaB), @(deltaA), nil];
+            _deltaRGBA = delta;
 
         }
     }
-    return _deltaRGB;
+    return _deltaRGBA;
 }
 
-- (NSArray *)normalColorRgb {
-    if (!_normalColorRgb) {
-        NSArray *normalColorRgb = [self getColorRgb:self.segmentStyle.normalTitleColor];
-        NSAssert(normalColorRgb, @"设置普通状态的文字颜色时 请使用RGB空间的颜色值");
-        _normalColorRgb = normalColorRgb;
+- (NSArray *)normalColorRGBA {
+    if (!_normalColorRGBA) {
+        NSArray *normalColorRGBA = [self getColorRGBA:self.segmentStyle.normalTitleColor];
+        NSAssert(normalColorRGBA, @"设置普通状态的文字颜色时 请使用RGBA空间的颜色值");
+        _normalColorRGBA = normalColorRGBA;
         
     }
-    return  _normalColorRgb;
+    return  _normalColorRGBA;
 }
 
-- (NSArray *)selectedColorRgb {
-    if (!_selectedColorRgb) {
-        NSArray *selectedColorRgb = [self getColorRgb:self.segmentStyle.selectedTitleColor];
-        NSAssert(selectedColorRgb, @"设置选中状态的文字颜色时 请使用RGB空间的颜色值");
-        _selectedColorRgb = selectedColorRgb;
+- (NSArray *)selectedColorRGBA {
+    if (!_selectedColorRGBA) {
+        NSArray *selectedColorRGBA = [self getColorRGBA:self.segmentStyle.selectedTitleColor];
+        NSAssert(selectedColorRGBA, @"设置选中状态的文字颜色时 请使用RGBA空间的颜色值");
+        _selectedColorRGBA = selectedColorRGBA;
         
     }
-    return  _selectedColorRgb;
+    return  _selectedColorRGBA;
 }
 
-- (NSArray *)getColorRgb:(UIColor *)color {
+- (NSArray *)getColorRGBA:(UIColor *)color {
     CGFloat numOfcomponents = CGColorGetNumberOfComponents(color.CGColor);
-    NSArray *rgbComponents;
+    NSArray *rgbaComponents;
     if (numOfcomponents == 4) {
         const CGFloat *components = CGColorGetComponents(color.CGColor);
-        rgbComponents = [NSArray arrayWithObjects:@(components[0]), @(components[1]), @(components[2]), nil];
+        rgbaComponents = [NSArray arrayWithObjects:@(components[0]), @(components[1]), @(components[2]), @(components[3]), nil];
     }
-    return rgbComponents;
+    return rgbaComponents;
     
 }
 
