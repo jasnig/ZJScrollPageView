@@ -1,11 +1,11 @@
 # ZJScrollPageView
-####OC版的简单方便的集成网易新闻, 腾讯视频, 头条 等首页的滑块视图联动的效果, segmentVIew, scrollViewController
+#### OC版的简单方便的集成网易新闻, 腾讯视频, 头条 等首页的滑块视图联动的效果, segmentVIew, scrollViewController
 
-###swift版本的请点[这里](https://github.com/jasnig/ScrollPageView)
+### swift版本的请点[这里](https://github.com/jasnig/ScrollPageView)
 
-####注意,如果您需要查看详细的注释, 可以下载swift版本里面, 这里很多地方就没有把注释移过来了
+#### 注意,如果您需要查看详细的注释, 可以下载swift版本里面, 这里很多地方就没有把注释移过来了
 ----
-##使用示例效果
+## 使用示例效果
 ![滚动示例1.gif](http://upload-images.jianshu.io/upload_images/1271831-ecb291a43d1e5209.gif?imageMogr2/auto-orient/strip)![滚动示例2.gif](http://upload-images.jianshu.io/upload_images/1271831-bd679dbe86ab7404.gif?imageMogr2/auto-orient/strip)![滚动示例3.gif](http://upload-images.jianshu.io/upload_images/1271831-e094a23212160015.gif?imageMogr2/auto-orient/strip)
 
 ![滚动示例4.gif](http://upload-images.jianshu.io/upload_images/1271831-829166f3911adff6.gif?imageMogr2/auto-orient/strip)![滚动示例5.gif](http://upload-images.jianshu.io/upload_images/1271831-3f2b8dc30bf013b1.gif?imageMogr2/auto-orient/strip)![滚动示例6.gif](http://upload-images.jianshu.io/upload_images/1271831-6d37b6b5699e63a6.gif?imageMogr2/auto-orient/strip)
@@ -25,7 +25,7 @@
 
 
 ### 书写思路移步
-###[简书1](http://www.jianshu.com/p/b84f4dd96d0c)
+### [简书1](http://www.jianshu.com/p/b84f4dd96d0c)
 
 ## Requirements
 
@@ -38,9 +38,9 @@
  
 ~~使用cocoaPods, 在你项目的Podfile文件里面添加 `pod ZJScrollPageView`(未更新)~~
 
-##usage
+## usage
 
-####特别说明
+#### 特别说明
 因为大家可能会复用同一个controller来显示内容
 * 在对应的controller的viewWillAppear()等生命周期里面可以根据不同的title来显示不同的内容或者刷新视图
 
@@ -52,7 +52,7 @@
  
 
 ----
-###更新说明
+### 更新说明
 * 2016/05/26 新增了一个通知ScrollPageViewDidShowThePageNotification, 你可以监听这个通知来获取到正在显示的页数, 使用的示例可以参照 ZJSegmentStyle.h里面的说明
 * 2016/05/27 增加了一个style属性 segmentViewBounces, 来设置segmentView是否有弹性
 * 2016/05/27 增加了一个style属性 scrollContentView, 来设置contentView是否能滑动
@@ -66,7 +66,7 @@
 
 
 
-####可以设置的style效果
+#### 可以设置的style效果
 ```
 /** 是否显示遮盖 默认为NO */
 @property (assign, nonatomic, getter=isShowCover) BOOL showCover;
@@ -110,7 +110,7 @@
 @property (assign, nonatomic) CGFloat segmentHeight;
 ```
 
-####一. 使用ScrollPageView , 提供了各种效果的组合,但是不能修改segmentView和ContentView的相对位置,两者是结合在一起的
+#### 一. 使用ScrollPageView , 提供了各种效果的组合,但是不能修改segmentView和ContentView的相对位置,两者是结合在一起的
 
 	- (void)viewDidLoad {
     [super viewDidLoad];
@@ -184,7 +184,7 @@
     }
     return childVc;
 	}
-####二 使用 ZJScrollSegmentView 和 ZJContentView, 提供相同的效果组合, 但是同时可以分离开segmentView和contentView,可以单独设置他们的frame, 使用更灵活
+#### 二 使用 ZJScrollSegmentView 和 ZJContentView, 提供相同的效果组合, 但是同时可以分离开segmentView和contentView,可以单独设置他们的frame, 使用更灵活
 
 
 	- (void)viewDidLoad {
@@ -201,7 +201,7 @@
 	}
 
 
-###setupSegmentView
+### setupSegmentView
 	    // 注意: 一定要避免循环引用!!
     __weak typeof(self) weakSelf = self;
     ZJScrollSegmentView *segment = [[ZJScrollSegmentView alloc] initWithFrame:CGRectMake(0, 64.0, 160.0, 28.0) segmentStyle:style titles:titles titleDidClick:^(UILabel *label, NSInteger index) {
@@ -219,7 +219,7 @@
     self.navigationItem.titleView = self.segmentView;
     
     
-###setupContentView
+### setupContentView
 
 	    ZJContentView *content = [[ZJContentView alloc] initWithFrame:CGRectMake(0.0, 64.0, self.view.bounds.size.width, self.view.bounds.size.height - 64.0) segmentView:self.segmentView parentViewController:self delegate:self];
     self.contentView = content;
