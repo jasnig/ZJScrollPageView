@@ -55,7 +55,7 @@
                               @"中国足球"
                               ];
         
-        ZJScrollPageView *scrollPageView = [[ZJScrollPageView alloc] initWithFrame:scrollPageViewFrame segmentStyle:style titles:_titles parentViewController:strongSelf delegate:strongSelf];
+        ZJScrollPageView *scrollPageView = [[ZJScrollPageView alloc] initWithFrame:scrollPageViewFrame segmentStyle:style titles:strongSelf.titles parentViewController:strongSelf delegate:strongSelf];
         strongSelf.scrollPageView = scrollPageView;
         // 额外的按钮响应的block
         
@@ -82,7 +82,7 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-#pragma <#arguments#>
+#pragma ZJScrollPageViewChildVcDelegate
 - (NSInteger)numberOfChildViewControllers {
     return self.titles.count;
 }

@@ -8,6 +8,9 @@
 
 #import "ZJContentView.h"
 
+#define cellID @"cellID"
+#define kChildVCKey(index) [NSString stringWithFormat:@"%ld", (long)(index)]
+
 @interface ZJContentView ()<UIScrollViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource> {
     CGFloat   _oldOffSetX;
     BOOL _isLoadFirstView;
@@ -26,23 +29,21 @@
 @property (assign, nonatomic) NSInteger itemsCount;
 // 所有的子控制器
 @property (strong, nonatomic) NSMutableDictionary<NSString *, UIViewController<ZJScrollPageViewChildVcDelegate> *> *childVcsDic;
-// 当前控制器
-@property (strong, nonatomic) UIViewController<ZJScrollPageViewChildVcDelegate> *currentChildVc;
 
 /// 如果类似cell缓存一样, 虽然创建的控制器少了, 但是每个页面每次都要重新加载数据, 否则显示的内容就会出错, 貌似还不如每个页面创建一个控制器好
 //@property (strong, nonatomic) NSCache *cacheChildVcs;
 
 @property (assign, nonatomic) NSInteger currentIndex;
 @property (assign, nonatomic) NSInteger oldIndex;
+@property (strong, nonatomic) NSIndexPath *indexPathWillDisplay;
 // 是否需要手动管理生命周期方法的调用
 @property (assign, nonatomic) BOOL needManageLifeCycle;
-// 滚动超过页面(直接设置contentOffSet导致)
-@property (assign, nonatomic) BOOL scrollOverOnePage;
+
+@property (assign, nonatomic) BOOL trasitionAnimated;
 
 @end
 
 @implementation ZJContentView
-#define cellID @"cellID"
 
 #pragma mark - life cycle
 
@@ -121,7 +122,7 @@
         __strong typeof(self) strongSelf = weakSelf;
         if (strongSelf) {
             if (childVc != strongSelf.currentChildVc) {
-                [_childVcsDic removeObjectForKey:key];
+                [strongSelf.childVcsDic removeObjectForKey:key];
                 [ZJContentView removeChildVc:childVc];
             }
         }
@@ -171,24 +172,17 @@
 /** 给外界可以设置ContentOffSet的方法 */
 - (void)setContentOffSet:(CGPoint)offset animated:(BOOL)animated {
     self.forbidTouchToAdjustPosition = YES;
+    self.trasitionAnimated = animated;
     
     NSInteger currentIndex = offset.x/self.collectionView.bounds.size.width;
     _oldIndex = _currentIndex;
     self.currentIndex = currentIndex;
-    _scrollOverOnePage = NO;
-
-    NSInteger page = labs(_currentIndex-_oldIndex);
-    if (page>=2) {// 需要滚动两页以上的时候, 跳过中间页的动画
-        _scrollOverOnePage = YES;
-    }
-
-    [self.collectionView setContentOffset:offset animated:animated];
     
+    [self.collectionView setContentOffset:offset animated:animated];
 }
 
 /** 给外界刷新视图的方法 */
 - (void)reload {
-    
     [self.childVcsDic enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, UIViewController<ZJScrollPageViewChildVcDelegate> * _Nonnull childVc, BOOL * _Nonnull stop) {
         [ZJContentView removeChildVc:childVc];
         childVc = nil;
@@ -351,6 +345,48 @@
     }
 }
 
+- (UIViewController<ZJScrollPageViewChildVcDelegate> *)createChildVcAtIndexPathIfNeeded:(NSIndexPath *)indexPath {
+    UIViewController<ZJScrollPageViewChildVcDelegate> *childVc = self.childVcsDic[kChildVCKey(indexPath.item)];
+    if (! childVc) {
+        childVc = [self createChildVcAtIndexPath:indexPath];
+    }
+    return childVc;
+}
+
+- (UIViewController<ZJScrollPageViewChildVcDelegate> *)createChildVcAtIndexPath:(NSIndexPath *)indexPath {
+    UIViewController<ZJScrollPageViewChildVcDelegate> *childVc = self.childVcsDic[kChildVCKey(indexPath.item)];
+    
+    NSAssert([_delegate respondsToSelector:@selector(childViewController:forIndex:)], @"必须设置代理和实现代理方法: %@", NSStringFromSelector(@selector(childViewController:forIndex:)));
+    childVc = [_delegate childViewController:childVc forIndex:indexPath.item];
+    
+    NSAssert([childVc conformsToProtocol:@protocol(ZJScrollPageViewChildVcDelegate)], @"子控制器必须遵守ZJScrollPageViewChildVcDelegate协议");
+    NSAssert(![childVc isKindOfClass:[UINavigationController class]], @"不要添加UINavigationController包装后的子控制器");
+    
+    // 设置当前下标
+    childVc.zj_currentIndex = indexPath.item;
+    self.childVcsDic[kChildVCKey(indexPath.item)] = childVc;
+    
+    return childVc;
+}
+
+- (void)setupChildVcForCell:(UICollectionViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+    if (_currentIndex != indexPath.item) {
+        return; // 跳过中间的多页
+    }
+    // 这里建立子控制器和父控制器的关系
+    UIViewController<ZJScrollPageViewChildVcDelegate> *childVc = self.childVcsDic[kChildVCKey(indexPath.item)];
+    if (childVc.zj_scrollViewController != self.parentViewController) {
+        [childVc willMoveToParentViewController:self.parentViewController];
+        [self.parentViewController addChildViewController:childVc];
+    }
+    childVc.view.frame = cell.contentView.bounds;
+    childVc.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    [cell.contentView addSubview:childVc.view];
+    [childVc didMoveToParentViewController:self.parentViewController];
+    childVc.zj_loaded = YES;
+    //    NSLog(@"当前的index:%ld", indexPath.item);
+}
+
 #pragma mark - UICollectionViewDelegate --- UICollectionViewDataSource
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
@@ -358,7 +394,6 @@
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    
     return _itemsCount;
 }
 
@@ -367,155 +402,102 @@
     // 移除subviews 避免重用内容显示错误
     [cell.contentView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     
-    if (_sysVersion < 8) {
-        [self setupChildVcForCell:cell atIndexPath:indexPath];
+//    NSLog(@"cellForItemAtIndexPath: current: %ld   old: %ld  indexpathRow: %ld \n---", (long)_currentIndex, (long)_oldIndex, (long)indexPath.item);
+    
+    [self createChildVcAtIndexPath:indexPath];
+    if (_sysVersion < 8.0) {
+        [self collectionView:collectionView willDisplayCell:cell forItemAtIndexPath:indexPath];
     }
     
     return cell;
 }
 
-
-- (void)setupChildVcForCell:(UICollectionViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-    if (_currentIndex != indexPath.row) {
-        return; // 跳过中间的多页
-    }
-    
-    _currentChildVc = [self.childVcsDic valueForKey:[NSString stringWithFormat:@"%ld", (long)indexPath.row]];
-    BOOL isFirstLoaded = _currentChildVc == nil;
-    
-    if (_delegate && [_delegate respondsToSelector:@selector(childViewController:forIndex:)]) {
-        if (_currentChildVc == nil) {
-            _currentChildVc = [_delegate childViewController:nil forIndex:indexPath.row];
-            
-            if (!_currentChildVc || ![_currentChildVc conformsToProtocol:@protocol(ZJScrollPageViewChildVcDelegate)]) {
-                NSAssert(NO, @"子控制器必须遵守ZJScrollPageViewChildVcDelegate协议");
-            }
-            // 设置当前下标
-            _currentChildVc.zj_currentIndex = indexPath.row;
-            [self.childVcsDic setValue:_currentChildVc forKey:[NSString stringWithFormat:@"%ld", (long)indexPath.row]];
-        } else {
-            [_delegate childViewController:_currentChildVc forIndex:indexPath.row];
-        }
-    } else {
-        NSAssert(NO, @"必须设置代理和实现代理方法");
-    }
-    // 这里建立子控制器和父控制器的关系
-    if ([_currentChildVc isKindOfClass:[UINavigationController class]]) {
-        NSAssert(NO, @"不要添加UINavigationController包装后的子控制器");
-    }
-    if (_currentChildVc.zj_scrollViewController != self.parentViewController) {
-        [self.parentViewController addChildViewController:_currentChildVc];
-    }
-    _currentChildVc.view.frame = cell.contentView.bounds;
-    [cell.contentView addSubview:_currentChildVc.view];
-    [_currentChildVc didMoveToParentViewController:self.parentViewController];
-    
-    //    NSLog(@"当前的index:%ld", indexPath.row);
-    
-    if (_isLoadFirstView) { // 第一次加载cell? 不会调用endDisplayCell
-        [self willAppearWithIndex:indexPath.row];
-        if (isFirstLoaded) {
-            // viewDidLoad
-            if ([_currentChildVc respondsToSelector:@selector(zj_viewDidLoadForIndex:)]) {
-                [_currentChildVc zj_viewDidLoadForIndex:indexPath.row];
-            }
-        }
-        [self didAppearWithIndex:indexPath.row];
-
-        _isLoadFirstView = NO;
-    }
-    else {
-        
-        [self willAppearWithIndex:indexPath.row];
-        if (isFirstLoaded) {
-            // viewDidLoad
-            if ([_currentChildVc respondsToSelector:@selector(zj_viewDidLoadForIndex:)]) {
-                [_currentChildVc zj_viewDidLoadForIndex:indexPath.row];
-            }
-        }
-        [self willDisappearWithIndex:_oldIndex];
-        
-    }
-   
-
-}
-
 - (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
-//    NSLog(@"出现出现:current:---- %ld   old ----- %ld indexpathRow----%ld ", _currentIndex, _oldIndex, indexPath.row);
-    if (_sysVersion >= 8) {
-        [self setupChildVcForCell:cell atIndexPath:indexPath];
+//    NSLog(@"willDisplayCell: current: %ld old: %ld indexpathRow: %ld \n---", (long)_currentIndex, (long)_oldIndex, (long)indexPath.item);
+    self.indexPathWillDisplay = indexPath;
+    
+    UIViewController<ZJScrollPageViewChildVcDelegate> *childVc = [self createChildVcAtIndexPathIfNeeded:indexPath];
+    BOOL _isCurrentVCFirstLoad = ! childVc.zj_loaded;
+    
+    [self setupChildVcForCell:cell atIndexPath:indexPath];
+    
+    if (_isLoadFirstView) { // 第一次加载cell, 不会调用endDisplayCell
+        [self willAppearWithIndex:indexPath.item];
+        if (_isCurrentVCFirstLoad) {
+            // viewDidLoad
+            if ([childVc respondsToSelector:@selector(zj_viewDidLoadForIndex:)]) {
+                [childVc zj_viewDidLoadForIndex:indexPath.item];
+            }
+        }
+        [self didAppearWithIndex:indexPath.item];
+        _isLoadFirstView = NO;
+    } else {
+        if (_isCurrentVCFirstLoad && indexPath.item == _currentIndex) {
+            // viewDidLoad
+            if ([childVc respondsToSelector:@selector(zj_viewDidLoadForIndex:)]) {
+                [childVc zj_viewDidLoadForIndex:indexPath.item];
+            }
+        }
+        if (self.trasitionAnimated) {
+            if (labs(indexPath.item - _oldIndex) == 1) {
+                [self willDisappearWithIndex:_oldIndex];
+            }
+            if (indexPath.item == _currentIndex) {
+                [self willAppearWithIndex:_currentIndex];
+            }
+        } else {
+            if (indexPath.item == _currentIndex) {
+                [self willAppearWithIndex:_currentIndex];
+                [self didAppearWithIndex:_currentIndex];
+            }
+        }
     }
-
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didEndDisplayingCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
-//    NSLog(@"消失消失:current:---- %ld   old ----- %ld indexpathRow----%ld ", _currentIndex, _oldIndex, indexPath.row);
+//    NSLog(@"didEndDisplayingCell:  current: %ld  old: %ld indexpathRow: %ld \n---", (long)_currentIndex, (long)_oldIndex, (long)indexPath.item);
 
-    if (!self.forbidTouchToAdjustPosition) {
-        if (_currentIndex == indexPath.row) {// 没有滚动完成
-            
-            
-            if (_needManageLifeCycle) {
-                UIViewController<ZJScrollPageViewChildVcDelegate> *currentVc = [self.childVcsDic valueForKey:[NSString stringWithFormat:@"%ld", _oldIndex]];
-                // 开始出现
-                [currentVc beginAppearanceTransition:YES animated:NO];
-                
-                UIViewController<ZJScrollPageViewChildVcDelegate> *oldVc = [self.childVcsDic valueForKey:[NSString stringWithFormat:@"%ld", indexPath.row]];
-                // 开始消失
-                [oldVc beginAppearanceTransition:NO animated:NO];
-                
-            }
-            
-            [self didAppearWithIndex:_oldIndex];
-            [self didDisappearWithIndex:indexPath.row];
-        }
-        else {
-            
-            
-            if (_oldIndex == indexPath.row) {
-                // 滚动完成
-                [self didAppearWithIndex:_currentIndex];
-                [self didDisappearWithIndex:indexPath.row];
-                
-            }
-            else {
-                // 滚动没有完成又快速的反向打开了另一页
-                if (_needManageLifeCycle) {
-                    UIViewController<ZJScrollPageViewChildVcDelegate> *currentVc = [self.childVcsDic valueForKey:[NSString stringWithFormat:@"%ld", _oldIndex]];
-                    // 开始出现
-                    [currentVc beginAppearanceTransition:YES animated:NO];
-                    
-                    UIViewController<ZJScrollPageViewChildVcDelegate> *oldVc = [self.childVcsDic valueForKey:[NSString stringWithFormat:@"%ld", indexPath.row]];
-                    // 开始消失
-                    [oldVc beginAppearanceTransition:NO animated:NO];
-                    // 消失
-                }
-                [self didAppearWithIndex:_oldIndex];
-                [self didDisappearWithIndex:indexPath.row];
-            }
-            
-            
-            
-        }
-
-    }
-    else {
-        
-        if (_scrollOverOnePage) {
-            if (labs(_currentIndex-indexPath.row) == 1) { //滚动完成
-                [self didAppearWithIndex:_currentIndex];
+    if (self.forbidTouchToAdjustPosition) {
+        // 点击标题切换子页面，或者直接调用方法切换子页面
+        if (self.trasitionAnimated) {
+            if (indexPath.item == _oldIndex) {
                 [self didDisappearWithIndex:_oldIndex];
             }
-
+            if (labs(indexPath.item - _currentIndex) == 1) {
+                [self didAppearWithIndex:_currentIndex];
+            }
+        } else {
+            if (indexPath.item == _oldIndex) {
+                [self willDisappearWithIndex:_oldIndex];
+                [self didDisappearWithIndex:_oldIndex];
+            }
         }
-        else {
-            [self didDisappearWithIndex:_oldIndex];
-            [self didAppearWithIndex:_currentIndex];
-
+    } else {
+        // 滑动切换子页面
+        if (_oldIndex == indexPath.item) { // 滚动完成
+//            NSLog(@"didEndDisplayingCell: 滚动完成 \n---");
+            if (self.trasitionAnimated) {
+                [self didDisappearWithIndex:_oldIndex];
+                [self didAppearWithIndex:_currentIndex];
+            } else {
+                [self willDisappearWithIndex:_oldIndex];
+                [self didDisappearWithIndex:_oldIndex];
+            }
+        } else {
+            if (indexPath.item == self.indexPathWillDisplay.item) {
+                // 滚动一半放弃了，又回到了滚动前的那一页
+//                NSLog(@"didEndDisplayingCell: 滚动一半放弃了，又回到了滚动前的那一页 \n---");
+                [self didDisappearWithIndex:self.oldIndex];
+                [self didAppearWithIndex:indexPath.item];
+                [self willDisappearWithIndex:indexPath.item];
+                [self willAppearWithIndex:self.oldIndex];
+            } else {
+//                NSLog(@"didEndDisplayingCell: 同 %@ 连续滚动 \n---", indexPath.item < self.indexPathWillDisplay.item ? @"右" : @"左");
+            }
+            [self didDisappearWithIndex:indexPath.item];
+            [self didAppearWithIndex:_oldIndex];
         }
-
     }
-    
 }
 
 #pragma mark - getter --- setter
