@@ -64,7 +64,7 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-#pragma <#arguments#>
+#pragma ZJScrollPageViewChildVcDelegate
 - (NSInteger)numberOfChildViewControllers {
     return self.titles.count;
 }

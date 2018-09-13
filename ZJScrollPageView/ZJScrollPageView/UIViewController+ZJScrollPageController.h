@@ -15,7 +15,7 @@
 @property (nonatomic, weak, readonly) UIViewController *zj_scrollViewController;
 
 @property (nonatomic, assign) NSInteger zj_currentIndex;
-
+@property (nonatomic, assign) BOOL zj_loaded;
 
 
 

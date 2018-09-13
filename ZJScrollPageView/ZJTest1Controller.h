@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 #import "ZJScrollPageViewDelegate.h"
 @interface ZJTest1Controller : UIViewController <ZJScrollPageViewChildVcDelegate>
-@property (copy, nonatomic) void(^click)();
+@property (copy, nonatomic) void(^click)(void);
 @end

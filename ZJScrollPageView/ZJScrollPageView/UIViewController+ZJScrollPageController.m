@@ -33,5 +33,12 @@ char ZJIndexKey;
     return [objc_getAssociatedObject(self, &ZJIndexKey) integerValue];
 }
 
+- (void)setZj_loaded:(BOOL)zj_loaded {
+    objc_setAssociatedObject(self, &(@selector(zj_loaded)), @(zj_loaded), OBJC_ASSOCIATION_ASSIGN);
+}
+
+- (BOOL)zj_loaded {
+    return [objc_getAssociatedObject(self, &(@selector(zj_loaded))) boolValue];
+}
 
 @end
